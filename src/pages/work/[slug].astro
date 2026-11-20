@@ -1,0 +1,99 @@
+---
+import ProjectPlate from '../../components/ProjectPlate.astro';
+import WorkFooter from '../../components/WorkFooter.astro';
+import { profile } from '../../data/profile';
+import { projects } from '../../data/projects';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/case-studies.css';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { category, cover, groups } = project;
+const sizes: Record<string, string> = {
+  posters: '(min-width: 90em) 421px, (min-width: 64em) 30vw, (min-width: 37.5em) 45vw, calc(100vw - 2rem)',
+  pairs: '(min-width: 90em) 644px, (min-width: 48em) 46vw, calc(100vw - 2rem)',
+  spreads: '(min-width: 64em) 1000px, calc(100vw - 2rem)',
+};
+---
+
+<BaseLayout title={`${project.title} · ${category.title} · ${profile.name}`} description={project.description}
+  share={{ slug: project.slug, alt: `${project.title}. ${cover.alt}` }} artworkViewer>
+  <article class="folio case-page container" aria-labelledby="project-heading" data-project={project.slug}>
+    <nav class="breadcrumb type-label" aria-label="Breadcrumb">
+      <a href="/work/" tabindex="0">Work</a><span aria-hidden="true">/</span><a href={category.href} tabindex="0">{category.title}</a>
+    </nav>
+
+    <div class="opening layout-grid">
+      <header class="heading">
+        <h1 id="project-heading"><span data-case-title>{project.title}</span></h1>
+        <p class="metadata"><span>{project.year}</span><span aria-hidden="true"> · </span>{project.role}</p>
+      </header>
+      <div class="cover">
+        <ProjectPlate art={cover} sizes="(min-width: 90em) 756px, (min-width: 64em) 52vw, calc(100vw - 2rem)" lead />
+      </div>
+      <div class="summary">
+        <p class="prose">{project.description}</p>
+        {project.credit && <p class="credit type-label">{project.credit}</p>}
+      </div>
+    </div>
+
+    {groups.map((group, i) => (
+      <section class="gallery chapter" aria-labelledby={`gallery-${i}`}>
+        <h2 id={`gallery-${i}`}>{group.title}</h2>
+        <div class={`plates ${group.layout}`}>
+          {group.items.map((art) => <ProjectPlate {art} sizes={sizes[group.layout]} />)}
+        </div>
+      </section>
+    ))}
+    <WorkFooter {category} next={project.next} />
+  </article>
+</BaseLayout>
+
+<style>
+  .opening {
+    align-items: start;
+    row-gap: var(--space-related);
+    padding-block-start: clamp(1rem, 2.8vw, 2.8rem);
+  }
+  .heading { container-type: inline-size; }
+  h1 {
+    font-size: min(clamp(2.65rem, 14.3cqi, 5.6rem), 17.5cqi);
+    font-weight: 650;
+    font-variation-settings: 'opsz' 96;
+    line-height: 1.01;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+  .metadata {
+    margin-block-start: 0.85rem;
+    color: var(--color-secondary);
+    font-size: var(--size-label);
+    line-height: 1.4;
+  }
+  .metadata span:first-child { font-variant-numeric: tabular-nums; }
+  .summary { max-inline-size: 46ch; }
+  .credit { margin-block-start: 1rem; color: var(--color-secondary); }
+  .plates { display: grid; align-items: start; gap: clamp(2rem, 4.5vw, 4rem) var(--grid-gap); margin-block-start: var(--space-related); }
+  .plates.spreads { max-inline-size: 62.5rem; margin-inline: auto; }
+  @container case-page (min-width: 32rem) {
+    .posters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @container case-page (min-width: 43rem) {
+    .opening { grid-template-rows: auto 1fr; }
+    .heading, .summary { grid-column: 1 / 5; }
+    .heading { grid-row: 1; }
+    .summary { grid-row: 2; }
+    .cover { grid-column: 5 / -1; grid-row: 1 / span 2; }
+    .pairs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @container case-page (min-width: 56rem) {
+    .heading { grid-column: 1 / 6; }
+    .summary { grid-column: 1 / 6; max-inline-size: 39ch; }
+    .cover { grid-column: 6 / -1; }
+    .posters { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+</style>

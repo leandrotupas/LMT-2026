@@ -1,0 +1,73 @@
+:root {
+  --color-paper: #f8f6f1;
+  --color-surface: #efebe4;
+  --color-ink: #22211f;
+  --color-secondary: #5a5853;
+  --color-link: #314aa3;
+  --color-divider: #ccc6be;
+
+  --font-sans: 'Bricolage Grotesque', Arial, sans-serif;
+  --font-reading: 'DM Sans', Arial, sans-serif;
+  --size-display: clamp(3.5rem, 1rem + 12.5vw, 4.75rem);
+  --size-title: clamp(3rem, 1.5rem + 8vw, 4.75rem);
+  --size-heading: clamp(1.3125rem, 1rem + 2vw, 2rem);
+  --size-lead: 1.3125rem;
+  --size-body: 1.125rem;
+  --size-label: 0.9375rem;
+  --display-tracking: -0.012em;
+  --reading-measure: 62ch;
+
+  --content-width: 82rem;
+  --grid-columns: 4;
+  --grid-gap: min(0.75rem, 4vw);
+  --page-margin: min(clamp(1rem, 6vw - 0.2rem, 1.25rem), 6vw);
+  --space-caption: clamp(0.5rem, 1.2vw, 1rem);
+  --space-related: clamp(1.5rem, 3vw, 2rem);
+  --space-section: clamp(4rem, 7vw, 8rem);
+  --target-size: 2.75rem;
+  --focus-width: 3px;
+  --focus-offset: 4px;
+
+  --duration-entrance: 660ms;
+  --duration-preview: 220ms;
+  --duration-page: 260ms;
+  --duration-exit: 120ms;
+  --ease-entrance: cubic-bezier(0.2, 0.75, 0.25, 1);
+  --ease-settle: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (min-width: 37.5em) {
+  :root {
+    --grid-gap: min(1.25rem, 3.5vw);
+    --page-margin: min(2rem, 5.5vw);
+    --size-display: clamp(4.75rem, 1.875rem + 7.6vw, 6.75rem);
+    --size-title: clamp(4.5rem, 7.5vw, 6rem);
+    --size-heading: clamp(1.625rem, 3vw, 2.125rem);
+    --size-lead: clamp(1.5rem, 1rem + 1.2vw, 1.875rem);
+    --size-body: clamp(1.125rem, 1rem + 0.35vw, 1.25rem);
+    --size-label: 1rem;
+    --display-tracking: -0.016em;
+  }
+}
+
+@media (min-width: 64em) {
+  :root {
+    --grid-gap: min(1.5rem, 2.5vw);
+    --page-margin: min(clamp(3rem, 4.5vw, 4rem), 5vw);
+    --size-display: clamp(6.75rem, 11.4vw, 10.5rem);
+    --size-title: clamp(4.5rem, 8vw, 7.25rem);
+    --size-heading: clamp(1.625rem, 3vw, 2.625rem);
+    --size-lead: 1.875rem;
+    --size-body: 1.25rem;
+    --display-tracking: -0.022em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-entrance: 0ms;
+    --duration-preview: 0ms;
+    --duration-page: 0ms;
+    --duration-exit: 0ms;
+  }
+}

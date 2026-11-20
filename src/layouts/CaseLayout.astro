@@ -1,0 +1,52 @@
+---
+import { flagships, type CaseStudy } from '../data/flagships';
+import { profile } from '../data/profile';
+import WorkFooter from '../components/WorkFooter.astro';
+import BaseLayout from './BaseLayout.astro';
+import '../styles/case-studies.css';
+
+interface Props {
+  project: CaseStudy;
+  subject?: string;
+}
+
+const { project, subject = 'Brand identity' } = Astro.props;
+const index = flagships.findIndex(({ slug }) => slug === project.slug);
+const next = flagships[(index + 1) % flagships.length];
+---
+
+<BaseLayout title={`${project.title} · ${subject} · ${profile.name}`} description={project.introduction}
+  share={{ slug: project.slug, alt: `${project.title}. ${project.applicationAlt}` }} artworkViewer>
+  <article class="case-page container" aria-labelledby="case-heading" data-project={project.slug}>
+    <nav class="breadcrumb type-label" aria-label="Breadcrumb">
+      <a href="/work/" tabindex="0">Work</a><span aria-hidden="true">/</span><a href="/work/#case-studies" tabindex="0">Case Studies</a>
+    </nav>
+
+    <header class="case-header layout-grid">
+      <div class="heading-block">
+        <h1 id="case-heading"><span data-case-title>{project.title}</span></h1>
+        <p class="case-meta"><time datetime={String(project.year)}>{project.year}</time><span aria-hidden="true"> · </span>{project.role}</p>
+      </div>
+      <p class="introduction type-lead">{project.introduction}</p>
+    </header>
+
+    <slot />
+
+    <section class="credits chapter layout-grid" aria-labelledby="credits">
+      <div class="credit-heading">
+        <h2 id="credits">Credits</h2>
+        <p class="type-label">{project.title}, {project.year}</p>
+      </div>
+      <dl>
+        {project.credits.map(({ role, people }) => <div><dt>{role}</dt><dd>{people}</dd></div>)}
+      </dl>
+      <div class="documents type-label">
+        {project.documents.map(({ label, href, pages }) => (
+          <a href={href} type="application/pdf" tabindex="0">{label} <span>(PDF, {pages} pages)</span></a>
+        ))}
+      </div>
+    </section>
+
+    <WorkFooter category={{ title: 'Case Studies', href: '/work/#case-studies' }} {next} nextLabel="Next case study" />
+  </article>
+</BaseLayout>

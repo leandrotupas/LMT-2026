@@ -1,0 +1,82 @@
+[data-case-title] {
+  display: inline-block;
+  max-inline-size: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
+  .primary-nav {
+    view-transition-name: primary-navigation;
+  }
+
+  ::view-transition {
+    pointer-events: none;
+  }
+
+  ::view-transition-group(*) {
+    animation-duration: var(--duration-page);
+    animation-timing-function: var(--ease-entrance);
+  }
+
+  ::view-transition-old(root) {
+    z-index: 1;
+    mix-blend-mode: normal;
+    animation: page-depart var(--duration-exit) ease-out both;
+  }
+
+  ::view-transition-new(root) {
+    mix-blend-mode: normal;
+    animation: page-arrive var(--duration-page) var(--ease-settle) both;
+  }
+
+  ::view-transition-group(primary-navigation),
+  ::view-transition-new(primary-navigation) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  ::view-transition-old(primary-navigation) {
+    display: none;
+  }
+
+  ::view-transition-old(case-title) {
+    display: none;
+  }
+
+  ::view-transition-group(case-art),
+  ::view-transition-group(case-title) {
+    animation-duration: 420ms;
+    animation-timing-function: var(--ease-settle);
+  }
+  ::view-transition-old(case-art), ::view-transition-new(case-art) {
+    object-fit: contain;
+    mix-blend-mode: normal;
+  }
+  ::view-transition-old(case-art) { animation: page-depart 170ms var(--ease-settle) both; }
+  ::view-transition-new(case-art) { animation: cover-arrives 200ms var(--ease-settle) both; }
+
+  ::view-transition-new(case-title) {
+    animation: none;
+    object-fit: contain;
+    object-position: left center;
+  }
+}
+
+@keyframes page-depart {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes cover-arrives { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes page-arrive {
+  from { opacity: 0.74; transform: translateY(5px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-smooth-anchor] { scroll-behavior: smooth; }
+
+  .site-header a, .categories a > span, .work-link .work-title, figcaption {
+    transition: color 150ms ease-out, text-decoration-color 150ms ease-out;
+  }
+}

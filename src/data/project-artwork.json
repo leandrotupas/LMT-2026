@@ -1,0 +1,795 @@
+{
+  "backstage": {
+    "coverSet": "/images/work/backstage-thumb.webp 240w, /images/projects/backstage/cover-480.webp 480w, /images/work/backstage.webp 958w",
+    "groups": [
+      {
+        "title": "The mark and wordmark",
+        "layout": "pairs",
+        "items": [
+          {
+            "src": "/images/projects/backstage/light-lockup.webp",
+            "width": 958,
+            "height": 539,
+            "srcset": "/images/projects/backstage/light-lockup-480.webp 480w, /images/projects/backstage/light-lockup.webp 958w",
+            "caption": "Black lockup on white",
+            "alt": "Four rounded modules sit beside the heavy BACKSTAGE wordmark."
+          },
+          {
+            "src": "/images/projects/backstage/inline.webp",
+            "width": 958,
+            "height": 540,
+            "srcset": "/images/projects/backstage/inline-480.webp 480w, /images/projects/backstage/inline.webp 958w",
+            "caption": "Inline wordmark",
+            "alt": "The four-piece symbol separates BACK and STAGE within a single line."
+          },
+          {
+            "src": "/images/projects/backstage/symbol.webp",
+            "width": 958,
+            "height": 540,
+            "srcset": "/images/projects/backstage/symbol-480.webp 480w, /images/projects/backstage/symbol.webp 958w",
+            "caption": "Standalone mark",
+            "alt": "Four rounded black forms make a compact, stacked emblem."
+          }
+        ]
+      }
+    ]
+  },
+  "bire": {
+    "coverSet": "/images/work/bire-thumb.webp 240w, /images/projects/bire/cover-480.webp 480w, /images/work/bire.webp 832w",
+    "groups": [
+      {
+        "title": "Presentation and social concepts",
+        "layout": "pairs",
+        "items": [
+          {
+            "src": "/images/projects/bire/cover.webp",
+            "width": 633,
+            "height": 356,
+            "srcset": "/images/projects/bire/cover-480.webp 480w, /images/projects/bire/cover.webp 633w",
+            "caption": "Presentation cover",
+            "alt": "A red presentation cover uses an aerial view of a residential neighborhood."
+          },
+          {
+            "src": "/images/projects/bire/page.webp",
+            "width": 721,
+            "height": 406,
+            "srcset": "/images/projects/bire/page-480.webp 480w, /images/projects/bire/page.webp 721w",
+            "caption": "Interior slide",
+            "alt": "A diagonal edge separates a red house photograph from the white text area."
+          },
+          {
+            "src": "/images/projects/bire/story.webp",
+            "width": 378,
+            "height": 671,
+            "srcset": "/images/projects/bire/story.webp 378w",
+            "caption": "Portrait property template",
+            "alt": "A high-rise photograph sits above a bright green information panel."
+          },
+          {
+            "src": "/images/projects/bire/social.webp",
+            "width": 330,
+            "height": 330,
+            "srcset": "/images/projects/bire/social.webp 330w",
+            "caption": "Square property template",
+            "alt": "An architectural photograph sits inside an angular light-blue layout."
+          }
+        ]
+      }
+    ]
+  },
+  "cote": {
+    "coverSet": "/images/work/cote-thumb.webp 170w, /images/projects/cote/cover-480.webp 480w, /images/work/cote.webp 769w",
+    "groups": [
+      {
+        "title": "Anniversary countdown",
+        "layout": "posters",
+        "items": [
+          {
+            "src": "/images/projects/cote/day-three.webp",
+            "width": 528,
+            "height": 529,
+            "srcset": "/images/projects/cote/day-three.webp 528w",
+            "caption": "Three days",
+            "alt": "A white numeral three sits inside a red floral countdown motif."
+          },
+          {
+            "src": "/images/projects/cote/day-two.webp",
+            "width": 529,
+            "height": 529,
+            "srcset": "/images/projects/cote/day-two.webp 529w",
+            "caption": "Two days",
+            "alt": "A cream numeral two sits inside a gold flower."
+          },
+          {
+            "src": "/images/projects/cote/day-one.webp",
+            "width": 529,
+            "height": 529,
+            "srcset": "/images/projects/cote/day-one.webp 529w",
+            "caption": "One day",
+            "alt": "A gold numeral one sits inside a black-and-gold flower."
+          }
+        ]
+      },
+      {
+        "title": "Feed and Story",
+        "layout": "pairs",
+        "items": [
+          {
+            "src": "/images/projects/cote/feed.webp",
+            "width": 528,
+            "height": 528,
+            "srcset": "/images/projects/cote/feed.webp 528w",
+            "caption": "Anniversary feed post",
+            "alt": "COTE Singapore Turns One in pale type over a dark restaurant photograph."
+          },
+          {
+            "src": "/images/projects/cote/story.webp",
+            "width": 613,
+            "height": 1089,
+            "srcset": "/images/projects/cote/story-480.webp 480w, /images/projects/cote/story.webp 613w",
+            "caption": "Anniversary Story",
+            "alt": "The anniversary headline and restaurant photograph in a tall Story format."
+          }
+        ]
+      }
+    ]
+  },
+  "fishwife": {
+    "coverSet": "/images/work/fishwife-thumb.webp 240w, /images/projects/fishwife/cover-480.webp 480w, /images/work/fishwife.webp 603w",
+    "groups": [
+      {
+        "title": "Feed and Story studies",
+        "layout": "pairs",
+        "items": [
+          {
+            "src": "/images/projects/fishwife/salmon-trio.webp",
+            "width": 603,
+            "height": 754,
+            "srcset": "/images/projects/fishwife/salmon-trio-480.webp 480w, /images/projects/fishwife/salmon-trio.webp 603w",
+            "caption": "Smoked Salmon Lover’s Trio",
+            "alt": "Three stacked tins sit within a black floral border on cream."
+          },
+          {
+            "src": "/images/projects/fishwife/tinned-fish.webp",
+            "width": 604,
+            "height": 1073,
+            "srcset": "/images/projects/fishwife/tinned-fish-480.webp 480w, /images/projects/fishwife/tinned-fish.webp 604w",
+            "caption": "Tinned Fish vertical study",
+            "alt": "Illustrated tins frame cream lettering on a coral-red ground."
+          }
+        ]
+      }
+    ]
+  },
+  "ingenuity": {
+    "coverSet": "/images/work/ingenuity-thumb.webp 240w, /images/projects/ingenuity/cover-480.webp 480w, /images/work/ingenuity.webp 724w",
+    "groups": [
+      {
+        "title": "Identity proposal",
+        "layout": "pairs",
+        "items": [
+          {
+            "src": "/images/projects/ingenuity/identity-board.webp",
+            "width": 965,
+            "height": 543,
+            "srcset": "/images/projects/ingenuity/identity-board-480.webp 480w, /images/projects/ingenuity/identity-board.webp 965w",
+            "caption": "Palette, typography and mark",
+            "alt": "An orange, black and white board pairs Satoshi lettering with a geometric identity mark."
+          },
+          {
+            "src": "/images/projects/ingenuity/cards.webp",
+            "width": 724,
+            "height": 543,
+            "srcset": "/images/projects/ingenuity/cards-480.webp 480w, /images/projects/ingenuity/cards.webp 724w",
+            "caption": "Stationery concept",
+            "alt": "Orange and white Ingenuity business cards carry the proposed geometric mark."
+          },
+          {
+            "src": "/images/projects/ingenuity/poster.webp",
+            "width": 760,
+            "height": 1086,
+            "srcset": "/images/projects/ingenuity/poster-480.webp 480w, /images/projects/ingenuity/poster.webp 760w",
+            "caption": "Built to last poster",
+            "alt": "A white geometric symbol fills the lower half of a narrow orange poster."
+          }
+        ]
+      }
+    ]
+  },
+  "micah": {
+    "coverSet": "/images/work/micah-thumb.webp 240w, /images/projects/micah/cover-480.webp 480w, /images/work/micah.webp 824w",
+    "groups": [
+      {
+        "title": "From the brand guidelines",
+        "layout": "pairs",
+        "items": [
+          {
+            "src": "/images/projects/micah/primary.webp",
+            "width": 831,
+            "height": 468,
+            "srcset": "/images/projects/micah/primary-480.webp 480w, /images/projects/micah/primary.webp 831w",
+            "caption": "Primary logo arrangements",
+            "alt": "A two-tone blue monogram sits beside the architectural designer’s name on light and dark backgrounds."
+          },
+          {
+            "src": "/images/projects/micah/secondary.webp",
+            "width": 831,
+            "height": 468,
+            "srcset": "/images/projects/micah/secondary-480.webp 480w, /images/projects/micah/secondary.webp 831w",
+            "caption": "Secondary logo arrangements",
+            "alt": "Stacked versions of the monogram and name appear on white and navy."
+          },
+          {
+            "src": "/images/projects/micah/palette.webp",
+            "width": 831,
+            "height": 468,
+            "srcset": "/images/projects/micah/palette-480.webp 480w, /images/projects/micah/palette.webp 831w",
+            "caption": "Primary color palette",
+            "alt": "Five graduated blue and white swatches are arranged in the brand guide."
+          },
+          {
+            "src": "/images/projects/micah/cards.webp",
+            "width": 623,
+            "height": 468,
+            "srcset": "/images/projects/micah/cards-480.webp 480w, /images/projects/micah/cards.webp 623w",
+            "caption": "Calling card mockup",
+            "alt": "Two navy and cream calling cards sit side by side on a wooden block."
+          }
+        ]
+      }
+    ]
+  },
+  "uxph": {
+    "coverSet": "/images/work/uxph-thumb.webp 240w, /images/work/uxph.webp 578w",
+    "groups": [
+      {
+        "title": "City artwork and event graphics",
+        "layout": "pairs",
+        "items": [
+          {
+            "src": "/images/projects/uxph/city.webp",
+            "width": 1281,
+            "height": 1361,
+            "srcset": "/images/projects/uxph/city-480.webp 480w, /images/projects/uxph/city-840.webp 840w, /images/projects/uxph/city.webp 1281w",
+            "caption": "City illustration, Brickroad Studios team",
+            "alt": "A purple city illustration brings buildings, street scenes and geometric motifs into one composition."
+          },
+          {
+            "src": "/images/projects/uxph/banner.webp",
+            "width": 1233,
+            "height": 215,
+            "srcset": "/images/projects/uxph/banner-480.webp 480w, /images/projects/uxph/banner-840.webp 840w, /images/projects/uxph/banner.webp 1233w",
+            "caption": "Roadshow city banner",
+            "alt": "A panoramic band of illustrated city landmarks in purple, orange, yellow and green."
+          },
+          {
+            "src": "/images/projects/uxph/speaker.webp",
+            "width": 295,
+            "height": 369,
+            "srcset": "/images/projects/uxph/speaker.webp 295w",
+            "caption": "Speaker announcement",
+            "alt": "A green and teal portrait graphic presents a Designing for Accessibility session."
+          },
+          {
+            "src": "/images/projects/uxph/session.webp",
+            "width": 328,
+            "height": 409,
+            "srcset": "/images/projects/uxph/session.webp 328w",
+            "caption": "Session announcement",
+            "alt": "An orange event graphic pairs speaker portraits with the session details."
+          }
+        ]
+      }
+    ]
+  },
+  "500d": {
+    "coverSet": "/images/work/500d-thumb.webp 240w, /images/projects/500d/cover-480.webp 480w, /images/projects/500d/cover-840.webp 840w, /images/work/500d.webp 1640w",
+    "groups": [
+      {
+        "title": "Covers and horizontal graphics",
+        "layout": "spreads",
+        "items": [
+          {
+            "src": "/images/projects/500d/freelance-guidance.webp",
+            "width": 1500,
+            "height": 500,
+            "srcset": "/images/projects/500d/freelance-guidance-480.webp 480w, /images/projects/500d/freelance-guidance-840.webp 840w, /images/projects/500d/freelance-guidance.webp 1500w",
+            "caption": "Practical Freelance Guidance, Facebook cover",
+            "alt": "A portrait against a blue checkerboard leads into the white Practical Freelance Guidance headline."
+          },
+          {
+            "src": "/images/projects/500d/the-pause.webp",
+            "width": 1200,
+            "height": 600,
+            "srcset": "/images/projects/500d/the-pause-480.webp 480w, /images/projects/500d/the-pause-840.webp 840w, /images/projects/500d/the-pause.webp 1200w",
+            "caption": "The Pause Is Where the Trip Lives, horizontal campaign",
+            "alt": "A café visitor sits with an open book beside the rust and teal travel headline."
+          },
+          {
+            "src": "/images/projects/500d/first-time-solo-trips.webp",
+            "width": 1640,
+            "height": 856,
+            "srcset": "/images/projects/500d/first-time-solo-trips-480.webp 480w, /images/projects/500d/first-time-solo-trips-840.webp 840w, /images/projects/500d/first-time-solo-trips.webp 1640w",
+            "caption": "Where First Timers Plan Solo Trips, destination cover",
+            "alt": "A purple travel headline sits above a mountain range and a lone hiker."
+          }
+        ]
+      },
+      {
+        "title": "Feed and community graphics",
+        "layout": "posters",
+        "items": [
+          {
+            "src": "/images/projects/500d/clarity.webp",
+            "width": 1080,
+            "height": 1350,
+            "srcset": "/images/projects/500d/clarity-480.webp 480w, /images/projects/500d/clarity-840.webp 840w, /images/projects/500d/clarity.webp 1080w",
+            "caption": "Clarity Always Comes First, portrait post",
+            "alt": "A woman presents at a desk above a teal panel carrying the headline."
+          },
+          {
+            "src": "/images/projects/500d/civic-awareness.webp",
+            "width": 1080,
+            "height": 1080,
+            "srcset": "/images/projects/500d/civic-awareness-480.webp 480w, /images/projects/500d/civic-awareness-840.webp 840w, /images/projects/500d/civic-awareness.webp 1080w",
+            "caption": "Civic Awareness Workshop, community graphic",
+            "alt": "A photograph of stacked hands sits above the bold white workshop title on indigo."
+          },
+          {
+            "src": "/images/projects/500d/resource-fair.webp",
+            "width": 1080,
+            "height": 1080,
+            "srcset": "/images/projects/500d/resource-fair-480.webp 480w, /images/projects/500d/resource-fair-840.webp 840w, /images/projects/500d/resource-fair.webp 1080w",
+            "caption": "Community Resource Fair, event graphic",
+            "alt": "A cobalt block of type and event details sits above a community meeting photograph."
+          },
+          {
+            "src": "/images/projects/500d/smoothie.webp",
+            "width": 1080,
+            "height": 1080,
+            "srcset": "/images/projects/500d/smoothie-480.webp 480w, /images/projects/500d/smoothie-840.webp 840w, /images/projects/500d/smoothie.webp 1080w",
+            "caption": "Smoothie promotion, square post",
+            "alt": "Four colorful smoothies line up beneath an orange scalloped headline panel."
+          },
+          {
+            "src": "/images/projects/500d/block-party.webp",
+            "width": 1080,
+            "height": 1080,
+            "srcset": "/images/projects/500d/block-party-480.webp 480w, /images/projects/500d/block-party-840.webp 840w, /images/projects/500d/block-party.webp 1080w",
+            "caption": "Annual Block Party, event graphic",
+            "alt": "A red event poster uses white lettering, colorful balloons and a party hat."
+          },
+          {
+            "src": "/images/projects/500d/community-potluck.webp",
+            "width": 1080,
+            "height": 1080,
+            "srcset": "/images/projects/500d/community-potluck-480.webp 480w, /images/projects/500d/community-potluck-840.webp 840w, /images/projects/500d/community-potluck.webp 1080w",
+            "caption": "Community Potluck Night, event graphic",
+            "alt": "Orange handwritten lettering, small burger illustrations and event details fill a pale yellow and aqua square."
+          }
+        ]
+      },
+      {
+        "title": "Vertical graphics",
+        "layout": "posters",
+        "items": [
+          {
+            "src": "/images/projects/500d/style-spaces.webp",
+            "width": 1012,
+            "height": 1800,
+            "srcset": "/images/projects/500d/style-spaces-480.webp 480w, /images/projects/500d/style-spaces.webp 1012w",
+            "caption": "Style Spaces With Green, vertical Story",
+            "alt": "Two potted plants rest on a small wooden table underneath white lettering."
+          },
+          {
+            "src": "/images/projects/500d/wine-pairing.webp",
+            "width": 1012,
+            "height": 1800,
+            "srcset": "/images/projects/500d/wine-pairing-480.webp 480w, /images/projects/500d/wine-pairing.webp 1012w",
+            "caption": "Wine Pairing, hospitality Story",
+            "alt": "Wine pours into a tall glass above a gold script headline on a dark red field."
+          },
+          {
+            "src": "/images/projects/500d/breezy-meadows.webp",
+            "width": 1012,
+            "height": 1800,
+            "srcset": "/images/projects/500d/breezy-meadows-480.webp 480w, /images/projects/500d/breezy-meadows.webp 1012w",
+            "caption": "Breezy Meadows Café, brunch promotion",
+            "alt": "A photograph of plated brunch separates two bright blue text panels."
+          },
+          {
+            "src": "/images/projects/500d/eye-friction.webp",
+            "width": 1080,
+            "height": 1440,
+            "srcset": "/images/projects/500d/eye-friction-480.webp 480w, /images/projects/500d/eye-friction-840.webp 840w, /images/projects/500d/eye-friction.webp 1080w",
+            "caption": "Work Without Eye Friction, vertical graphic",
+            "alt": "A man holding his glasses sits beside a white headline on sky blue."
+          },
+          {
+            "src": "/images/projects/500d/wine-tasting.webp",
+            "width": 1012,
+            "height": 1800,
+            "srcset": "/images/projects/500d/wine-tasting-480.webp 480w, /images/projects/500d/wine-tasting.webp 1012w",
+            "caption": "Wine Pairing Nights, hospitality Story",
+            "alt": "Gold script sits between photographs of wine, fruit and cheese on burgundy."
+          },
+          {
+            "src": "/images/projects/500d/mellow-morsels.webp",
+            "width": 1012,
+            "height": 1800,
+            "srcset": "/images/projects/500d/mellow-morsels-480.webp 480w, /images/projects/500d/mellow-morsels.webp 1012w",
+            "caption": "Family-Style Meal Packages, restaurant offer",
+            "alt": "A pasta dish sits above yellow lettering on a red and yellow vertical graphic."
+          }
+        ]
+      }
+    ]
+  },
+  "beecot": {
+    "coverSet": "/images/work/beecot-thumb.webp 240w, /images/projects/beecot/cover-480.webp 480w, /images/projects/beecot/cover-840.webp 840w, /images/work/beecot.webp 1156w",
+    "groups": [
+      {
+        "title": "Brand collateral",
+        "layout": "pairs",
+        "items": [
+          {
+            "src": "/images/projects/beecot/architecture.webp",
+            "width": 775,
+            "height": 323,
+            "srcset": "/images/projects/beecot/architecture-480.webp 480w, /images/projects/beecot/architecture.webp 775w",
+            "caption": "Architectural banner",
+            "alt": "Translucent teal planes cross a wide photograph of a glazed building interior."
+          },
+          {
+            "src": "/images/projects/beecot/message.webp",
+            "width": 533,
+            "height": 356,
+            "srcset": "/images/projects/beecot/message.webp 533w",
+            "caption": "Promotional layout",
+            "alt": "White display lettering sits over a darkened office interior."
+          },
+          {
+            "src": "/images/projects/beecot/geometry.webp",
+            "width": 574,
+            "height": 323,
+            "srcset": "/images/projects/beecot/geometry.webp 574w",
+            "caption": "Brand pattern",
+            "alt": "Fine line drawings form a geometric teal pattern."
+          }
+        ]
+      }
+    ]
+  },
+  "burtkadoos": {
+    "coverSet": "/images/work/burtkadoos-thumb.webp 240w, /images/projects/burtkadoos/cover-480.webp 480w, /images/work/burtkadoos.webp 587w",
+    "groups": [
+      {
+        "title": "Campaign variations",
+        "layout": "posters",
+        "items": [
+          {
+            "src": "/images/projects/burtkadoos/local.webp",
+            "width": 587,
+            "height": 587,
+            "srcset": "/images/projects/burtkadoos/local-480.webp 480w, /images/projects/burtkadoos/local.webp 587w",
+            "caption": "Local shopping post",
+            "alt": "A yellow ribbon connects Dutch campaign copy with a supermarket scene."
+          },
+          {
+            "src": "/images/projects/burtkadoos/discount.webp",
+            "width": 587,
+            "height": 587,
+            "srcset": "/images/projects/burtkadoos/discount-480.webp 480w, /images/projects/burtkadoos/discount.webp 587w",
+            "caption": "Discount message",
+            "alt": "A blue information panel sits above a photograph of two shoppers."
+          },
+          {
+            "src": "/images/projects/burtkadoos/retail.webp",
+            "width": 587,
+            "height": 587,
+            "srcset": "/images/projects/burtkadoos/retail-480.webp 480w, /images/projects/burtkadoos/retail.webp 587w",
+            "caption": "Retail campaign post",
+            "alt": "Green and yellow curves frame market photography and a navy message panel."
+          }
+        ]
+      }
+    ]
+  },
+  "doorless": {
+    "coverSet": "/images/work/doorless-thumb.webp 240w, /images/projects/doorless/cover-480.webp 480w, /images/work/doorless.webp 910w",
+    "groups": [
+      {
+        "title": "Inside the onboarding playbook",
+        "layout": "spreads",
+        "items": [
+          {
+            "src": "/images/projects/doorless/contents.webp",
+            "width": 907,
+            "height": 642,
+            "srcset": "/images/projects/doorless/contents-480.webp 480w, /images/projects/doorless/contents.webp 907w",
+            "caption": "Contents and introduction",
+            "alt": "A white contents page faces a blue introduction with illustrated figures in the gutter."
+          },
+          {
+            "src": "/images/projects/doorless/onboarding.webp",
+            "width": 908,
+            "height": 640,
+            "srcset": "/images/projects/doorless/onboarding-480.webp 480w, /images/projects/doorless/onboarding.webp 908w",
+            "caption": "Onboarding framework",
+            "alt": "Two white pages pair Dutch editorial text with blue and purple figures."
+          },
+          {
+            "src": "/images/projects/doorless/implementation.webp",
+            "width": 908,
+            "height": 640,
+            "srcset": "/images/projects/doorless/implementation-480.webp 480w, /images/projects/doorless/implementation.webp 908w",
+            "caption": "Practical guidance spread",
+            "alt": "Columns of Dutch text sit above a curved blue footer and a photograph."
+          }
+        ]
+      }
+    ]
+  },
+  "insifr": {
+    "coverSet": "/images/work/insifr-thumb.webp 240w, /images/projects/insifr/cover-480.webp 480w, /images/work/insifr.webp 916w",
+    "groups": [
+      {
+        "title": "Digital applications",
+        "layout": "spreads",
+        "items": [
+          {
+            "src": "/images/projects/insifr/team.webp",
+            "width": 916,
+            "height": 340,
+            "srcset": "/images/projects/insifr/team-480.webp 480w, /images/projects/insifr/team.webp 916w",
+            "caption": "Team banner",
+            "alt": "Cream ribbon shapes cross an office photograph of people in conversation."
+          },
+          {
+            "src": "/images/projects/insifr/pattern.webp",
+            "width": 915,
+            "height": 339,
+            "srcset": "/images/projects/insifr/pattern-480.webp 480w, /images/projects/insifr/pattern.webp 915w",
+            "caption": "Ribbon pattern",
+            "alt": "A low-contrast taupe ribbon pattern fills a wide banner."
+          },
+          {
+            "src": "/images/projects/insifr/lockup.webp",
+            "width": 916,
+            "height": 339,
+            "srcset": "/images/projects/insifr/lockup-480.webp 480w, /images/projects/insifr/lockup.webp 916w",
+            "caption": "Digital wordmark layout",
+            "alt": "The cream Insifr symbol and gold lettering sit on a dark green field."
+          }
+        ]
+      }
+    ]
+  },
+  "move-to-happiness": {
+    "coverSet": "/images/work/move-to-happiness-thumb.webp 240w, /images/projects/move-to-happiness/cover-480.webp 480w, /images/projects/move-to-happiness/cover-840.webp 840w, /images/work/move-to-happiness.webp 1132w",
+    "groups": [
+      {
+        "title": "Inside the whitepaper",
+        "layout": "spreads",
+        "items": [
+          {
+            "src": "/images/projects/move-to-happiness/methods.webp",
+            "width": 1132,
+            "height": 797,
+            "srcset": "/images/projects/move-to-happiness/methods-480.webp 480w, /images/projects/move-to-happiness/methods-840.webp 840w, /images/projects/move-to-happiness/methods.webp 1132w",
+            "caption": "Measurement methods",
+            "alt": "A comparison table and team photograph sit across two whitepaper pages."
+          },
+          {
+            "src": "/images/projects/move-to-happiness/reporting.webp",
+            "width": 1130,
+            "height": 795,
+            "srcset": "/images/projects/move-to-happiness/reporting-480.webp 480w, /images/projects/move-to-happiness/reporting-840.webp 840w, /images/projects/move-to-happiness/reporting.webp 1130w",
+            "caption": "Strategies and reporting",
+            "alt": "Colored diagrams and a workshop photograph accompany the reporting text."
+          },
+          {
+            "src": "/images/projects/move-to-happiness/example.webp",
+            "width": 1127,
+            "height": 792,
+            "srcset": "/images/projects/move-to-happiness/example-480.webp 480w, /images/projects/move-to-happiness/example-840.webp 840w, /images/projects/move-to-happiness/example.webp 1127w",
+            "caption": "Worked example",
+            "alt": "Charts and a team photograph illustrate a whitepaper example."
+          }
+        ]
+      }
+    ]
+  },
+  "pionative": {
+    "coverSet": "/images/work/pionative-thumb.webp 240w, /images/projects/pionative/cover-480.webp 480w, /images/work/pionative.webp 1011w",
+    "groups": [
+      {
+        "title": "Portrait and square campaign formats",
+        "layout": "posters",
+        "items": [
+          {
+            "src": "/images/projects/pionative/blue-story.webp",
+            "width": 499,
+            "height": 886,
+            "srcset": "/images/projects/pionative/blue-story.webp 499w",
+            "caption": "Blue portrait banner",
+            "alt": "A blue portrait layout sets the Kubernetes headline above a guide mockup."
+          },
+          {
+            "src": "/images/projects/pionative/navy-story.webp",
+            "width": 499,
+            "height": 886,
+            "srcset": "/images/projects/pionative/navy-story.webp 499w",
+            "caption": "Navy portrait banner",
+            "alt": "The campaign message and guide covers appear on a dark navy layout."
+          },
+          {
+            "src": "/images/projects/pionative/gradient-story.webp",
+            "width": 499,
+            "height": 886,
+            "srcset": "/images/projects/pionative/gradient-story.webp 499w",
+            "caption": "Gradient portrait banner",
+            "alt": "A pale pink-to-blue field sits behind the guide cover and headline."
+          },
+          {
+            "src": "/images/projects/pionative/navy-square.webp",
+            "width": 499,
+            "height": 499,
+            "srcset": "/images/projects/pionative/navy-square.webp 499w",
+            "caption": "Navy square graphic",
+            "alt": "A guide preview sits beneath the campaign headline on dark purple."
+          },
+          {
+            "src": "/images/projects/pionative/gradient-square.webp",
+            "width": 499,
+            "height": 499,
+            "srcset": "/images/projects/pionative/gradient-square.webp 499w",
+            "caption": "Gradient square graphic",
+            "alt": "The guide campaign is adapted to a square pink and blue layout."
+          }
+        ]
+      }
+    ]
+  },
+  "japanese-type": {
+    "coverSet": "/images/work/japanese-type-thumb.webp 240w, /images/projects/japanese-type/cover-480.webp 480w, /images/projects/japanese-type/cover-840.webp 840w, /images/work/japanese-type.webp 1800w",
+    "groups": []
+  },
+  "music": {
+    "coverSet": "/images/work/music-thumb.webp 170w, /images/work/music.webp 534w",
+    "groups": [
+      {
+        "title": "Selected posters",
+        "layout": "posters",
+        "items": [
+          {
+            "src": "/images/projects/music/busy-woman.webp",
+            "width": 431,
+            "height": 766,
+            "srcset": "/images/projects/music/busy-woman.webp 431w",
+            "caption": "Busy Woman",
+            "alt": "A desktop-style collage combines pale blue lettering, window panels and yellow flowers."
+          },
+          {
+            "src": "/images/projects/music/unhappiness.webp",
+            "width": 243,
+            "height": 344,
+            "srcset": "/images/projects/music/unhappiness.webp 243w",
+            "caption": "Is There Really No Happiness",
+            "alt": "Pink and black letterforms wrap around small photographic cutouts."
+          },
+          {
+            "src": "/images/projects/music/ribs.webp",
+            "width": 259,
+            "height": 345,
+            "srcset": "/images/projects/music/ribs.webp 259w",
+            "caption": "Ribs, Lorde",
+            "alt": "Large serif lettering sits above a small skeletal illustration on a violet-blue ground."
+          },
+          {
+            "src": "/images/projects/music/chrome.webp",
+            "width": 393,
+            "height": 509,
+            "srcset": "/images/projects/music/chrome.webp 393w",
+            "caption": "Location Unknown",
+            "alt": "A reflective green form floats among white drawings on black."
+          },
+          {
+            "src": "/images/projects/music/back-to-friends.webp",
+            "width": 217,
+            "height": 325,
+            "srcset": "/images/projects/music/back-to-friends.webp 217w",
+            "caption": "back to friends",
+            "alt": "Orange and lilac lettering stretches vertically across the poster."
+          }
+        ]
+      }
+    ]
+  },
+  "stickers": {
+    "coverSet": "/images/work/stickers-thumb.webp 240w, /images/projects/stickers/cover-480.webp 480w, /images/projects/stickers/cover-840.webp 840w, /images/work/stickers.webp 1293w",
+    "groups": [
+      {
+        "title": "Lettering and illustration",
+        "layout": "pairs",
+        "items": [
+          {
+            "src": "/images/projects/stickers/niche.webp",
+            "width": 1296,
+            "height": 483,
+            "srcset": "/images/projects/stickers/niche-480.webp 480w, /images/projects/stickers/niche-840.webp 840w, /images/projects/stickers/niche.webp 1296w",
+            "caption": "It’s So Hard Being Niche",
+            "alt": "Bold white lettering spans a warm, hazy red and yellow background."
+          },
+          {
+            "src": "/images/projects/stickers/prevail.webp",
+            "width": 1296,
+            "height": 480,
+            "srcset": "/images/projects/stickers/prevail-480.webp 480w, /images/projects/stickers/prevail-840.webp 840w, /images/projects/stickers/prevail.webp 1296w",
+            "caption": "I Will Prevail",
+            "alt": "Stacked serif lettering trails blue and yellow extruded shadows."
+          },
+          {
+            "src": "/images/projects/stickers/held.webp",
+            "width": 1293,
+            "height": 480,
+            "srcset": "/images/projects/stickers/held-480.webp 480w, /images/projects/stickers/held-840.webp 840w, /images/projects/stickers/held.webp 1293w",
+            "caption": "Be Held by Someone",
+            "alt": "Black lettering and a vintage-style illustrated couple share a green strip."
+          },
+          {
+            "src": "/images/projects/stickers/fruit.webp",
+            "width": 1500,
+            "height": 360,
+            "srcset": "/images/projects/stickers/fruit-480.webp 480w, /images/projects/stickers/fruit-840.webp 840w, /images/projects/stickers/fruit.webp 1500w",
+            "caption": "Fruit stickers",
+            "alt": "A sliced tomato, a pomegranate and an orange form three illustrated sticker designs."
+          }
+        ]
+      }
+    ]
+  },
+  "tramp-stamps": {
+    "coverSet": "/images/work/tramp-stamps-thumb.webp 176w, /images/projects/tramp-stamps/cover-480.webp 480w, /images/work/tramp-stamps.webp 945w",
+    "groups": [
+      {
+        "title": "Stamp studies",
+        "layout": "posters",
+        "items": [
+          {
+            "src": "/images/projects/tramp-stamps/prevail.webp",
+            "width": 534,
+            "height": 534,
+            "srcset": "/images/projects/tramp-stamps/prevail.webp 534w",
+            "caption": "I Will Prevail",
+            "alt": "A brown horse silhouette crosses a cream perforated stamp."
+          },
+          {
+            "src": "/images/projects/tramp-stamps/parang-like.webp",
+            "width": 534,
+            "height": 723,
+            "srcset": "/images/projects/tramp-stamps/parang-like.webp 534w",
+            "caption": "Parang Like",
+            "alt": "Blue and lavender bands run below pale condensed lettering in a stamp."
+          },
+          {
+            "src": "/images/projects/tramp-stamps/get-lost.webp",
+            "width": 534,
+            "height": 729,
+            "srcset": "/images/projects/tramp-stamps/get-lost.webp 534w",
+            "caption": "Get Lost",
+            "alt": "A dark animal face sits beneath the words Get Lost on a white stamp."
+          },
+          {
+            "src": "/images/projects/tramp-stamps/running-to-pain.webp",
+            "width": 720,
+            "height": 534,
+            "srcset": "/images/projects/tramp-stamps/running-to-pain-480.webp 480w, /images/projects/tramp-stamps/running-to-pain.webp 720w",
+            "caption": "Running to Pain",
+            "alt": "Pale serif type overlays a dark landscape inside a perforated border."
+          }
+        ]
+      }
+    ]
+  }
+}

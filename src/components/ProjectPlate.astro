@@ -1,0 +1,38 @@
+---
+import type { GalleryArtwork } from '../data/projects';
+
+interface Props { art: GalleryArtwork; sizes: string; lead?: boolean }
+const { art, sizes, lead = false } = Astro.props;
+---
+
+<figure class:list={['project-plate', { lead }]} style={{ '--art-width': `${art.width}px`, '--art-ratio': String(art.width / art.height) }}>
+  <a class="art-link" href={art.src} type="image/webp" tabindex="0" data-artwork data-caption={art.caption} data-alt={art.alt}
+    aria-label={`View ${art.caption} in detail`}>
+    <img src={art.src} srcset={art.srcset} sizes={lead ? sizes : `auto, ${sizes}`} width={art.width} height={art.height} alt={art.alt} data-case-cover={lead || undefined}
+      loading={lead ? 'eager' : 'lazy'} fetchpriority={lead ? 'high' : undefined} decoding="async" />
+  </a>
+  <figcaption>{art.caption}</figcaption>
+</figure>
+
+<style>
+  figure { min-inline-size: 0; }
+  .art-link {
+    display: grid;
+    align-content: center;
+    min-block-size: var(--target-size);
+    inline-size: min(100%, var(--art-width));
+    max-inline-size: 100%;
+    cursor: zoom-in;
+  }
+  .lead .art-link { inline-size: min(100%, var(--art-width), calc(72svh * var(--art-ratio))); }
+  img { display: block; inline-size: 100%; block-size: auto; }
+  figcaption {
+    margin-block-start: clamp(0.5rem, 1vw, 0.85rem);
+    color: var(--color-secondary);
+    font-size: clamp(0.875rem, 1.15vw, 1rem);
+    line-height: 1.4;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .art-link:hover + figcaption { color: var(--color-link); }
+  }
+</style>

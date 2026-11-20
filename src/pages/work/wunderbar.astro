@@ -1,0 +1,121 @@
+---
+import { getImage, Image } from 'astro:assets';
+import CaseFigure from '../../components/CaseFigure.astro';
+import { wunderbar, wunderbarArt as art, wunderbarStudies } from '../../data/wunderbar';
+import CaseLayout from '../../layouts/CaseLayout.astro';
+
+const cardSize = '(min-width: 80em) 595px, (min-width: 64em) 47vw, calc(100vw - 2rem)';
+const menuSize = '(min-width: 75em) 425px, (min-width: 48em) 32vw, calc(100vw - 2rem)';
+const studies = await Promise.all(wunderbarStudies.map(async (study) => {
+  const full = await getImage({ src: study.image, width: study.image.width, format: 'webp', quality: 90 });
+  return { ...study, href: full.src };
+}));
+---
+
+<CaseLayout project={wunderbar} subject="Identity and menus">
+  <section class="opening layout-grid" aria-label="Wünderbar’s menu and wordmark">
+    <CaseFigure class="clipboard" art={art.clipboard} sizes={cardSize} priority />
+    <div class="identity-note">
+      <CaseFigure art={art.wordmark} sizes="(min-width: 90em) 533px, (min-width: 64em) 40vw, calc(100vw - 2rem)" loading="eager" />
+      <p class="prose">{wunderbar.idea}</p>
+    </div>
+  </section>
+
+  <section class="chapter" aria-labelledby="studies-heading">
+    <div class="section-intro layout-grid">
+      <h2 id="studies-heading">Finding the wordmark</h2>
+      <p class="prose">{wunderbar.exploration}</p>
+    </div>
+    <figure class="study-board">
+      <div class="studies">
+        {studies.map(({ image, alt, href }) => (
+          <a {href} type="image/webp" tabindex="0" data-artwork data-caption={alt} data-alt={alt} aria-label={`View study in detail. ${alt}`}>
+            <Image src={image} {alt} widths={[200, image.width]} sizes="auto, (min-width: 90em) 199px, (min-width: 64em) 14vw, (min-width: 37.5em) 29vw, 43vw" format="webp" quality={90} loading="lazy" decoding="async" />
+          </a>
+        ))}
+      </div>
+      <figcaption class="type-label">Selected badge and wordmark studies</figcaption>
+    </figure>
+  </section>
+
+  <section class="menu-spread chapter layout-grid" aria-labelledby="menu-heading">
+    <div class="menu-note">
+      <h2 id="menu-heading">On the menu</h2>
+      <div class="prose">
+        <p>{wunderbar.system}</p>
+        <p>{wunderbar.menus}</p>
+      </div>
+    </div>
+    <CaseFigure class="navy-menu" art={art.menu} sizes={menuSize} detailLabel="View the navy menu at full size" />
+    <CaseFigure class="illustrated-menu" art={art.illustrated} sizes={menuSize} detailLabel="View the illustrated menu at full size" />
+  </section>
+
+  <section class="chapter" aria-labelledby="print-heading">
+    <div class="section-intro layout-grid">
+      <h2 id="print-heading">Cards and signage</h2>
+      <p class="prose">{wunderbar.applications}</p>
+    </div>
+    <div class="print-spread layout-grid">
+      <CaseFigure class="cards" art={art.cards} sizes={cardSize} />
+      <CaseFigure class="board" art={art.board} sizes="(min-width: 80em) 396px, (min-width: 48em) 32vw, 74vw" />
+    </div>
+  </section>
+
+  <section class="handover chapter layout-grid" aria-labelledby="handover-heading">
+    <div class="handover-note">
+      <h2 id="handover-heading">After handover</h2>
+      <p class="prose">{wunderbar.outcome}</p>
+    </div>
+    <CaseFigure class="later" art={art.later} sizes="(min-width: 64em) 360px, (min-width: 48em) 33vw, 76vw" />
+  </section>
+</CaseLayout>
+
+<style>
+  .opening, .section-intro, .menu-spread, .print-spread, .handover { align-items: start; row-gap: var(--space-related); }
+  .opening { padding-block-start: clamp(1.4rem, 3vw, 2.85rem); }
+  .clipboard, .cards { inline-size: min(100%, 595px); }
+  .identity-note .prose, .menu-note .prose, .handover-note .prose { margin-block-start: 1rem; }
+  .study-board, .print-spread { margin-block-start: var(--space-related); }
+  .studies {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--grid-gap);
+  }
+  .studies img { inline-size: 100%; block-size: auto; }
+  .studies a { display: block; align-self: start; cursor: zoom-in; }
+  .study-board figcaption { margin-block-start: var(--space-caption); color: var(--color-secondary); }
+  .navy-menu { inline-size: min(100%, 519px); }
+  .illustrated-menu { inline-size: min(100%, 478px); }
+  .board { inline-size: min(76%, 396px); justify-self: end; }
+  .later { inline-size: min(76%, 360px); justify-self: end; }
+  @container case-page (min-width: 32rem) {
+    .studies { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @container case-page (min-width: 43rem) {
+    .clipboard { grid-column: 5 / -1; grid-row: 1; justify-self: end; }
+    .identity-note { grid-column: 1 / 5; grid-row: 1; align-self: end; }
+    .section-intro h2 { grid-column: 1 / 4; }
+    .section-intro .prose { grid-column: 4 / -1; }
+    .menu-note { grid-column: 1 / 7; }
+    .navy-menu { grid-column: 1 / 5; }
+    .illustrated-menu { grid-column: 5 / -1; }
+    .cards { grid-column: 1 / 6; align-self: end; }
+    .board { grid-column: 6 / -1; inline-size: min(100%, 396px); }
+    .handover-note { grid-column: 1 / 6; }
+    .later { grid-column: 6 / -1; inline-size: min(100%, 360px); }
+  }
+  @container case-page (min-width: 56rem) {
+    .clipboard { grid-column: 7 / -1; }
+    .identity-note { grid-column: 1 / 6; }
+    .section-intro h2 { grid-column: 1 / 5; }
+    .section-intro .prose { grid-column: 6 / 12; }
+    .studies { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    .menu-note { grid-column: 1 / 4; }
+    .navy-menu { grid-column: 5 / 9; }
+    .illustrated-menu { grid-column: 9 / -1; }
+    .cards { grid-column: 2 / 8; }
+    .board { grid-column: 9 / -1; }
+    .handover-note { grid-column: 6 / 12; grid-row: 1; align-self: center; }
+    .later { grid-column: 1 / 5; grid-row: 1; justify-self: start; }
+  }
+</style>

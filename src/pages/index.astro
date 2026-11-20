@@ -1,0 +1,20 @@
+---
+import FlagshipSelection from '../components/FlagshipSelection.astro';
+import HomeSignature from '../components/HomeSignature.astro';
+import { profile } from '../data/profile';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title={`${profile.name} — ${profile.role}`}
+  description={`Selected brand and graphic design by ${profile.name} in ${profile.location}. Explore Advenient, KOTA Center Davao and Wünderbar.`}
+>
+  <div class="container home">
+    <HomeSignature />
+    <FlagshipSelection />
+  </div>
+</BaseLayout>
+
+<style>
+  .home { container: homepage / inline-size; font-family: var(--font-sans); }
+</style>

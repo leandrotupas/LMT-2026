@@ -1,0 +1,281 @@
+---
+import { profile } from '../../data/profile';
+import { workSections } from '../../data/work';
+import { projectFormats } from '../../data/project-formats';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const projectCount = workSections.reduce((total, section) => total + section.projects.length, 0);
+---
+
+<BaseLayout
+  title={`Work · ${profile.name}`}
+  description={`Explore ${projectCount} projects by ${profile.name}, from brand identities and campaign graphics to lettering and posters.`}
+>
+  <div class="container destination work-page">
+    <header class="destination-heading">
+      <h1>Work</h1>
+      <p class="type-label">{projectCount} projects</p>
+    </header>
+
+    <div class="work-layout" data-work-index>
+      <nav class="categories type-label" aria-label="Work categories">
+        {workSections.map((section) => (
+          <a href={`#${section.id}`} tabindex="0">
+            <span>{section.title}</span>
+            <span class="count" aria-label={`${section.projects.length} projects`}>{section.projects.length}</span>
+          </a>
+        ))}
+      </nav>
+
+      <div class="groups">
+        {workSections.map((section) => (
+          <section class="group" data-group={section.id} aria-labelledby={section.id}>
+            <div class="group-heading">
+              <h2 id={section.id} tabindex="-1">{section.title}</h2>
+            </div>
+            <ul role="list">
+              {section.projects.map((project) => (
+                <li>
+                  <a
+                    class="work-link"
+                    tabindex="0"
+                    href={project.href}
+                    type={projectFormats[project.format].type}
+                    data-case-link
+                    data-share-cover={project.sharesCover || undefined}
+                    data-preview={project.preview}
+                    data-caption={project.caption}
+                    aria-label={`${project.title}, ${projectFormats[project.format].action}`}
+                    aria-describedby={`${project.slug}-year`}
+                  >
+                    <img
+                      class="thumbnail"
+                      src={project.thumbnail}
+                      width={project.width}
+                      height={project.height}
+                      alt={project.alt}
+                      loading={section.id === 'case-studies' ? 'eager' : 'lazy'}
+                      decoding="async"
+                    />
+                    <span class="work-title"><span data-case-title>{project.title}</span></span>
+                    <span class="year" id={`${project.slug}-year`}>
+                      {project.year}
+                      {project.format === 'case' && <span aria-hidden="true"> · {projectFormats.case.label}</span>}
+                    </span>
+                    <span class="open" aria-hidden="true">→</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+
+      <figure class="work-preview" aria-label="Selected artwork">
+        <a class="preview-frame" data-hover-label="Open project →"></a>
+        <figcaption>
+          <p class="preview-title"></p>
+          <p class="preview-caption"></p>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import '../../scripts/work-index';
+</script>
+
+<style>
+  .work-page { container: work-page / inline-size; font-family: var(--font-sans); }
+  .destination-heading { border-color: var(--color-ink); }
+  .work-layout {
+    --work-preview: 0;
+    display: grid;
+    align-items: start;
+    gap: clamp(2.25rem, 5vw, 4.25rem) var(--grid-gap);
+    padding-block-start: clamp(0.85rem, 2.8vw, 2.75rem);
+  }
+  .categories {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 var(--grid-gap);
+    padding-block-end: 0.75rem;
+    border-block-end: 1px solid var(--color-divider);
+  }
+  .categories a {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+    min-block-size: var(--target-size);
+    padding-block: 0.6em;
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .categories a:is([aria-current], :focus-visible) > span:first-child,
+  .work-link:focus-visible .work-title {
+    color: var(--color-link);
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+    text-decoration-thickness: 0.065em;
+  }
+  .count, .year, .preview-caption {
+    color: var(--color-secondary);
+    font-size: clamp(0.875rem, 1.1vw, 1rem);
+    line-height: 1.4;
+  }
+  .count, .year { font-variant-numeric: tabular-nums; }
+  .categories a > span:first-child { min-inline-size: 0; }
+  .groups { min-inline-size: 0; }
+  .group + .group { margin-block-start: clamp(2.8rem, 5.5vw, 5.3rem); }
+  .group:last-child:has(h2:target) { min-block-size: calc(100svh - 1.5rem - var(--space-section)); }
+  .group-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    padding-block-end: 0.7rem;
+    border-block-end: 1px solid var(--color-ink);
+  }
+  .group-heading h2 {
+    scroll-margin-block-start: 1.5rem;
+    font-size: clamp(1.55rem, 3.1vw, 2.55rem);
+    letter-spacing: -0.025em;
+    line-height: 1.13;
+  }
+  .group-heading h2:focus:not(:focus-visible) { outline: none; }
+  .group ul { list-style: none; padding: 0; margin: 0; }
+  .group li { border-block-end: 1px solid var(--color-divider); }
+  .work-link {
+    position: relative;
+    display: grid;
+    grid-template-columns: clamp(3.45rem, 17.5vw, 7rem) minmax(0, 1fr) auto;
+    grid-template-areas: "thumb title open" "thumb year open";
+    column-gap: clamp(0.7rem, 2.4vw, 1.5rem);
+    row-gap: 0.25rem;
+    align-items: center;
+    min-block-size: var(--target-size);
+    padding-block: clamp(0.85rem, 2vw, 1.2rem);
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .work-link:focus-visible { z-index: 1; }
+  .thumbnail {
+    grid-area: thumb;
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 1.4;
+    object-fit: contain;
+    object-position: left center;
+  }
+  .work-title {
+    grid-area: title;
+    align-self: end;
+    font-weight: 560;
+    font-size: clamp(1.125rem, 2.4vw, 1.8rem);
+    letter-spacing: -0.015em;
+    line-height: 1.18;
+    overflow-wrap: anywhere;
+  }
+  .year { grid-area: year; align-self: start; }
+  .open { grid-area: open; color: var(--color-link); font-size: 1.2rem; }
+  .work-preview { display: none; }
+
+  @media (hover: hover) and (pointer: fine) {
+    .categories a:hover > span:first-child, .work-link:hover .work-title {
+      color: var(--color-link);
+      text-decoration: underline;
+      text-underline-offset: 0.18em;
+      text-decoration-thickness: 0.065em;
+    }
+  }
+
+  @container work-page (min-width: 43rem) {
+    .work-layout { grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr)); }
+    .categories {
+      grid-column: span 2;
+      position: sticky;
+      top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      border-block-end: 0;
+      padding-block-end: 0;
+    }
+    .categories a { justify-content: space-between; max-inline-size: 13.75rem; }
+    .groups { grid-column: 3 / -1; }
+    .work-link {
+      grid-template-columns: clamp(6rem, 9.5vw, 8rem) minmax(0, 1fr) auto;
+      grid-template-areas: "thumb title year";
+    }
+    .work-title, .year { align-self: center; }
+    .open { display: none; }
+  }
+
+  @container work-page (min-width: 56rem) {
+    .categories { grid-column: 1 / 4; }
+    .groups { grid-column: 4 / -1; }
+  }
+
+  @container work-page (min-width: 67rem) {
+    @media (hover: hover) and (pointer: fine) {
+      .work-layout { --work-preview: 1; }
+    }
+    [data-enhanced] .groups { grid-column: 4 / 9; }
+    [data-enhanced] .thumbnail { display: none; }
+    [data-enhanced] .work-link {
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas: "title year";
+      min-block-size: 4.75rem;
+      padding: 0.95rem 0.35rem;
+    }
+    [data-previewed] .work-title { text-decoration: underline; text-underline-offset: 0.18em; text-decoration-thickness: 0.055em; }
+    [data-enhanced] .work-preview {
+      position: sticky;
+      top: 1.5rem;
+      display: block;
+      grid-column: 9 / -1;
+      margin-block-start: calc(clamp(1.55rem, 3.1vw, 2.55rem) * 1.13 + 0.7rem + 1px);
+      min-inline-size: 0;
+    }
+    .preview-frame {
+      position: relative;
+      display: grid;
+      grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+      aspect-ratio: 1.24;
+      max-block-size: min(50svh, 26rem);
+      overflow: clip;
+    }
+    .preview-frame :global(.previous-print) {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+      background: var(--color-paper);
+      pointer-events: none;
+    }
+    .preview-frame :global(img) {
+      place-self: end start;
+      inline-size: auto;
+      max-inline-size: 100%;
+      block-size: auto;
+      max-block-size: 100%;
+      object-fit: contain;
+      object-position: left bottom;
+    }
+    .work-preview figcaption { padding-block-start: 0.75rem; }
+    .preview-title { font-size: 1.125rem; font-weight: 600; line-height: 1.25; }
+    .preview-caption { margin-block-start: 0.2rem; }
+  }
+
+  @container work-page (max-width: 17rem) {
+    .categories { grid-template-columns: minmax(0, 1fr); }
+    .categories a { justify-content: space-between; }
+    .work-link {
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas: "thumb thumb" "title title" "year open";
+      row-gap: 0.45rem;
+    }
+    .thumbnail { inline-size: min(7rem, 100%); }
+  }
+</style>

@@ -1,0 +1,212 @@
+---
+import { getImage } from 'astro:assets';
+import portrait from '../assets/profile/yancy-portraits.jpg';
+import { profile } from '../data/profile';
+import { workSections } from '../data/work';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const work = Object.fromEntries(workSections.flatMap(({ projects }) =>
+  projects.map((project) => [project.slug, project] as const)
+));
+const smallPortraits = await Promise.all([112, 180, 256].map(async (width) => {
+  const image = await getImage({ src: portrait, width, format: 'webp', quality: 84 });
+  return `${image.src} ${width}w`;
+}));
+const portraitSet = [...smallPortraits, `${portrait.src} ${portrait.width}w`].join(', ');
+const [mailbox, domain] = profile.email.split('@');
+---
+
+<BaseLayout title={`About · ${profile.name}`} description={profile.introduction}>
+  <article class="about-page container" aria-labelledby="about-title">
+    <header class="about-intro">
+      <h1 id="about-title" data-reveal>{profile.aboutHeading}</h1>
+      <figure class="portrait" data-reveal>
+        <img src={portrait.src} srcset={portraitSet} width={portrait.width} height={portrait.height}
+          alt="Two portraits of Yancy, wearing glasses in the first and laughing in the second."
+          sizes="(min-width: 64em) 245px, (min-width: 40em) 21vw, 27vw"
+          loading="eager" fetchpriority="high" decoding="async" />
+      </figure>
+      <div class="biography">
+        <p class="introduction type-lead">{profile.introduction}</p>
+        <p class="prose">{profile.statement}</p>
+      </div>
+    </header>
+
+    <section class="profile-section split layout-grid" aria-labelledby="experience">
+      <h2 id="experience" data-reveal>Experience</h2>
+      <ol class="entries plain-list" role="list">
+        {profile.experience.map((entry) => (
+          <li class="entry">
+            <div class="entry-heading">
+              <h3>{entry.organization}</h3>
+              <span class="period type-label">{entry.period}</span>
+            </div>
+            <p class="role">{entry.role}</p>
+            {'note' in entry && <p class="entry-note prose">{entry.note}</p>}
+            {entry.projectSlugs.length > 0 && (
+              <ul class="sample-links plain-list type-label" role="list" aria-label={`Selected work, ${entry.organization}`}>
+                {entry.projectSlugs.map((slug) => <li><a href={work[slug].href} tabindex="0">{work[slug].title}</a></li>)}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="profile-section split layout-grid" aria-labelledby="education">
+      <h2 id="education" data-reveal>Education</h2>
+      <div class="education">
+        <div class="entry-heading">
+          <h3>{profile.education.institution}</h3>
+          <span class="period type-label">{profile.education.period}</span>
+        </div>
+        <p class="role">{profile.education.degree}</p>
+        <p class="entry-note prose">{profile.education.note}</p>
+      </div>
+    </section>
+
+    <div class="profile-section practice">
+      <section aria-labelledby="skills">
+        <h2 id="skills" data-reveal>Skills</h2>
+        <ul class="skill-list plain-list" role="list">
+          {profile.skills.map((skill) => <li>{skill}</li>)}
+        </ul>
+      </section>
+      <section aria-labelledby="tools">
+        <h2 id="tools" data-reveal>Core tools</h2>
+        <ul class="plain-list" role="list">
+          {profile.tools.map((tool) => <li>{tool}</li>)}
+        </ul>
+      </section>
+      <a class="resume type-label" href={profile.resume.href} type="application/pdf" tabindex="0" download>
+        Download résumé <span>(PDF, {profile.resume.pages} pages)</span>
+      </a>
+    </div>
+
+    <section class="contact profile-section split layout-grid" aria-labelledby="contact">
+      <h2 id="contact" tabindex="-1">Contact</h2>
+      <div class="contact-details">
+        <p class="availability prose">{profile.availability}</p>
+        <address>
+          <a class="email" href={`mailto:${profile.email}`} tabindex="0">{mailbox}<wbr />@{domain}</a>
+          <ul class="profiles sample-links type-label plain-list" role="list">
+            {profile.socialProfiles.map(({ name, url }) => <li><a href={url} tabindex="0">{name}</a></li>)}
+          </ul>
+        </address>
+        <a class="back-to-about type-label" href="/about/" tabindex="0">Back to About</a>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .about-page { container: about-page / inline-size; }
+  .about-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 27%;
+    align-items: center;
+    gap: var(--space-related) var(--grid-gap);
+    padding-block: clamp(1.5rem, 3.7vw, 3.75rem) var(--space-section);
+  }
+  h1 {
+    max-inline-size: 13ch;
+    font-size: clamp(2.85rem, 9.5vw, 7.25rem);
+    line-height: 0.98;
+    font-weight: 650;
+    letter-spacing: var(--display-tracking);
+    font-variation-settings: 'opsz' 96;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+  .portrait { inline-size: 100%; max-inline-size: 245px; justify-self: end; }
+  .portrait img { inline-size: 100%; block-size: auto; }
+  .biography { grid-column: 1 / -1; max-inline-size: 50ch; }
+  .introduction { max-inline-size: 41ch; text-wrap: pretty; }
+  .biography .prose { max-inline-size: 44ch; margin-block-start: 0.9em; }
+  .plain-list { margin: 0; padding: 0; list-style: none; }
+  .profile-section {
+    border-block-start: 1px solid var(--color-divider);
+    padding-block: clamp(1.65rem, 3.7vw, 3.7rem);
+  }
+  .about-intro + .profile-section, .contact { border-color: var(--color-ink); }
+  .split { align-items: baseline; row-gap: var(--space-related); }
+  .split > * { grid-column: 1 / -1; min-inline-size: 0; }
+  h2, h3 { letter-spacing: -0.022em; text-wrap: balance; }
+  h3 { font-size: clamp(1.35rem, 2.1vw, 2.05rem); line-height: 1.15; }
+  .entry + .entry {
+    border-block-start: 1px solid var(--color-divider);
+    margin-block-start: clamp(0.9rem, 1.8vw, 1.5rem);
+    padding-block-start: clamp(1rem, 2vw, 1.65rem);
+  }
+  .entry-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.3rem 1.5rem; }
+  .entry-heading h3 { min-inline-size: 0; max-inline-size: 100%; overflow-wrap: anywhere; }
+  .period { color: var(--color-secondary); font-variant-numeric: tabular-nums; }
+  .role { margin-block-start: 0.3rem; line-height: 1.4; }
+  .entry-note { max-inline-size: 52ch; margin-block-start: 0.5rem; }
+  .sample-links { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 1.4rem; }
+  .sample-links a, .resume, .back-to-about {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--target-size);
+    min-inline-size: var(--target-size);
+  }
+  .practice {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.25rem), 1fr));
+    gap: var(--space-related) var(--grid-gap);
+  }
+  .practice ul { display: grid; gap: 0.3rem var(--grid-gap); margin-block-start: 1rem; line-height: 1.4; }
+  .resume { grid-column: 1 / -1; justify-self: start; flex-wrap: wrap; gap: 0 0.35em; }
+  .resume span { color: var(--color-secondary); }
+  .contact { padding-block-end: clamp(3rem, 8vw, 7.5rem); }
+  .contact:has(#contact:target) {
+    min-block-size: 100svh;
+    align-content: start;
+    padding-block-start: clamp(2.25rem, 8.5svh, 6.75rem);
+  }
+  #contact { inline-size: fit-content; font-size: clamp(2rem, 4.6vw, 4rem); scroll-margin-block-start: var(--space-related); }
+  address { margin-block-start: 0.5rem; font-style: normal; }
+  .availability { max-inline-size: 42ch; }
+  .email {
+    font-family: var(--font-sans);
+    display: inline-block;
+    align-content: center;
+    max-inline-size: 100%;
+    min-block-size: var(--target-size);
+    padding-block: 0.22em;
+    font-size: clamp(1.35rem, 3.35vw, 3.3rem);
+    font-weight: 530;
+    line-height: 1.18;
+    letter-spacing: -0.022em;
+    text-decoration-thickness: 0.055em;
+    overflow-wrap: anywhere;
+  }
+  .profiles { margin-block-start: 0.45rem; }
+  .back-to-about { margin-block-start: var(--space-related); }
+  @container about-page (min-width: 35rem) {
+    .about-intro { grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr)); }
+    .about-intro h1, .biography { grid-column: 1 / 6; }
+    .about-intro h1 { grid-row: 1; align-self: end; }
+    .biography { grid-row: 2; align-self: start; }
+    .portrait { grid-column: 6 / -1; grid-row: 1 / 3; justify-self: center; inline-size: min(100%, 21vw); }
+    .split > h2 { grid-column: 1 / 4; }
+    .split > :last-child { grid-column: 4 / -1; }
+    .practice { grid-template-columns: 1fr 1fr; }
+  }
+  @container about-page (min-width: 56rem) {
+    .about-intro h1, .biography { grid-column: 1 / 9; }
+    .portrait { grid-column: 9 / -1; inline-size: 245px; max-inline-size: 100%; }
+    .split > h2 { grid-column: 1 / 5; }
+    .split > :last-child { grid-column: 5 / -1; }
+    .practice { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+    .practice section:first-child { grid-column: 1 / 8; }
+    .practice section:nth-child(2) { grid-column: 9 / -1; }
+    .practice .skill-list { grid-template: repeat(4, auto) / 1fr 1fr; grid-auto-flow: column; }
+  }
+  @container about-page (max-width: 17rem) {
+    .about-intro { grid-template-columns: minmax(0, 1fr); }
+    .portrait { inline-size: min(48%, 132px); justify-self: start; }
+    .entry-heading { flex-direction: column; align-items: flex-start; }
+    .entry-heading h3 { font-size: 1.3rem; }
+  }
+</style>

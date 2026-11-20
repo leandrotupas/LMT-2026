@@ -1,0 +1,138 @@
+---
+import { profile } from '../data/profile';
+
+const { pathname } = Astro.url;
+const aboutPage = pathname === '/about/';
+const currentWork = pathname === '/work/' ? 'page' : pathname.startsWith('/work/') ? 'location' : undefined;
+---
+
+<a class="skip-link type-label" href="#main-content" tabindex="0">Skip to content</a>
+<header class="site-header container type-label">
+  {pathname !== '/' && (
+    <a class="home-link" href="/" tabindex="0" aria-label={`${profile.name}, home`}>{profile.name}</a>
+  )}
+  <nav aria-label="Primary" class="primary-nav">
+    <a href="/work/" tabindex="0" aria-current={currentWork}><span>Work</span></a>
+    <a href="/about/" tabindex="0" data-about-link aria-current={aboutPage ? 'page' : undefined}><span>About</span></a>
+    <a href="/about/#contact" tabindex="0" data-contact-link><span>Contact</span></a>
+  </nav>
+</header>
+
+{aboutPage && (
+  <script is:inline>
+    (() => {
+      const about = document.querySelector('[data-about-link]');
+      const contact = document.querySelector('[data-contact-link]');
+
+      function syncCurrentLink() {
+        const atContact = location.hash === '#contact';
+        const current = atContact ? contact : about;
+        const other = atContact ? about : contact;
+        other.removeAttribute('aria-current');
+        current.setAttribute('aria-current', atContact ? 'location' : 'page');
+      }
+
+      syncCurrentLink();
+      window.addEventListener('hashchange', syncCurrentLink);
+      window.addEventListener('pageshow', syncCurrentLink);
+    })();
+  </script>
+)}
+
+<style>
+  .skip-link {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: 0.5rem;
+    inset-inline-start: var(--page-margin);
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--target-size);
+    padding-inline: 1rem;
+    background: var(--color-paper);
+    transform: translateY(calc(-100% - 1rem));
+  }
+
+  .skip-link:focus {
+    transform: none;
+  }
+
+  .site-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.25rem var(--grid-gap);
+    padding-block: clamp(0.5rem, 1.5vw, 1.375rem);
+    font-size: 1rem;
+  }
+
+  .primary-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 clamp(0.5rem, 3vw, 2.375rem);
+    margin-inline-start: auto;
+    max-inline-size: 100%;
+  }
+
+  .site-header a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: var(--target-size);
+    min-block-size: var(--target-size);
+    color: var(--color-ink);
+    text-decoration-color: transparent;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.28em;
+  }
+
+  .site-header .home-link {
+    font-size: 1.0625em;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+
+  .site-header a[aria-current],
+  .site-header a:focus-visible,
+  :global(body:has(#contact:target)) .primary-nav [data-contact-link] {
+    text-decoration-color: var(--color-link);
+  }
+
+  /* The server knows the About page. The browser also knows the fragment. */
+  :global(body:has(#contact:target)) .primary-nav [data-about-link]:not(:focus-visible) {
+    text-decoration-color: transparent;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .site-header .home-link:hover {
+      text-decoration-color: var(--color-link);
+    }
+    .primary-nav span { position: relative; }
+    .primary-nav span::after {
+      content: '';
+      position: absolute;
+      inset: auto 0 -0.1em;
+      block-size: 2px;
+      background: var(--color-link);
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+    .primary-nav a:not([aria-current]):hover span::after,
+    :global(body:has(#contact:target)) .primary-nav [data-about-link]:hover span::after { transform: scaleX(1); }
+    @media (prefers-reduced-motion: no-preference) {
+      .primary-nav span::after { transition: transform var(--duration-preview) var(--ease-settle); }
+    }
+  }
+
+  .site-header a:active {
+    color: var(--color-link);
+  }
+
+  @media (min-width: 64em) {
+    .site-header {
+      font-size: 1.125rem;
+    }
+  }
+</style>

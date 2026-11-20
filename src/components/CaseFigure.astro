@@ -1,0 +1,59 @@
+---
+import { getImage, Image } from 'astro:assets';
+import type { HTMLAttributes } from 'astro/types';
+import type { CaseArtwork } from '../data/flagships';
+
+interface Props extends HTMLAttributes<'figure'> {
+  art: CaseArtwork;
+  sizes: string;
+  loading?: 'eager' | 'lazy';
+  priority?: boolean;
+  sharesCover?: boolean;
+  detailLabel?: string;
+}
+
+const { art, sizes, loading = 'lazy', priority = false, sharesCover = false, detailLabel, ...figureProps } = Astro.props;
+// Keep the full original width and skip near-identical renditions such as 1,200 and 1,201.
+const widths = [...[240, 480, 840, 1200].filter((width) => width < art.image.width * 0.9), art.image.width];
+const fullSize = await getImage({ src: art.image, width: art.image.width, format: 'webp', quality: 90 });
+---
+
+<figure {...figureProps}>
+  <a class="art-link" href={fullSize.src} type="image/webp" tabindex="0" data-artwork data-caption={art.caption} data-alt={art.alt}
+    style={{ '--art-width': `${art.image.width}px` }} aria-label={`View ${art.caption} in detail`}>
+    <Image
+      src={art.image}
+      data-case-cover={sharesCover || undefined}
+      alt={art.alt}
+      widths={widths}
+      sizes={priority || loading === 'eager' ? sizes : `auto, ${sizes}`}
+      format="webp"
+      quality={90}
+      loading={priority ? 'eager' : loading}
+      fetchpriority={priority ? 'high' : undefined}
+      decoding="async"
+    />
+  </a>
+  <figcaption>
+    {art.caption}
+    {detailLabel && <a class="detail" href={fullSize.src} type="image/webp" tabindex="0">{detailLabel}</a>}
+  </figcaption>
+</figure>
+
+<style>
+  figure { min-inline-size: 0; }
+  .art-link { display: block; inline-size: min(100%, var(--art-width)); max-inline-size: 100%; cursor: zoom-in; }
+  img { inline-size: 100%; block-size: auto; }
+  figcaption {
+    margin-block-start: clamp(0.5rem, 1vw, 0.85rem);
+    color: var(--color-secondary);
+    font-size: clamp(0.875rem, 1.15vw, 1rem);
+    line-height: 1.4;
+  }
+  .detail {
+    display: flex;
+    align-items: center;
+    inline-size: fit-content;
+    min-block-size: var(--target-size);
+  }
+</style>

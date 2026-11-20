@@ -1,0 +1,152 @@
+<dialog class="art-viewer" aria-label="Artwork viewer">
+  <header class="viewer-header">
+    <span class="type-label" data-viewer-position></span>
+    <button type="button" data-viewer-close>Close</button>
+  </header>
+  <div class="viewer-stage" id="artwork-stage">
+    <div class="viewer-pan" role="region" aria-labelledby="artwork-caption" aria-describedby="zoom-help" tabindex="-1">
+      <img data-viewer-image alt="" draggable="false" />
+    </div>
+  </div>
+  <footer class="viewer-footer">
+    <div aria-live="polite" aria-atomic="true">
+      <p class="viewer-caption" id="artwork-caption" data-viewer-caption></p>
+      <p class="type-label" data-viewer-error hidden></p>
+      <span class="visually-hidden" data-viewer-announcement></span>
+    </div>
+    <div class="viewer-controls">
+      <a data-viewer-original tabindex="0">Open full size</a>
+      <button type="button" data-viewer-zoom aria-pressed="false" aria-controls="artwork-stage"
+        aria-describedby="zoom-help">2× zoom</button>
+      <span class="visually-hidden" id="zoom-help">When zoomed in, drag, swipe or use the arrow keys to pan.</span>
+      <div class="viewer-pager">
+        <button type="button" data-viewer-prev>Previous</button>
+        <button type="button" data-viewer-next>Next</button>
+      </div>
+    </div>
+  </footer>
+</dialog>
+
+<script>
+  import '../scripts/artwork-viewer';
+</script>
+
+<style>
+  .art-viewer {
+    position: fixed;
+    inset: 0;
+    inline-size: 100%;
+    max-inline-size: 100%;
+    block-size: 100%;
+    block-size: 100dvh;
+    max-block-size: 100%;
+    margin: 0;
+    border: 0;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    padding: max(0.5rem, env(safe-area-inset-top)) var(--page-margin) max(0.65rem, env(safe-area-inset-bottom));
+    overscroll-behavior: contain;
+  }
+  .art-viewer[open] {
+    display: grid;
+    grid-template-rows: auto minmax(4rem, 1fr) auto;
+    gap: clamp(0.5rem, 1.6vh, 1.4rem);
+  }
+  .art-viewer::backdrop { background: transparent; }
+  .viewer-header, .viewer-controls, .viewer-pager {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem 1rem;
+    flex-wrap: wrap;
+  }
+  .viewer-header { justify-content: space-between; }
+  [data-viewer-position] { color: var(--color-secondary); font-variant-numeric: tabular-nums; }
+  .viewer-stage {
+    container-type: size;
+    min-block-size: 0;
+    min-inline-size: 0;
+    display: grid;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  }
+  .viewer-pan { display: flex; min-inline-size: 0; min-block-size: 0; }
+  .viewer-pan[data-zoomed] { --magnification: 2; overflow: auto; overscroll-behavior: contain; }
+  .viewer-pan[data-fitting] { overflow: clip; }
+  .viewer-stage img {
+    flex: none;
+    margin: auto;
+    inline-size: calc(var(--magnification, 1) * min(100cqw, var(--source-width), 100cqh * var(--source-ratio)));
+    block-size: auto;
+    aspect-ratio: var(--source-ratio);
+    max-inline-size: none;
+    max-block-size: none;
+    object-fit: contain;
+    cursor: zoom-in;
+    user-select: none;
+  }
+  .viewer-pan[data-zoomed] img { cursor: grab; }
+  .viewer-pan[data-dragging] img { cursor: grabbing; }
+  .viewer-footer {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    border-block-start: 1px solid var(--color-divider);
+    padding-block-start: 0.5rem;
+    gap: 0.25rem var(--grid-gap);
+  }
+  .viewer-caption { max-inline-size: 60ch; font-size: clamp(1rem, 1.4vw, 1.25rem); line-height: 1.3; overflow-wrap: anywhere; }
+  .viewer-controls { justify-content: space-between; flex: 1 1 auto; }
+  .viewer-controls > a { margin-inline-start: auto; }
+  .art-viewer button, .viewer-controls a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: var(--target-size);
+    min-inline-size: var(--target-size);
+    padding: 0 0.15rem;
+    border: 0;
+    background: transparent;
+    color: var(--color-link);
+    font: 500 1rem/1.35 var(--font-sans);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+  }
+  .art-viewer [hidden] { display: none; }
+  .art-viewer [data-viewer-zoom][aria-pressed="true"] {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    text-decoration: none;
+  }
+  .art-viewer [data-viewer-zoom] { padding-inline: 0.45rem; }
+  .art-viewer button:disabled { color: var(--color-secondary); text-decoration: none; cursor: default; }
+  .visually-hidden { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); }
+  @media (width < 48em) {
+    .viewer-footer { display: grid; }
+    .viewer-controls > a { margin-inline-start: 0; }
+  }
+
+  @media (orientation: landscape) and (max-height: 32em) and (min-width: 28em) {
+    .art-viewer[open] {
+      grid-template-columns: minmax(0, 1fr) min(42%, clamp(12rem, 31vw, 19rem));
+      grid-template-rows: auto minmax(0, 1fr);
+      column-gap: var(--grid-gap);
+    }
+    .viewer-stage { grid-area: 1 / 1 / 3 / 2; }
+    .viewer-header { grid-area: 1 / 2; min-inline-size: 0; }
+    .viewer-footer {
+      grid-area: 2 / 2;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: stretch;
+      justify-content: start;
+      min-block-size: 0;
+      overflow-y: auto;
+      padding: 0.5rem;
+      overscroll-behavior: contain;
+    }
+    .viewer-controls { flex: 0 0 auto; }
+    .viewer-controls > a { margin-inline-start: 0; }
+  }
+</style>

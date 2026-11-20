@@ -1,0 +1,130 @@
+---
+import CaseFigure from '../../components/CaseFigure.astro';
+import { advenient as project, advenientArt as art } from '../../data/advenient';
+import CaseLayout from '../../layouts/CaseLayout.astro';
+
+const largeImage = '(min-width: 90em) 756px, (min-width: 64em) 53vw, calc(100vw - 2rem)';
+const halfImage = '(min-width: 90em) 644px, (min-width: 48em) 46vw, calc(100vw - 2rem)';
+---
+
+<CaseLayout {project}>
+  <section class="opening layout-grid" aria-labelledby="mark-heading">
+    <CaseFigure class="playbook" art={art.playbook} sizes={largeImage} sharesCover={project.sharesCover} priority />
+    <div class="mark-note">
+      <CaseFigure class="symbol" art={art.symbol} sizes="(min-width: 48em) clamp(7rem, 13vw, 11.75rem), 4.5rem" />
+      <h2 id="mark-heading">A mark that moves forward.</h2>
+      <p class="prose">{project.growth}</p>
+    </div>
+  </section>
+
+  <section class="brief chapter layout-grid" aria-labelledby="brief-heading">
+    <div class="brief-label">
+      <h2 id="brief-heading">The brief</h2>
+      <CaseFigure class="previous-logo" art={art.previous} sizes="100px" />
+    </div>
+    <div class="copy prose">
+      <p>{project.context}</p>
+      <p>{project.approach}</p>
+      <p>{project.exploration}</p>
+    </div>
+  </section>
+
+  <section class="identity chapter" aria-labelledby="identity-heading">
+    <div class="identity-spread layout-grid">
+      <div class="identity-note">
+        <h2 id="identity-heading">Identity system</h2>
+        <p class="prose">{project.system}</p>
+      </div>
+      <CaseFigure class="construction" art={art.construction} sizes="(min-width: 90em) 867px, (min-width: 48em) 59vw, calc(100vw - 2rem)" />
+    </div>
+    <div class="type-spread layout-grid">
+      <p class="system-note prose">{project.colorAndType}</p>
+      <CaseFigure class="palette" art={art.palette} sizes={halfImage} />
+      <CaseFigure class="typography" art={art.typography} sizes={halfImage} />
+    </div>
+  </section>
+
+  <section class="applications chapter" aria-labelledby="applications-heading">
+    <div class="chapter-intro layout-grid">
+      <h2 id="applications-heading">Applications</h2>
+      <p class="prose">{project.applications}</p>
+    </div>
+    <div class="applications-spread layout-grid">
+      <CaseFigure class="posters" art={art.outdoor} sizes="(min-width: 90em) 867px, (min-width: 48em) 60vw, calc(100vw - 2rem)" />
+      <CaseFigure class="social" art={art.social} sizes="(min-width: 90em) 310px, (min-width: 48em) 28vw, 75vw" />
+      <CaseFigure class="cards" art={art.cards} sizes="(min-width: 90em) 533px, (min-width: 48em) 42vw, calc(100vw - 2rem)" />
+      <CaseFigure class="staff" art={art.staff} sizes={halfImage} />
+    </div>
+  </section>
+
+  <section class="outcome chapter chapter-intro layout-grid" aria-labelledby="outcome-heading">
+    <h2 id="outcome-heading">Outcome</h2>
+    <p class="prose">{project.outcome}</p>
+  </section>
+</CaseLayout>
+
+<style>
+  .opening {
+    align-items: start;
+    row-gap: var(--space-related);
+    padding-block-start: clamp(1.4rem, 3vw, 2.85rem);
+  }
+  .mark-note {
+    border-block-start: 1px solid var(--color-divider);
+    padding-block-start: var(--space-related);
+  }
+  .symbol { display: flex; align-items: center; gap: 0.8rem; }
+  .symbol :global(.art-link) { inline-size: 4.5rem; }
+  .symbol :global(figcaption) { margin: 0; }
+  .mark-note h2 { margin-block: 1.4rem 0.65rem; font-size: clamp(1.4rem, 2.3vw, 2.1rem); }
+  .brief, .identity-spread, .chapter-intro { row-gap: 1.25rem; }
+  .brief-label { display: flex; flex-wrap: wrap; align-items: start; justify-content: space-between; gap: var(--space-caption); }
+  .previous-logo { inline-size: min(6.25rem, 100%); }
+  .identity-note .prose { margin-block-start: 0.9em; }
+  .type-spread { margin-block-start: clamp(2rem, 4.7vw, 4.4rem); row-gap: var(--space-related); }
+  .applications-spread {
+    align-items: start;
+    margin-block-start: var(--space-related);
+    row-gap: clamp(2.2rem, 4vw, 4rem);
+  }
+  .applications-spread .social { inline-size: 76%; justify-self: end; }
+
+  @container case-page (min-width: 43rem) {
+    .playbook { grid-column: 1 / 6; }
+    .mark-note { grid-column: 6 / -1; border: 0; padding: 0; }
+    .symbol { display: block; }
+    .symbol :global(.art-link) { inline-size: clamp(7rem, 13vw, 11.75rem); }
+    .symbol :global(figcaption) { margin-block-start: 0.65rem; }
+    .mark-note h2 { margin-block-start: clamp(1.4rem, 2.5vw, 2.45rem); }
+    .brief-label, .chapter-intro > h2, .identity-note { grid-column: 1 / 4; }
+    .brief-label { display: block; }
+    .previous-logo { margin-block-start: 1.4rem; max-inline-size: 100%; inline-size: 6.25rem; }
+    .copy, .chapter-intro > .prose, .construction { grid-column: 4 / -1; }
+    .system-note { grid-column: 1 / 7; }
+    .palette { grid-column: 1 / 5; }
+    .typography { grid-column: 5 / -1; }
+    .posters { grid-column: 1 / 6; }
+    .applications-spread .social { grid-column: 6 / -1; inline-size: 100%; align-self: end; }
+    .cards { grid-column: 1 / 5; }
+    .staff { grid-column: 5 / -1; align-self: end; }
+  }
+
+  @container case-page (min-width: 56rem) {
+    .playbook { grid-column: 1 / 8; }
+    .mark-note { grid-column: 9 / -1; }
+    .copy, .chapter-intro > .prose { grid-column: 5 / 12; }
+    .construction { grid-column: 5 / -1; }
+    .system-note { grid-column: 5 / 12; }
+    .palette { grid-column: 1 / 7; }
+    .typography { grid-column: 7 / -1; }
+    .posters { grid-column: 1 / 9; }
+    .applications-spread .social { grid-column: 10 / -1; }
+    .cards { grid-column: 2 / 7; }
+    .staff { grid-column: 7 / -1; }
+  }
+
+  @container case-page (max-width: 16.5rem) {
+    .symbol { flex-wrap: wrap; }
+  }
+</style>
+

@@ -1,0 +1,195 @@
+@import './tokens.css';
+
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src: url('../assets/fonts/bricolage-grotesque-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('../assets/fonts/dm-sans-regular-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  color-scheme: light;
+  scroll-behavior: auto;
+  scrollbar-gutter: stable;
+}
+
+html:has(.art-viewer[open]) { overflow: hidden; }
+
+body {
+  margin: 0;
+  font-family: var(--font-reading);
+  font-size: var(--size-body);
+  font-optical-sizing: auto;
+  line-height: 1.55;
+}
+
+:where(h1, h2, h3, p, figure, blockquote) {
+  margin: 0;
+}
+
+:where(h1, h2, h3, figcaption, dl, .type-display, .viewer-caption, [data-case-title]) {
+  font-family: var(--font-sans);
+}
+
+:where(h1, h2, h3) {
+  font-weight: 600;
+  overflow-wrap: break-word;
+}
+
+h1 {
+  font-size: var(--size-title);
+  line-height: 1;
+  letter-spacing: -0.016em;
+}
+
+h2 {
+  font-size: var(--size-heading);
+  line-height: 1.12;
+}
+
+img, video {
+  display: block;
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+a {
+  color: var(--color-link);
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.07em;
+  text-underline-offset: 0.19em;
+}
+
+a:hover {
+  text-decoration-thickness: 0.12em;
+}
+
+a[data-artwork], a[data-hover-label] { position: relative; }
+:is(a[data-artwork], a[data-hover-label])::after {
+  content: 'Enlarge +';
+  position: absolute;
+  z-index: 1;
+  inset: auto 0.45rem 0.45rem auto;
+  padding: 0.25rem 0.55rem;
+  border: 1px solid var(--color-ink);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font: 550 0.8125rem/1.25 var(--font-sans);
+  opacity: 0;
+  pointer-events: none;
+}
+a[data-hover-label]::after { content: attr(data-hover-label); }
+:is(a[data-artwork], a[data-hover-label]):focus-visible::after { opacity: 1; }
+@media (hover: hover) and (pointer: fine) {
+  :is(a[data-artwork], a[data-hover-label]):hover::after { opacity: 1; }
+  @media (prefers-reduced-motion: no-preference) {
+    :is(a[data-artwork], a[data-hover-label]):not(:focus-visible)::after {
+      transform: translateY(0.25rem);
+      transition: opacity 150ms ease-out, transform var(--duration-preview) var(--ease-settle);
+    }
+    :is(a[data-artwork], a[data-hover-label]):hover:not(:focus-visible)::after { transform: none; }
+  }
+}
+
+:focus-visible {
+  outline: var(--focus-width) solid var(--color-link);
+  outline-offset: var(--focus-offset);
+}
+
+::selection {
+  background: var(--color-link);
+  color: var(--color-paper);
+}
+
+.container {
+  inline-size: min(var(--content-width), calc(100% - 2 * var(--page-margin)));
+  margin-inline: auto;
+}
+
+.layout-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+}
+
+/* Each page shell measures the space between its margins, at the reader’s text size. */
+@container (min-width: 32rem) {
+  main > .container > * { --grid-columns: 8; }
+}
+
+@container (min-width: 56rem) {
+  main > .container > * { --grid-columns: 12; }
+}
+
+.destination {
+  padding-block: clamp(2rem, 4vw, 4rem) var(--space-section);
+}
+
+.destination-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-caption) var(--space-related);
+  padding-block-end: var(--space-related);
+  border-block-end: 1px solid var(--color-divider);
+}
+
+.destination-heading p {
+  color: var(--color-secondary);
+}
+
+#main-content:focus-visible {
+  outline-offset: calc(-1 * var(--focus-width));
+}
+
+.type-display {
+  font-size: var(--size-display);
+  font-weight: 650;
+  font-variation-settings: 'opsz' 96;
+  line-height: 0.96;
+  letter-spacing: var(--display-tracking);
+}
+
+.type-label {
+  font-family: var(--font-sans);
+  font-size: var(--size-label);
+  font-weight: 500;
+  font-variation-settings: 'opsz' 14;
+  line-height: 1.4;
+}
+
+.prose, .type-lead {
+  max-inline-size: var(--reading-measure);
+  font-family: var(--font-reading);
+  font-weight: 400;
+  overflow-wrap: break-word;
+}
+
+.prose { line-height: 1.55; }
+
+.type-lead {
+  font-size: var(--size-lead);
+  line-height: 1.38;
+}
+
+@media (min-width: 64em) {
+  .type-lead {
+    line-height: 1.3;
+  }
+}
