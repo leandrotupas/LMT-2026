@@ -1,0 +1,5 @@
+---
+interface Props { title: string; titleParts?: string[] }
+const { title, titleParts } = Astro.props;
+---
+{titleParts ? titleParts.map((part, i) => <>{i > 0 && <wbr />}{part}</>) : title}

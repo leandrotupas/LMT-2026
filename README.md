@@ -1,6 +1,6 @@
 # Yancy Tupas · Portfolio
 
-This workspace contains Yancy’s graphic and brand design portfolio. The homepage pairs Yancy’s initials and name with three flagship projects. The Work index at `/work/` opens all 21 projects, including seven Freelance Work projects, seven Professional Work projects and four Misc. projects. The three flagship pages are `/work/advenient/`, `/work/kota-center-davao/` and `/work/wunderbar/`. The introduction and contact information are at `/about/` and `/about/#contact`. [Creative direction](CREATIVE-DIRECTION.md) · [Wireframes](PORTFOLIO-WIREFRAMES.pdf)
+This workspace contains Yancy’s graphic and brand design portfolio. The homepage pairs Yancy’s initials and name with three flagship projects. The Work index at `/work/` opens 22 projects, including eight Freelance Work projects, seven Professional Work projects and four Misc. projects. The three flagship pages are `/work/advenient/`, `/work/kota-center-davao/` and `/work/wunderbar/`. The introduction and contact information are at `/about/` and `/about/#contact`. [Creative direction](CREATIVE-DIRECTION.md) · [Wireframes](PORTFOLIO-WIREFRAMES.pdf)
 
 ## Run locally
 
@@ -21,7 +21,7 @@ npm.cmd run build
 npm.cmd run preview
 ```
 
-`check` runs Astro and TypeScript diagnostics. `build` writes the static site to `dist/`. `preview` serves that build locally.
+`check` runs Astro and TypeScript diagnostics. `build` writes the static site to `dist/`. `preview` serves that build locally. The final audit records the browser coverage, resolved defects and mobile load measurements. [Final audit](FINAL-AUDIT.md)
 
 ## Project structure
 
@@ -31,20 +31,21 @@ npm.cmd run preview
 | `src/components/HomeSignature.astro`, `FlagshipSelection.astro` | The homepage entrance and three linked project rows |
 | `src/components/SiteHeader.astro` | Primary links, current page or section, and skip link |
 | `src/layouts/BaseLayout.astro` | Document metadata, display-font preload, shared header and main landmark |
-| `src/layouts/CaseLayout.astro` | Shared case title, breadcrumb, team credits, document links and navigation to the next flagship |
+| `src/layouts/CaseLayout.astro` | Shared case title, breadcrumb, credits, document links and navigation within the project’s Work category |
 | `src/styles/` | Design tokens, local fonts, type, focus, grid and native page transitions |
 | `src/data/profile.ts` | Verified public profile copy, email and professional links |
 | `src/pages/about.astro`, `src/assets/profile/yancy-portraits.jpg` | Biography, complete portrait strip, experience, education, skills, core tools, résumé and contact details |
 | `public/portfolio/yancy-tupas-resume.pdf` | The two-page résumé from the confirmed Drive folder, served as a local download |
 | `src/data/flagships.ts` | Public project titles, dates, disciplines, image descriptions and source colors |
 | `src/data/advenient.ts`, `kota.ts`, `wunderbar.ts` and matching folders in `src/assets/` | Case narratives, team credits, captions and source artwork |
+| `src/pages/work/yanceyancerevolution.astro`, `src/data/yanceyancerevolution.ts` | Freelance DJ identity case study with eight numbered brand-kit pages, mix covers and posters |
 | `src/components/CaseFigure.astro` | Captioned responsive WebP images, including full-size links for detailed artwork |
 | `src/data/work.ts`, `src/scripts/work-index.ts` | The public project register, artwork captions, category tracking and desktop preview |
-| `src/pages/work/[slug].astro`, `src/data/projects.ts`, `src/data/project-artwork.json` | The 18 project pages, including text, credits and responsive image selections |
+| `src/pages/work/[slug].astro`, `src/data/projects.ts`, `src/data/project-artwork.json` | The 18 gallery projects, including text, credits and responsive image selections |
 | `src/components/ArtworkViewer.astro`, `src/scripts/artwork-viewer.ts` | Full-screen artwork viewer with captions, original image links and keyboard navigation |
 | `src/scripts/motion.ts` | Section scrolling, stepped mouse-wheel scrolling and artwork entrances |
 | `src/assets/fonts/`, `src/assets/lmt-initials*.png` | Self-hosted WOFF2 fonts and approved initials |
-| `public/images/flagships/`, `public/portfolio/` | Responsive index artwork, the three portfolio excerpts and Advenient’s original brand guide |
+| `public/images/flagships/`, `public/portfolio/` | Responsive flagship artwork, the résumé, three portfolio excerpts and the Advenient and YANCEYANCEREVOLUTION brand guides |
 | `public/images/work/`, `public/images/projects/` | Index thumbnails, project covers, complete gallery images and responsive sizes |
 | `public/images/share/` | 1,200 × 630 JPEGs for social previews, with one portfolio card and one card per project |
 | `public/licenses/` | The copyright and SIL Open Font License notices distributed with the fonts |
@@ -79,7 +80,7 @@ The four Work categories have native fragment links at `#case-studies`, `#freela
 
 The large preview is a link to the displayed project. Its destination, title and caption update together when the requested image is ready. Back restores the project the visitor opened. The primary navigation draws an underline on hover and artwork links show an **Enlarge** cue on hover or keyboard focus. [Work index](src/pages/work/index.astro) · [Preview behavior](src/scripts/work-index.ts) · [Header](src/components/SiteHeader.astro) · [Shared link styles](src/styles/global.css)
 
-The 18 additional project pages present 91 captioned works. Seventeen pages use artwork from PORTFOLIO 2026, pages 22–23, 25–29, 31–36 and 38–41. The 500D page contains the 16 approved public images, including *Work-Friendly Solo Travel*. The full-size files match the inventory’s SHA-256 records. [Artwork inventory](CONTENT-INVENTORY.md)
+The 18 gallery projects present 91 captioned works. Seventeen use artwork from PORTFOLIO 2026, pages 22–23, 25–29, 31–36 and 38–41. The 500D page contains the 16 approved public images, including *Work-Friendly Solo Travel*. Their full-size files match the inventory’s SHA-256 records. YANCEYANCEREVOLUTION is a long-form case study in Freelance Work, with 16 viewer entries. Eight are numbered pages from Yancy’s November 2026 brand kit. The full 25-page PDF is available from the opening and credits. [Artwork inventory](CONTENT-INVENTORY.md)
 
 Selecting an artwork opens a full-screen viewer. The thumbnail expands from its actual position while the full-resolution image loads. Click or tap a detail to magnify it to twice the fitted size. The **2× zoom** button magnifies around the center. Drag, swipe or use the arrow keys to pan. Select the image or button again to fit the print. While fitted, Left and Right move between artworks. Previous and Next work in either view and fit the new print. Closing the same fitted print returns it to its visible thumbnail. Escape closes the viewer and restores focus.
 

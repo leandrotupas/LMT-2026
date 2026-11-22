@@ -1,7 +1,9 @@
 ---
+import ProjectName from './ProjectName.astro';
+
 interface Props {
   category: { title: string; href: string };
-  next: { title: string; href: string };
+  next: { title: string; href: string; titleParts?: string[] };
   nextLabel?: string;
 }
 const { category, next, nextLabel = 'Next project' } = Astro.props;
@@ -11,6 +13,6 @@ const { category, next, nextLabel = 'Next project' } = Astro.props;
   <a class="back type-label" href={category.href} tabindex="0">Back to {category.title}</a>
   <a class="next" href={next.href} tabindex="0" data-case-link>
     <span class="type-label">{nextLabel}</span>
-    <span data-case-title>{next.title}</span>
+    <span data-case-title><ProjectName title={next.title} titleParts={next.titleParts} /></span>
   </a>
 </nav>

@@ -1,9 +1,11 @@
 import { flagships } from './flagships';
 import type { ProjectFormat } from './project-formats';
+import { y2rIndex } from './yanceyancerevolution';
 
 interface Artwork {
   slug: string;
   title: string;
+  titleParts?: string[];
   year: number | string;
   caption: string;
   alt: string;
@@ -25,12 +27,12 @@ interface WorkSection {
   projects: IndexProject[];
 }
 
-function artworkSection(id: string, title: string, artworks: Artwork[]): WorkSection {
+function artworkSection(id: string, title: string, artworks: (Artwork & { format?: ProjectFormat })[]): WorkSection {
   return {
     id, title,
     projects: artworks.map((artwork) => {
       const base = `/images/work/${artwork.slug}`;
-      return { ...artwork, thumbnail: `${base}-thumb.webp`, preview: `${base}.webp`, href: `/work/${artwork.slug}/`, format: 'project', sharesCover: true };
+      return { ...artwork, thumbnail: `${base}-thumb.webp`, preview: `${base}.webp`, href: `/work/${artwork.slug}/`, format: artwork.format ?? 'project', sharesCover: true };
     }),
   };
 }
@@ -93,6 +95,7 @@ export const workSections: WorkSection[] = [
       alt: 'Orange UXPH Mini Cebu event graphic with the speakers arranged in rows.',
       width: 578, height: 325,
     },
+    y2rIndex,
   ]),
   artworkSection('professional-work', 'Professional Work', [
     {
@@ -165,4 +168,12 @@ export const workSections: WorkSection[] = [
     },
   ]),
 ];
+
+export const workEntries = workSections.flatMap((section) =>
+  section.projects.map((project, index, siblings) => ({
+    ...project,
+    category: { title: section.title, href: `/work/#${section.id}` },
+    next: siblings[(index + 1) % siblings.length],
+  }))
+);
 

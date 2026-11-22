@@ -3,6 +3,7 @@ import { profile } from '../../data/profile';
 import { workSections } from '../../data/work';
 import { projectFormats } from '../../data/project-formats';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectName from '../../components/ProjectName.astro';
 
 const projectCount = workSections.reduce((total, section) => total + section.projects.length, 0);
 ---
@@ -57,7 +58,7 @@ const projectCount = workSections.reduce((total, section) => total + section.pro
                       loading={section.id === 'case-studies' ? 'eager' : 'lazy'}
                       decoding="async"
                     />
-                    <span class="work-title"><span data-case-title>{project.title}</span></span>
+                    <span class="work-title"><span data-case-title><ProjectName title={project.title} titleParts={project.titleParts} /></span></span>
                     <span class="year" id={`${project.slug}-year`}>
                       {project.year}
                       {project.format === 'case' && <span aria-hidden="true"> · {projectFormats.case.label}</span>}

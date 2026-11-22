@@ -1,5 +1,5 @@
 import artwork from './project-artwork.json';
-import { workSections } from './work';
+import { workEntries } from './work';
 
 interface ProjectNotes {
   role: string;
@@ -92,18 +92,14 @@ export interface GalleryArtwork {
   caption: string;
 }
 
-export const projects = workSections.flatMap((section) =>
-  section.projects.filter((project) => project.format === 'project').map((project, index, siblings) => {
+export const projects = workEntries
+  .filter((project) => project.format === 'project')
+  .map((project) => {
     const slug = project.slug as keyof typeof artwork;
     const gallery = artwork[slug];
     const cover: GalleryArtwork = {
       src: project.preview, srcset: gallery.coverSet, width: project.width, height: project.height,
       alt: project.alt, caption: project.caption,
     };
-    return {
-      ...project, ...notes[slug], cover, groups: gallery.groups,
-      category: { title: section.title, href: `/work/#${section.id}` },
-      next: siblings[(index + 1) % siblings.length],
-    };
-  })
-);
+    return { ...project, ...notes[slug], cover, groups: gallery.groups };
+  });

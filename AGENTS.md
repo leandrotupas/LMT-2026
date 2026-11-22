@@ -6,7 +6,7 @@ Yancy makes the final creative decisions. The master brief governs the project. 
 
 Start each milestone with **CURRENT STEP** and identify the intended change, files and decisions. End with **STEP SUMMARY**, verified results, outstanding decisions and a request for approval. Stop at each gate. A request for revisions authorizes work on the current milestone. Explain and obtain approval before changing an earlier creative decision.
 
-Steps 0–3 and Milestones 4.1–4.8 are approved. Yancy liked the Milestone 4.9 motion and requested more interactivity and a modern sans serif for body copy. The homepage print previews, clickable Work preview, artwork zoom and DM Sans reading text are ready for visual approval. [Interaction recording](PORTFOLIO-INTERACTION-PREVIEW.webm) · [Implementation notes](README.md#navigation-and-motion)
+Steps 0–3 and Milestones 4.1–4.8 are approved. Yancy approved the look of the Milestone 4.9 motion, interaction and DM Sans revisions and requested a final audit. On 22 November 2026, Yancy approved the expanded YANCEYANCEREVOLUTION case study under Freelance Work. The portfolio-wide audit is ready for sign-off. [Final audit](FINAL-AUDIT.md) · [Interaction recording](PORTFOLIO-INTERACTION-PREVIEW.webm) · [Implementation notes](README.md#navigation-and-motion)
 
 Deployment requires separate approval of the host and final domain.
 
@@ -14,6 +14,7 @@ Deployment requires separate approval of the host and final domain.
 
 - Use **Yancy Tupas** as the display name. The approved homepage keeps the square LMT initials fixed while the two words of the name settle on their baselines. Give the three flagships equal prominence in their confirmed order of Advenient, KOTA Center Davao, then Wünderbar.
 - Use PORTFOLIO 2026 as the primary source. The old site supplies existing wording and artwork associations. Preserve the original voice, aspect ratios, credits and files. Confirm missing facts and material changes with Yancy. [Content inventory](CONTENT-INVENTORY.md)
+- Yancy added **YANCEYANCEREVOLUTION** to Freelance Work on 22 November 2026 and requested a case-study treatment. Its separate Drive folder contains the signed November 2026 kit for Yancy’s DJ alias. The case study presents eight full kit pages alongside the original cover, five mix covers and two posters. Its index entry, breadcrumb and next project follow Freelance Work. [Source register](CONTENT-INVENTORY.md#freelance-work-8)
 - Yancy confirmed **2021–Present** for independent freelance work. On 21 November 2026, Yancy confirmed the public availability line “Open to full-time, freelance and contract work. Remote-friendly.” Contact uses the published email address, Behance and LinkedIn.
 - About pairs Yancy’s biography with the original two-frame portrait and links to the verified two-page résumé. Credit the Wünderbar cocktail drawings to “Collaborating illustrator” for this review and the menu layouts to Yancy.
 - Keep **Case Studies**, **Freelance Work**, **Professional Work** and **Misc.** as four sections of one Work index. Keep 500D under Professional Work with its existing 16 approved public samples. Yancy confirmed **2025** as the display year for all six SUM Digital projects. Follow the inventory for the seven skills and five core tools.

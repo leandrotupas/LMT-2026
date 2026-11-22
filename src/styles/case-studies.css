@@ -39,6 +39,8 @@
   line-height: 0.99;
   letter-spacing: -0.022em;
 }
+.case-header .heading-block:has(wbr) { container-type: inline-size; }
+.case-header .heading-block:has(wbr) h1 { font-size: min(5.6rem, 14.3cqi); }
 .case-meta { margin-block-start: 0.75rem; font-size: var(--size-body); line-height: 1.35; }
 .case-meta time { font-variant-numeric: tabular-nums; }
 .case-header .introduction { max-inline-size: 38ch; text-wrap: pretty; }
@@ -72,6 +74,9 @@
   line-height: 1.15;
   text-decoration: underline;
   text-underline-offset: 0.15em;
+}
+.case-footer .next [data-case-title]:has(wbr) {
+  font-size: min(clamp(1.5rem, 3vw, 2.6rem), 14cqi);
 }
 
 @container case-page (width < 43rem) {

@@ -55,9 +55,10 @@ export const flagships = [
 
 export const [advenientProject, kotaProject, wunderbarProject] = flagships;
 
-export type CaseStudy = (typeof flagships)[number] & {
+export interface CaseStudy {
+  slug: string;
   introduction: string;
   role: string;
   credits: { role: string; people: string }[];
   documents: { label: string; href: string; pages: number }[];
-};
+}

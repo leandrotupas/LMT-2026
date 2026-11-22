@@ -1,0 +1,107 @@
+---
+import ProjectPlate from '../../components/ProjectPlate.astro';
+import { dreamPosters, kit, mixCovers, y2r, y2rCover } from '../../data/yanceyancerevolution';
+import CaseLayout from '../../layouts/CaseLayout.astro';
+
+const large = '(min-width: 90em) 756px, (min-width: 48em) 54vw, calc(100vw - 2rem)';
+const half = '(min-width: 90em) 644px, (min-width: 48em) 46vw, calc(100vw - 2rem)';
+const sleeve = '(min-width: 90em) 243px, (min-width: 48em) 18vw, calc(100vw - 2rem)';
+const [document] = y2r.documents;
+---
+
+<CaseLayout project={y2r} subject="DJ identity case study">
+  <section class="opening spread" aria-labelledby="brief">
+    <ProjectPlate art={y2rCover} sizes={large} lead />
+    <div class="brief">
+      <div class="note">
+        <h2 id="brief">The sound behind the brief</h2>
+        <p class="prose">{y2r.brief}</p>
+        <a class="kit-link type-label" href={document.href} type="application/pdf">Read the full kit (PDF, {document.pages} pages)</a>
+      </div>
+      <ProjectPlate art={kit.sound} sizes={half} />
+    </div>
+  </section>
+
+  <section class="chapter" aria-labelledby="mark">
+    <div class="chapter-intro">
+      <h2 id="mark">A Y, an R and a hidden 2</h2>
+      <p class="prose">{y2r.mark}</p>
+    </div>
+    <div class="pair">
+      <ProjectPlate art={kit.lockups} sizes={half} />
+      <ProjectPlate art={kit.construction} sizes={half} />
+    </div>
+  </section>
+
+  <section class="chapter" aria-labelledby="system">
+    <div class="chapter-intro">
+      <h2 id="system">Type and color</h2>
+      <p class="prose">{y2r.system}</p>
+    </div>
+    <div class="pair">
+      <ProjectPlate art={kit.type} sizes={half} />
+      <ProjectPlate art={kit.palette} sizes={half} />
+    </div>
+  </section>
+
+  <section class="chapter" aria-labelledby="mixes">
+    <div class="experiments spread">
+      <div class="note">
+        <h2 id="mixes">One mark, five mix covers</h2>
+        <p class="prose">{y2r.mixes}</p>
+      </div>
+      <ProjectPlate art={kit.experiments} sizes={large} />
+    </div>
+    <div class="mix-covers">
+      {mixCovers.map((art) => <ProjectPlate {art} sizes={sleeve} />)}
+    </div>
+  </section>
+
+  <section class="chapter" aria-labelledby="posters">
+    <div class="chapter-intro">
+      <h2 id="posters">The dream mix posters</h2>
+      <p class="prose">{y2r.posters}</p>
+    </div>
+    <div class="pair posters">
+      {dreamPosters.map((art) => <ProjectPlate {art} sizes={half} />)}
+    </div>
+  </section>
+
+  <section class="chapter" aria-labelledby="applications">
+    <div class="chapter-intro">
+      <h2 id="applications">From stickers to video</h2>
+      <p class="prose">{y2r.applications}</p>
+    </div>
+    <div class="pair">
+      <ProjectPlate art={kit.stickers} sizes={half} />
+      <ProjectPlate art={kit.overlays} sizes={half} />
+    </div>
+  </section>
+</CaseLayout>
+
+<style>
+  .opening { padding-block-start: clamp(1.4rem, 3vw, 2.85rem); }
+  .spread, .pair, .chapter-intro, .brief, .mix-covers {
+    display: grid;
+    align-items: start;
+    gap: var(--space-related) var(--grid-gap);
+  }
+  .chapter-intro { gap: 0.8rem var(--grid-gap); }
+  .chapter-intro .prose { max-inline-size: 57ch; }
+  .note { max-inline-size: 44ch; }
+  .note .prose { margin-block-start: 0.8rem; }
+  .kit-link { display: inline-flex; align-items: center; min-block-size: var(--target-size); margin-block-start: 0.4rem; }
+  .pair, .mix-covers { margin-block-start: var(--space-related); }
+  .posters { max-inline-size: 65rem; margin-inline: auto; }
+  @container case-page (min-width: 18rem) {
+    .mix-covers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .mix-covers > :global(figure:first-child) { grid-column: 1 / -1; }
+  }
+  @container case-page (min-width: 43rem) {
+    .opening { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+    .experiments, .chapter-intro { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+    .pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .mix-covers { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .mix-covers > :global(figure:first-child) { grid-column: auto; }
+  }
+</style>

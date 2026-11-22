@@ -1,6 +1,8 @@
 ---
-import { flagships, type CaseStudy } from '../data/flagships';
+import type { CaseStudy } from '../data/flagships';
+import { workEntries } from '../data/work';
 import { profile } from '../data/profile';
+import ProjectName from '../components/ProjectName.astro';
 import WorkFooter from '../components/WorkFooter.astro';
 import BaseLayout from './BaseLayout.astro';
 import '../styles/case-studies.css';
@@ -11,21 +13,22 @@ interface Props {
 }
 
 const { project, subject = 'Brand identity' } = Astro.props;
-const index = flagships.findIndex(({ slug }) => slug === project.slug);
-const next = flagships[(index + 1) % flagships.length];
+const entry = workEntries.find(({ slug }) => slug === project.slug);
+if (!entry) throw new Error(`Missing Work index entry for ${project.slug}`);
+const { title, titleParts, year, category, next } = entry;
 ---
 
-<BaseLayout title={`${project.title} · ${subject} · ${profile.name}`} description={project.introduction}
-  share={{ slug: project.slug, alt: `${project.title}. ${project.applicationAlt}` }} artworkViewer>
+<BaseLayout title={`${title} · ${subject} · ${profile.name}`} description={project.introduction}
+  share={{ slug: entry.slug, alt: `${title}. ${entry.alt}` }} artworkViewer>
   <article class="case-page container" aria-labelledby="case-heading" data-project={project.slug}>
     <nav class="breadcrumb type-label" aria-label="Breadcrumb">
-      <a href="/work/" tabindex="0">Work</a><span aria-hidden="true">/</span><a href="/work/#case-studies" tabindex="0">Case Studies</a>
+      <a href="/work/" tabindex="0">Work</a><span aria-hidden="true">/</span><a href={category.href} tabindex="0">{category.title}</a>
     </nav>
 
     <header class="case-header layout-grid">
       <div class="heading-block">
-        <h1 id="case-heading"><span data-case-title>{project.title}</span></h1>
-        <p class="case-meta"><time datetime={String(project.year)}>{project.year}</time><span aria-hidden="true"> · </span>{project.role}</p>
+        <h1 id="case-heading"><span data-case-title><ProjectName {title} {titleParts} /></span></h1>
+        <p class="case-meta"><time datetime={String(year)}>{year}</time><span aria-hidden="true"> · </span>{project.role}</p>
       </div>
       <p class="introduction type-lead">{project.introduction}</p>
     </header>
@@ -35,7 +38,7 @@ const next = flagships[(index + 1) % flagships.length];
     <section class="credits chapter layout-grid" aria-labelledby="credits">
       <div class="credit-heading">
         <h2 id="credits">Credits</h2>
-        <p class="type-label">{project.title}, {project.year}</p>
+        <p class="type-label"><ProjectName {title} {titleParts} />, {year}</p>
       </div>
       <dl>
         {project.credits.map(({ role, people }) => <div><dt>{role}</dt><dd>{people}</dd></div>)}
@@ -47,6 +50,6 @@ const next = flagships[(index + 1) % flagships.length];
       </div>
     </section>
 
-    <WorkFooter category={{ title: 'Case Studies', href: '/work/#case-studies' }} {next} nextLabel="Next case study" />
+    <WorkFooter {category} {next} nextLabel={next.format === 'case' ? 'Next case study' : 'Next project'} />
   </article>
 </BaseLayout>

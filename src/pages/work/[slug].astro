@@ -1,5 +1,6 @@
 ---
 import ProjectPlate from '../../components/ProjectPlate.astro';
+import ProjectName from '../../components/ProjectName.astro';
 import WorkFooter from '../../components/WorkFooter.astro';
 import { profile } from '../../data/profile';
 import { projects } from '../../data/projects';
@@ -28,7 +29,7 @@ const sizes: Record<string, string> = {
 
     <div class="opening layout-grid">
       <header class="heading">
-        <h1 id="project-heading"><span data-case-title>{project.title}</span></h1>
+        <h1 id="project-heading"><span data-case-title><ProjectName title={project.title} titleParts={project.titleParts} /></span></h1>
         <p class="metadata"><span>{project.year}</span><span aria-hidden="true"> · </span>{project.role}</p>
       </header>
       <div class="cover">

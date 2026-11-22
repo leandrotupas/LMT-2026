@@ -1,8 +1,8 @@
 # Yancy Tupas · Portfolio content inventory
 
-20 November 2026 · Step 1 review
+20 November 2026 · Step 1 review, updated 22 November 2026
 
-The published portfolio contains **21 projects**. All three flagship projects have first-person case-study copy and corresponding spreads in the portfolio PDF. Eight projects have dedicated Drive folders with 225 source files. The other 13 have published artwork, including Wünderbar.
+The earlier published portfolio contained **21 projects**. All three flagships have first-person case-study copy and corresponding spreads in the portfolio PDF. Eight of those projects had dedicated Drive folders with 225 source files. The other 13 had published artwork, including Wünderbar. Yancy added YANCEYANCEREVOLUTION from a separate Drive folder on 22 November, bringing the current portfolio to **22 projects**.
 
 The full manifest preserves the available project copy, credits and captions alongside the associated files. Each project’s `web_asset_keys` leads to measured images in `published_image_assets`. Its `drive_file_ids` lead to paths and source links in `drive_files`. The record also points to the relevant PDF pages. [Open the full JSON manifest](content-inventory.json)
 
@@ -20,7 +20,7 @@ Projects are alphabetical within each category for lookup. Yancy confirmed the f
 | [KOTA Center Davao](https://yancy-tupas-portfolio.earnedbirch2.chatgpt.site/work/kota/) | 2024 | 10–14 | [41](https://drive.google.com/drive/folders/1cRbf_umSmJwUyXuV326lhb_Gq1AEILLH) | 26 |
 | [Wünderbar](https://yancy-tupas-portfolio.earnedbirch2.chatgpt.site/work/wunderbar/) | 2025 | 15–20 | — | 20 |
 
-### Freelance Work (7)
+### Freelance Work (8)
 
 | Project | Source year | Portfolio PDF page | Drive files | Web images |
 | --- | --- | ---: | ---: | ---: |
@@ -31,6 +31,9 @@ Projects are alphabetical within each category for lookup. Yancy confirmed the f
 | [Ingenuity](https://yancy-tupas-portfolio.earnedbirch2.chatgpt.site/work/ingenuity/) | 2025 | 27 | [5](https://drive.google.com/drive/folders/1yc_IdJ_rap92fp3-YPmOfsLyWNI_8yrp) | 16 |
 | [Micah Denise Tupas](https://yancy-tupas-portfolio.earnedbirch2.chatgpt.site/work/micah/) | 2025 | 23 | [119](https://drive.google.com/drive/folders/1og9eUQlkhOFmf4BtHrxfjpmUrOIN3yCQ) | 11 |
 | [UXPH Mini 2025 — Roadshow](https://yancy-tupas-portfolio.earnedbirch2.chatgpt.site/work/uxph/) | 2025 | 22 | — | 14 |
+| YANCEYANCEREVOLUTION | Nov 2026 | Separate 25-page kit | [49](https://drive.google.com/drive/folders/1mvlDeHbOUBOWJJXhCgqnhMTK1slXd5cM) | New project |
+
+Yancy placed this self-initiated DJ identity under Freelance Work and requested a case study. The signed kit dates the work and explains the Dance Dance Revolution reference. Eight full pages illustrate the narrative. Page 6 covers the sound, pages 10–11 the lockups and mark construction, pages 13–14 the type and palette, page 17 the experiments, page 20 the stickers and page 23 the video overlays. The supplied cover, five mix covers and two portrait posters complete the selection. The full kit is available from the case study. The private manifest records every selected file and page. [Original brand kit](https://drive.google.com/file/d/1RdP7y0j9-liQhbgU0LR5LA6gYkQ96VBz/view)
 
 ### Professional Work (7)
 
@@ -75,9 +78,9 @@ Graphic Design · Brand Design · Visual Communication · Creative Thinking · A
 **Approved core tools**  
 Adobe Illustrator · Adobe Photoshop · Adobe InDesign · Figma · Canva
 
-## File checks
+## Step 1 file checks for PORTFOLIO 2026
 
-- Drive contains **1,376 files in 409 folders**, including the top folder. The catalog covers the 2020–2021 archive, college branding, seven UI/UX folders and other unselected work. It identifies 183 .DS_Store files and one temporary file. Earlier student sticker artwork has no verified connection to the published Sticker Designs project.
+- The original PORTFOLIO 2026 source contained **1,376 files in 409 folders**, including the top folder. The catalog covers the 2020–2021 archive, college branding, seven UI/UX folders and other unselected work. It identifies 183 .DS_Store files and one temporary file. Earlier student sticker artwork has no verified connection to the published Sticker Designs project.
 - All **246 published image URLs** opened, decoded and mapped to a project. Both linked PDFs opened. The external Advenient guide matches its Drive original byte for byte. The published résumé and the Drive résumé are different files. The confirmed Drive folder is the primary reference.
 - Nine published project images fall below the 1,000-pixel width used for review. They include seven music posters, a KOTA mark and the UXPH Philippines illustration. Drive also has a scalable version of the KOTA mark. Three 844 × 1,500 poster exports have like-named 1,080 × 1,920 Drive files, including *Shapeshifter*. Both versions of *back to friends* measure 682 × 1,024. The manifest records exact dimensions and flags 31 narrow project-folder rasters, including logo variants.
 - Full-file SHA-256 checks found **52 groups of byte-identical Drive files**. Micah’s `MDT LOGO-40.png` and `MDT LOGO-41.png` are one example. All 246 delivered web files have distinct hashes.
