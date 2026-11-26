@@ -106,7 +106,8 @@ const [givenName, ...familyName] = profile.name.split(' ');
   if (hero && !reduced) {
     // One entrance: the words rise from their own baselines; the mark is already in place.
     gsap.from(hero.querySelectorAll('.word > span'), { yPercent: 105, duration: 1.1, ease: 'expo.out', stagger: 0.09, delay: 0.1 });
-    gsap.from(hero.querySelectorAll('.intro > *'), { opacity: 0, y: 12, duration: 0.8, ease: 'expo.out', delay: 0.55, stagger: 0.06 });
+    // The intro is painted at once (it is often the largest element on phones); it only settles into place.
+    gsap.from(hero.querySelectorAll('.intro > *'), { y: 12, duration: 0.8, ease: 'expo.out', stagger: 0.06 });
 
     // The authored moment, scrubbed by scroll.
     const mark = hero.querySelector<HTMLElement>('.mark')!;

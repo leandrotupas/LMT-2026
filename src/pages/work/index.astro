@@ -223,25 +223,27 @@ const projectCount = workSections.reduce((total, section) => total + section.pro
   }
 
   @container work-page (min-width: 67rem) {
-    @media (hover: hover) and (pointer: fine) {
-      .work-layout { --work-preview: 1; }
-    }
-    [data-enhanced] .groups { grid-column: 4 / 9; }
-    [data-enhanced] .thumbnail { display: none; }
-    [data-enhanced] .work-link {
+    /* The preview layout applies from first paint, not when the script runs, so the list never jumps.
+       work-index.ts reads --work-preview to know the same condition holds. */
+    @media (scripting: enabled) and (hover: hover) and (pointer: fine) {
+    .work-layout { --work-preview: 1; }
+    .groups { grid-column: 4 / 9; }
+    .thumbnail { display: none; }
+    .work-link {
       grid-template-columns: minmax(0, 1fr) auto;
       grid-template-areas: "title year";
       min-block-size: 4.75rem;
       padding: 0.95rem 0.35rem;
     }
     [data-previewed] .work-title { text-decoration: underline; text-underline-offset: 0.18em; text-decoration-thickness: 0.055em; }
-    [data-enhanced] .work-preview {
+    .work-preview {
       position: sticky;
       top: var(--header-clearance);
       display: block;
       grid-column: 9 / -1;
       margin-block-start: calc(clamp(1.55rem, 3.1vw, 2.55rem) * 1.13 + 0.7rem + 1px);
       min-inline-size: 0;
+    }
     }
     .preview-frame {
       position: relative;

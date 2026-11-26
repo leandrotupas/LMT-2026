@@ -1,5 +1,51 @@
 # Afterhours revamp: full-site audit
 
+## Full audit, 27 November 2026 (live site plus local build)
+
+| # | Dimension | Score | Key finding |
+|---|---|---|---|
+| 1 | Accessibility | 4 | No issues on 26 pages, night and day. The day toggle is reachable by keyboard, with a purple focus ring at 8.5:1 |
+| 2 | Performance | 3 | The Work index shifts layout after load (CLS 0.091). The homepage hero statement fades in late on phones, delaying its first paint |
+| 3 | Theming | 4 | The day palette passes contrast (body text 17.7, secondary 6.4, links 8.5:1). The saved theme applies before first paint |
+| 4 | Responsive | 4 | No sideways scroll at 320 to 1920 px (78 page-width checks). Every control is at least 44 px; the day toggle is hidden below 360 px |
+| 5 | Implementation integrity | 3 | The live site tells search engines not to index it, uses relative preview-image URLs, and is two deployments behind the branch |
+| **Total** | | **18/20** | **Excellent; fix the live-site release settings first** |
+
+### Fix pass (same day)
+
+| Finding | Fix | Verified |
+|---|---|---|
+| P1 `noindex` and relative preview images on the live site | `astro.config.mjs` uses `SITE_URL`, or on Vercel production builds `https://` plus `VERCEL_PROJECT_PRODUCTION_URL`. Preview and local builds stay `noindex` | Simulated production build: canonical and absolute `og:image` on every page, no `noindex` (except the 404). Simulated preview build: `noindex` |
+| P2 Missing `robots.txt` and `sitemap.xml` | The build always writes `robots.txt`; with an origin, it adds the `Sitemap:` line and a 25-URL sitemap that excludes the 404 page | Both present in the production build |
+| P2 Work index CLS 0.091 | The preview layout applies with `@media (scripting: enabled) and (hover: hover) and (pointer: fine)` from first paint | CLS 0 at 1440 px. Page weight before scrolling dropped from 523 to 354 KB because the hidden thumbnails no longer load. The preview follows hover. 1024 px still shows thumbnails |
+| P2 Hero statement fades in late on phones | The intro is painted at once and only settles into position | Mobile LCP 620 → 132 ms (local) |
+| P1 Live site two deployments behind | Needs Yancy in the Vercel dashboard: production branch or promotion, and the build logs | Open |
+
+Estimated score after the code fixes: **19/20.** Implementation integrity returns to 4 once production deploys from this branch.
+
+### Live site (lmt-2026.vercel.app), fetched directly
+
+- **[P1] Every page tells search engines not to index it, and preview images use relative URLs.** The live pages carry `<meta name="robots" content="noindex">`, have no canonical link, and set `og:image` to `/images/share/...`. Google won't list the site, and LinkedIn and Messenger can't load preview images from a relative path. Cause: `SITE_URL` isn't set for the Vercel build. Fix: set it in Vercel, or fall back to Vercel's production URL in `astro.config.mjs`.
+- **[P1] The live site is two deployments behind.** It serves `508fc33` (it has the icons, but the header still uses `container` and there's no day toggle). `d40ddf1` (the mobile header fix) and `f438291` (transitions, day mode, analytics) aren't live, and `main` is still the original site. Check Vercel's Deployments for failed builds, or whether production was promoted by hand from a preview; set the production branch accordingly.
+- **[P2] `robots.txt` and `sitemap.xml` return 404.** The sitemap is only generated when `SITE_URL` is set. Add a `robots.txt` that points to the sitemap.
+
+### Local build
+
+- **[P2] Work index layout shift: CLS 0.091 at 1440 px.** At 103 ms, `work-index.ts` adds `[data-enhanced]`, which hides the thumbnails and shrinks the rows from 131 to 77 px. Fix: apply the enhanced desktop layout with `@media (scripting: enabled)` so it's correct at first paint.
+- **[P2] Hero statement fades in late on phones.** The intro starts at `opacity: 0` with a 0.55 s delay. On a 390 px phone it's the largest element on screen, so its first paint (LCP) waits for the fade: 620 ms locally, slower on real networks. Fix: animate only `y`, or start visible.
+- **[P3] Shared motion bundle: 49 KB gzipped on every page** (GSAP, ScrollTrigger, Lenis). Acceptable for the interactions it powers. ScrollTrigger could later load only where scroll moments exist.
+
+### Verified, no issues
+
+- Check: 0 errors, 0 warnings, 0 hints. Build: 26 pages.
+- Night crawl of 25 pages: one h1 per page, no skipped heading levels, skip link first, every image has alt text, every control is named, no overflow at 390 or 320 px, no controls under 24 px, no errors under reduced motion, Lenis off under reduced motion.
+- Keyboard order: skip link → name → Work → About → Contact → Day mode → content, each with a visible ring.
+- Day mode with reduced motion: no errors, and the View badge is off.
+- CLS is 0 on the homepage, case studies, project pages and About at 1440 and 390 px.
+- Detector: 32 findings, all previously verified false positives (22 empty viewer images in closed dialogs, 9 single-line heading leadings, 1 edge-to-edge band).
+
+---
+
 ## Re-audit after YANCEYANCEREVOLUTION became the fourth flagship (26 November 2026)
 
 | # | Dimension | Score | Notes |
