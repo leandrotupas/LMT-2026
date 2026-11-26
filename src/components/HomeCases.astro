@@ -1,13 +1,7 @@
 ---
 import { flagships } from '../data/flagships';
 import { projectFormats } from '../data/project-formats';
-
-// Ink for each flagship's color flood: night on light grounds, bone on dark ones (WCAG AA).
-const floodInk: Record<string, string> = {
-  advenient: 'var(--color-paper)',
-  'kota-center-davao': '#fff',
-  wunderbar: '#fff',
-};
+import ProjectName from './ProjectName.astro';
 ---
 
 <section class="cases" id="case-studies" aria-labelledby="cases-heading">
@@ -22,11 +16,11 @@ const floodInk: Record<string, string> = {
         <li>
           <a class="row" href={project.href} data-case-link data-share-cover={project.sharesCover || undefined}
             data-preview={`${asset}-${project.largestRendition}.webp`} data-preview-caption={project.applicationCaption}
-            style={{ '--flood': project.identityColor, '--flood-ink': floodInk[project.slug] }}>
+            style={{ '--flood': project.identityColor, '--flood-ink': project.identityInk }}>
             <img class="thumb" src={`${asset}-480.webp`} srcset={`${asset}-240.webp 240w, ${asset}-480.webp 480w, ${asset}-${project.largestRendition}.webp ${project.largestRendition}w`}
               sizes="calc(100vw - 2 * var(--page-margin))" width={project.width} height={project.height}
               alt={project.applicationAlt} loading="lazy" decoding="async" />
-            <h3 class="type-poster"><span data-case-title>{project.title}</span></h3>
+            <h3 class="type-poster"><span data-case-title><ProjectName title={project.title} titleParts={'titleParts' in project ? [...project.titleParts] : undefined} /></span></h3>
             <span class="meta type-label"><span class="year">{project.year}</span>{project.discipline}<span class="visually-hidden">, {projectFormats[project.format].label}</span></span>
           </a>
         </li>

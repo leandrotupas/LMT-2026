@@ -14,11 +14,11 @@ Yancy chose this direction from three homepage concepts. The approved references
 | Dim (`--color-secondary`) | `#A69EB2` | Captions, years and roles. 7.7:1 on Night |
 | Yellow-green (`--color-link`) | `#E7FA60` | Links, focus, selection and the family name. From the kit |
 | Purple (`--color-accent`) | `#670DA8` | The statement band and the scrollbar. From the kit. Yellow-green on purple is 8.3:1 |
-| Flagship floods | `#09B2B5`, `#CC0000`, `#03256C` | Each case's own color on hover, paired with ink that passes AA: Night on teal (7.6:1), white on red (5.2:1) and on navy (12.6:1) |
+| Flagship floods | `#09B2B5`, `#CC0000`, `#03256C`, `#670DA8` | Each case's own color on hover, paired with ink that passes AA: Night on teal (7.6:1), white on red (5.2:1) and on navy (12.6:1), and yellow-green on purple (8.3:1) for YANCEYANCEREVOLUTION, the fourth flagship since 26 November 2026 |
 
 **Type.** Bricolage Grotesque, now self-hosted with its width axis. The name, case titles and band are set at 800 weight, 75% width, in capitals with 0.84 leading (`.type-poster`). Headings and labels use Bricolage at normal width. DM Sans stays for reading. Labels are in sentence case: no mono costume, no all-caps eyebrows, and no section numbering.
 
-**The one authored moment.** The LMT square holds still while YANCY and TUPAS part on scroll and the three flagships rise between them. This evolves the approved "mark fixed, name settles" signature. Everything else stays quiet:
+**The one authored moment.** The LMT square holds still while YANCY and TUPAS part on scroll. On phones, the square glides back to center as the words leave. On 26 November 2026, Yancy removed the flagship images that used to rise between the words: the moment is the name alone, and the case rows follow directly. Everything else stays quiet:
 - case rows flood with their brand color on hover
 - a preview follows a fine pointer over the rows and the index, and touch shows thumbnails instead
 - the statement band drifts and speeds up slightly with scroll velocity, with a pause control

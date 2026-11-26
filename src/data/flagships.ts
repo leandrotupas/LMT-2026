@@ -20,6 +20,8 @@ export const flagships = [
     height: 475,
     largestRendition: 840,
     identityColor: '#09b2b5',
+    // Ink on the color flood, paired for WCAG AA.
+    identityInk: '#0b0712',
   },
   {
     slug: 'kota-center-davao',
@@ -35,6 +37,7 @@ export const flagships = [
     height: 631,
     largestRendition: 840,
     identityColor: '#cc0000',
+    identityInk: '#ffffff',
   },
   {
     slug: 'wunderbar',
@@ -50,6 +53,25 @@ export const flagships = [
     height: 447,
     largestRendition: 595,
     identityColor: '#03256c',
+    identityInk: '#ffffff',
+  },
+  {
+    // Promoted from Freelance Work to the fourth flagship on 26 November 2026.
+    slug: 'yanceyancerevolution',
+    sharesCover: true,
+    href: '/work/yanceyancerevolution/',
+    format: 'case',
+    title: 'YANCEYANCEREVOLUTION',
+    titleParts: ['YANCE', 'YANCE', 'REVOLUTION'],
+    year: 2026,
+    discipline: 'DJ identity',
+    applicationCaption: 'Brand kit cover',
+    applicationAlt: 'The purple y2r mark fills the right side of a yellow-green cover, with the lowercase wordmark on the left.',
+    width: 809,
+    height: 633,
+    largestRendition: 809,
+    identityColor: '#670da8',
+    identityInk: '#e7fa60',
   },
 ] as const;
 

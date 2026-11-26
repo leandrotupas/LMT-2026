@@ -12,7 +12,7 @@ const { category, next, nextLabel = 'Next project' } = Astro.props;
 // The next case arrives in its own color with ink that passes AA; other work uses the kit purple.
 const flagship = flagships.find(({ href }) => href === next.href);
 const panel = flagship?.identityColor ?? 'var(--color-accent)';
-const panelInk = flagship?.slug === 'advenient' ? 'var(--color-paper)' : '#fff';
+const panelInk = flagship?.identityInk ?? '#fff';
 ---
 
 <nav class="case-footer" aria-label="Explore other work">

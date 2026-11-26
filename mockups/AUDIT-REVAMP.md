@@ -1,5 +1,27 @@
 # Afterhours revamp: full-site audit
 
+## Re-audit after YANCEYANCEREVOLUTION became the fourth flagship (26 November 2026)
+
+| # | Dimension | Score | Notes |
+|---|---|---|---|
+| 1 | Accessibility | 4 | One h1 per page, no skipped levels, skip link first on all 25 pages. Flood title and meta contrast: Advenient 7.64, KOTA 5.89, Wünderbar 14.14, YANCEYANCEREVOLUTION 8.29:1. The focus ring on the purple row is yellow-green |
+| 2 | Performance | 4 | Hover motion uses only `transform` and `opacity`. Images below the fold are lazy and have dimensions. The flagship renditions reuse existing optimized files |
+| 3 | Theming | 4 | Flood ink lives in the data (`identityInk`) and is shared by the homepage rows and the "Next" panels |
+| 4 | Responsive | 4 | No sideways scroll at 390 or 320 px on any page. The four-image fan stays on screen at 1440, 1024 and 390 px, centered within 3 px |
+| 5 | Implementation integrity | 4 | The next-case chain loops Advenient → KOTA → Wünderbar → YANCEYANCEREVOLUTION → Advenient. Work counts are 4 / 7 / 7 / 4. Breadcrumbs follow the data |
+| **Total** | | **20/20** | **Excellent** |
+
+**Fixed in this pass:**
+- On phones, the four-image fan pushed tilted corners 3–5 px past the screen edges. It now spreads less below 600 px, staying between 12 and 381 px on a 390 px screen.
+
+**Unchanged false positives:** the detector reports the same 31 findings as before (22 empty viewer images in closed dialogs, 8 single-line heading leadings, 1 edge-to-edge band). The crawler also flags the teal "Next" panel on the YANCEYANCEREVOLUTION case because the flood is a pseudo-element; measured directly, it's 7.64:1.
+
+**Under reduced motion,** the hero shows the name and mark without the fan. The flagships appear in the rows directly below.
+
+**Still open:** real-device touch and Safari testing; link-preview images in the earlier light design; unused `*-identity.webp` files in `public/images/flagships/`, kept until Yancy decides.
+
+---
+
 26 November 2026 · Built site (`npm run build`, served with `astro preview`) · 25 pages
 
 ## Result

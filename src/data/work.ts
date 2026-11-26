@@ -1,6 +1,5 @@
 import { flagships } from './flagships';
 import type { ProjectFormat } from './project-formats';
-import { y2rIndex } from './yanceyancerevolution';
 
 interface Artwork {
   slug: string;
@@ -45,6 +44,7 @@ export const workSections: WorkSection[] = [
       const base = `/images/flagships/${project.slug}`;
       return {
         slug: project.slug, title: project.title, year: project.year,
+        titleParts: 'titleParts' in project ? [...project.titleParts] : undefined,
         caption: project.applicationCaption, alt: project.applicationAlt,
         width: project.width, height: project.height,
         thumbnail: `${base}-240.webp`, preview: `${base}-${project.largestRendition}.webp`,
@@ -95,7 +95,6 @@ export const workSections: WorkSection[] = [
       alt: 'Orange UXPH Mini Cebu event graphic with the speakers arranged in rows.',
       width: 578, height: 325,
     },
-    y2rIndex,
   ]),
   artworkSection('professional-work', 'Professional Work', [
     {
