@@ -43,11 +43,13 @@ npm.cmd run preview
 | `src/data/work.ts`, `src/scripts/work-index.ts` | The public project register, artwork captions, category tracking and desktop preview |
 | `src/pages/work/[slug].astro`, `src/data/projects.ts`, `src/data/project-artwork.json` | The 18 gallery projects, including text, credits and responsive image selections |
 | `src/components/ArtworkViewer.astro`, `src/scripts/artwork-viewer.ts` | Full-screen artwork viewer with captions, original image links and keyboard navigation |
-| `src/scripts/motion.ts` | Section scrolling, stepped mouse-wheel scrolling and artwork entrances |
+| `src/scripts/smooth.ts`, `src/scripts/motion.ts` | Lenis wheel smoothing with GSAP and ScrollTrigger; same-page links that move focus; artwork entrances |
 | `src/assets/fonts/`, `src/assets/lmt-initials*.png` | Self-hosted WOFF2 fonts and approved initials |
 | `public/images/flagships/`, `public/portfolio/` | Responsive flagship artwork, the résumé, three portfolio excerpts and the Advenient and YANCEYANCEREVOLUTION brand guides |
 | `public/images/work/`, `public/images/projects/` | Index thumbnails, project covers, complete gallery images and responsive sizes |
-| `public/images/share/` | 1,200 × 630 JPEGs for social previews, with one portfolio card and one card per project |
+| `public/images/share/` | 1,200 × 630 JPEGs for social previews in the Afterhours style, with one portfolio card and one card per project |
+| `public/favicon.ico`, `public/*icon*.png`, `public/site.webmanifest` | Browser-tab icon (the LMT square), home-screen and app icons on night, and the web app manifest |
+| `src/pages/404.astro` | The not-found page: the LMT square as the zero, links back to the work, kept out of search |
 | `public/licenses/` | The copyright and SIL Open Font License notices distributed with the fonts |
 
 Bricolage Grotesque supplies the display and label weights. DM Sans Regular is the body face for the biography, project introductions and case-study copy. Its Latin WOFF2 is served locally. The 192 px favicon and 408 px signature image come from Yancy’s confirmed square master. [Bricolage Grotesque](https://fonts.google.com/specimen/Bricolage+Grotesque) · [DM Sans](https://fonts.google.com/specimen/DM+Sans) · [DM Sans license](public/licenses/dm-sans-OFL.txt) · [Original initials](https://drive.google.com/file/d/1DOqXnEnIsjpNqMa0A1FxIClYQeal0LoL/view)
@@ -90,6 +92,14 @@ On short landscape screens, the controls sit beside the artwork and scroll indep
 
 Use the root inventory and research files during development. Only copy verified public fields or approved artwork into `src/` or `public/`. The root inventory includes private source references. [Content inventory](CONTENT-INVENTORY.md) · [Visual research](VISUAL-RESEARCH.md)
 
-Page titles, descriptions and social card metadata are prerendered. The sharing JPEGs use the same artwork as the Work index. Update the matching file in `public/images/share/` if the selection changes.
+Page titles, descriptions and social card metadata are prerendered. The sharing JPEGs show each page's own title, section, year and lead artwork, with flagships on their brand color. They were rendered from the built pages on 26 November 2026. Regenerate the matching file in `public/images/share/` if a title or lead image changes.
 
 Deployment is a separate approval stage. Local builds use `noindex`. Set the build environment variable `SITE_URL` to the confirmed public origin when preparing a release. Astro then emits canonical URLs, absolute social URLs and a sitemap containing every public page. The static host serves `dist/` after Yancy approves publication.
+
+### Going live checklist
+
+1. **Choose the host and domain (Yancy's approval).** Any static host works. Netlify, Vercel and Cloudflare Pages all build Astro on their free tiers.
+2. **Configure the build.** Build command `npm run build`, output folder `dist`, Node 22 or later, and `SITE_URL` set to the final origin, for example `https://yancytupas.com`.
+3. **Serve the 404 page.** Astro emits `dist/404.html`; Netlify, Vercel and Cloudflare Pages serve it automatically for unknown addresses.
+4. **Test on real devices.** Check touch momentum, the hero scroll and the artwork viewer on an iPhone in Safari and on an Android phone. The cloud audits used Chromium only.
+5. **Check link previews.** Paste the live URL into LinkedIn's Post Inspector and the Facebook Sharing Debugger to confirm the cards update.

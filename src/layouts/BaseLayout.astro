@@ -1,6 +1,5 @@
 ---
 import displayFont from '../assets/fonts/bricolage-grotesque-wdth-latin.woff2?url';
-import initials from '../assets/lmt-initials.png';
 import { profile } from '../data/profile';
 import ArtworkViewer from '../components/ArtworkViewer.astro';
 import SiteHeader from '../components/SiteHeader.astro';
@@ -46,7 +45,10 @@ const shareUrl = Astro.site ? new URL(sharePath, Astro.site).href : sharePath;
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={shareAlt} />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/png" href={initials.src} />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="preload" as="font" type="font/woff2" href={displayFont} crossorigin="anonymous" />
     <style is:inline>
       /* Make the navigation preference available on a first visit, before external CSS loads. */
