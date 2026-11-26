@@ -10,8 +10,8 @@
   --color-on-accent: #e7fa60;
   --color-divider: #2f2838;
   --header-clearance: 5rem;
-  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-out-strong: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-strong: cubic-bezier(0.22, 1, 0.36, 1);
 
   --font-sans: 'Bricolage Grotesque', Arial, sans-serif;
   --font-reading: 'DM Sans', Arial, sans-serif;
@@ -27,7 +27,7 @@
   --content-width: 82rem;
   --grid-columns: 4;
   --grid-gap: min(0.75rem, 4vw);
-  --page-margin: min(clamp(1rem, 6vw - 0.2rem, 1.25rem), 6vw);
+  --page-margin: min(clamp(1rem, 6vw - 0.25rem, 1.25rem), 6vw);
   --space-caption: clamp(0.5rem, 1.2vw, 1rem);
   --space-related: clamp(1.5rem, 3vw, 2rem);
   --space-section: clamp(4rem, 7vw, 8rem);
@@ -39,8 +39,8 @@
   --duration-preview: 220ms;
   --duration-page: 260ms;
   --duration-exit: 120ms;
-  --ease-entrance: cubic-bezier(0.2, 0.75, 0.25, 1);
-  --ease-settle: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-entrance: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @media (min-width: 37.5em) {

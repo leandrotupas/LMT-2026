@@ -4,7 +4,6 @@
   /* The next panel bleeds to the window edge with 50vw, which includes the scrollbar; clip that overhang. */
   overflow-x: clip;
   background: var(--color-paper);
-  box-shadow: 0 -40px 80px -20px rgb(0 0 0 / 0.5);
 }
 
 .case-page {
@@ -13,12 +12,12 @@
 }
 
 :where(.case-page) .layout-grid > * { min-inline-size: 0; }
-:where(.case-page) h2 { font-size: clamp(1.5rem, 3vw, 2.7rem); letter-spacing: -0.022em; line-height: 1.12; }
+:where(.case-page) h2 { font-size: clamp(1.5rem, 3vw, 2.7rem); letter-spacing: 0; line-height: 1.12; }
 :where(.case-page) .prose { text-wrap: pretty; }
 :where(.case-page) .prose p + p { margin-block-start: 0.85em; }
 :where(.case-page) .chapter {
-  margin-block-start: clamp(3.2rem, 6.2vw, 6.25rem);
-  padding-block-start: clamp(1.25rem, 2.6vw, 2.6rem);
+  margin-block-start: clamp(3.25rem, 6.2vw, 6.25rem);
+  padding-block-start: clamp(1.25rem, 2.6vw, 2.5rem);
   border-block-start: 1px solid var(--color-divider);
 }
 
@@ -37,8 +36,8 @@
 }
 .case-header {
   align-items: start;
-  row-gap: clamp(1.2rem, 3vw, 2.7rem);
-  padding-block: clamp(0.9rem, 2vw, 2rem) clamp(1.4rem, 2.8vw, 2.6rem);
+  row-gap: clamp(1.25rem, 3vw, 2.75rem);
+  padding-block: clamp(1rem, 2vw, 2rem) clamp(1.5rem, 2.8vw, 2.5rem);
   border-block-end: 1px solid var(--color-divider);
 }
 .case-header .heading-block { container-type: inline-size; }
@@ -50,14 +49,14 @@
 .case-meta, .folio .metadata { font-family: var(--font-sans); }
 
 .case-page .credits { row-gap: 1.25rem; }
-.credit-heading p { margin-block-start: 0.6rem; color: var(--color-secondary); }
+.credit-heading p { margin-block-start: 0.5rem; color: var(--color-secondary); }
 .credits dl, .credits dd { margin: 0; }
-.credits dl > div + div { margin-block-start: clamp(0.9rem, 1.75vw, 1.4rem); }
+.credits dl > div + div { margin-block-start: clamp(1rem, 1.75vw, 1.5rem); }
 .credits dt, .documents span { color: var(--color-secondary); }
 .credits dt { font-size: var(--size-label); }
-.credits dd { margin-block-start: 0.2em; font-weight: 550; line-height: 1.36; }
-.case-page .documents { display: flex; flex-wrap: wrap; gap: 0 1.7rem; }
-.case-page .documents a { display: inline; align-content: center; padding-block: 0.65rem; }
+.credits dd { margin-block-start: 0.2em; font-weight: 500; line-height: 1.36; }
+.case-page .documents { display: flex; flex-wrap: wrap; gap: 0 1.75rem; }
+.case-page .documents a { display: inline; align-content: center; padding-block: 0.75rem; }
 .documents span { font-size: 0.92em; }
 .case-footer {
   display: flex;
@@ -70,7 +69,7 @@
   border-block-start: 1px solid var(--color-ink);
 }
 .case-footer a { min-inline-size: 0; max-inline-size: 100%; overflow-wrap: anywhere; }
-.case-footer .next { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.3rem; min-block-size: var(--target-size); text-decoration: none; }
+.case-footer .next { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.25rem; min-block-size: var(--target-size); text-decoration: none; }
 .case-footer .next .type-label { color: var(--color-secondary); }
 .case-footer .next > span:last-child {
   font-size: min(clamp(1.5rem, 3vw, 2.6rem), 17.5cqi);

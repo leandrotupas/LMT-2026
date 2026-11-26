@@ -58,15 +58,15 @@ const { title, titleParts, year, category, next } = entry;
 </BaseLayout>
 
 <script>
-  import { gsap } from '../scripts/smooth';
+  import { easeOut, gsap } from '../scripts/smooth';
 
   const opener = document.querySelector<HTMLElement>('[data-case-opener]');
   const sheet = document.querySelector<HTMLElement>('.case-sheet');
   if (opener && sheet && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const image = opener.querySelector('img');
     // The artwork settles once on arrival, then recedes slightly as the page rises over it. It is never faded or tinted.
-    gsap.from(image, { scale: 1.04, duration: 1.4, ease: 'expo.out' });
-    gsap.from('#case-heading', { yPercent: 30, opacity: 0, duration: 1.1, ease: 'expo.out', delay: 0.15 });
+    gsap.from(image, { scale: 1.04, duration: 1.4, ease: easeOut });
+    gsap.from('#case-heading', { yPercent: 30, opacity: 0, duration: 1.1, ease: easeOut, delay: 0.15 });
     gsap.to(image, { scale: 0.94, ease: 'none', scrollTrigger: { trigger: sheet, start: 'top bottom', end: 'top top', scrub: true } });
   }
 </script>

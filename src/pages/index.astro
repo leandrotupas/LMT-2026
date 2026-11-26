@@ -34,25 +34,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     scale: 0.92;
     /* It appears to the right of the cursor, so it grows from that side; it leaves faster than it arrives. */
     transform-origin: left center;
-    transition: opacity 150ms ease, scale 150ms var(--ease-out-strong);
+    transition: opacity 150ms var(--ease-out-strong), scale 150ms var(--ease-out-strong);
   }
 
   .peek.is-on { opacity: 1; scale: 1; transition-duration: 250ms; }
   .peek img {
     inline-size: 100%;
-    box-shadow: 0 30px 70px -14px rgb(0 0 0 / 0.75);
-    transition: filter 200ms ease, opacity 200ms ease;
+    box-shadow: 0 12px 32px -12px rgb(0 0 0 / 0.5);
+    transition: filter 200ms var(--ease-out-strong), opacity 200ms var(--ease-out-strong);
   }
   /* A brief blur hides the cut when the preview switches between projects. */
   .peek img.is-swapping { filter: blur(2px); opacity: 0.6; transition-duration: 0s; }
-  .peek figcaption { margin-block-start: 0.625rem; color: var(--color-ink); }
+  .peek figcaption { margin-block-start: 0.75rem; color: var(--color-ink); }
 
   @media (hover: none), (pointer: coarse), (max-width: 51.25em) { .peek { display: none; } }
-  @media (prefers-reduced-motion: reduce) { .peek { transition: opacity 150ms ease; scale: 1; } }
+  @media (prefers-reduced-motion: reduce) { .peek { transition: opacity 150ms var(--ease-out-strong); scale: 1; } }
 </style>
 
 <script>
-  import { gsap } from '../scripts/smooth';
+  import { easeOut, gsap } from '../scripts/smooth';
 
   // A preview follows a fine pointer over the case rows and the index; touch shows thumbnails instead.
   const peek = document.querySelector<HTMLElement>('[data-peek]');
@@ -61,8 +61,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     const image = peek.querySelector('img')!;
     const caption = peek.querySelector('figcaption')!;
     const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const moveX = gsap.quickTo(peek, 'x', { duration: still ? 0 : 0.55, ease: 'power3' });
-    const moveY = gsap.quickTo(peek, 'y', { duration: still ? 0 : 0.55, ease: 'power3' });
+    const moveX = gsap.quickTo(peek, 'x', { duration: still ? 0 : 0.55, ease: easeOut });
+    const moveY = gsap.quickTo(peek, 'y', { duration: still ? 0 : 0.55, ease: easeOut });
     addEventListener('pointermove', (event) => {
       moveX(Math.min(event.clientX + 28, innerWidth - peek.offsetWidth - 16));
       moveY(Math.max(16, event.clientY - peek.offsetHeight * 0.55));

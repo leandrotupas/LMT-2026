@@ -122,24 +122,24 @@ const [mailbox, domain] = profile.email.split('@');
   .plain-list { margin: 0; padding: 0; list-style: none; }
   .profile-section {
     border-block-start: 1px solid var(--color-divider);
-    padding-block: clamp(1.65rem, 3.7vw, 3.7rem);
+    padding-block: clamp(1.75rem, 3.7vw, 3.75rem);
   }
   .about-intro + .profile-section, .contact { border-color: var(--color-divider); }
   .split { align-items: baseline; row-gap: var(--space-related); }
   .split > * { grid-column: 1 / -1; min-inline-size: 0; }
-  h2, h3 { letter-spacing: -0.022em; text-wrap: balance; }
+  h2, h3 { letter-spacing: 0; text-wrap: balance; }
   h3 { font-size: clamp(1.35rem, 2.1vw, 2.05rem); line-height: 1.15; }
   .entry + .entry {
     border-block-start: 1px solid var(--color-divider);
-    margin-block-start: clamp(0.9rem, 1.8vw, 1.5rem);
-    padding-block-start: clamp(1rem, 2vw, 1.65rem);
+    margin-block-start: clamp(1rem, 1.8vw, 1.5rem);
+    padding-block-start: clamp(1rem, 2vw, 1.75rem);
   }
-  .entry-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.3rem 1.5rem; }
+  .entry-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.25rem 1.5rem; }
   .entry-heading h3 { min-inline-size: 0; max-inline-size: 100%; overflow-wrap: anywhere; }
   .period { color: var(--color-secondary); font-variant-numeric: tabular-nums; }
-  .role { margin-block-start: 0.3rem; line-height: 1.4; }
+  .role { margin-block-start: 0.25rem; line-height: 1.4; }
   .entry-note { max-inline-size: 52ch; margin-block-start: 0.5rem; }
-  .sample-links { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 1.4rem; }
+  .sample-links { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 1.5rem; }
   .sample-links a, .resume, .back-to-about {
     display: inline-flex;
     align-items: center;
@@ -151,7 +151,7 @@ const [mailbox, domain] = profile.email.split('@');
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.25rem), 1fr));
     gap: var(--space-related) var(--grid-gap);
   }
-  .practice ul { display: grid; gap: 0.3rem var(--grid-gap); margin-block-start: 1rem; line-height: 1.4; }
+  .practice ul { display: grid; gap: 0.25rem var(--grid-gap); margin-block-start: 1rem; line-height: 1.4; }
   .resume { grid-column: 1 / -1; justify-self: start; flex-wrap: wrap; gap: 0 0.35em; }
   .resume span { color: var(--color-secondary); }
   .contact { padding-block-end: clamp(3rem, 8vw, 7.5rem); }
@@ -179,7 +179,7 @@ const [mailbox, domain] = profile.email.split('@');
     text-decoration-thickness: 0.055em;
     overflow-wrap: anywhere;
   }
-  .profiles { margin-block-start: 0.45rem; }
+  .profiles { margin-block-start: 0.5rem; }
   .back-to-about { margin-block-start: var(--space-related); }
   @container about-page (min-width: 35rem) {
     .about-intro { grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr)); }

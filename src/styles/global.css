@@ -25,7 +25,7 @@ html {
   background: var(--color-paper);
   color: var(--color-ink);
   color-scheme: dark;
-  transition: background-color 250ms ease, color 250ms ease;
+  transition: background-color 250ms var(--ease-out-strong), color 250ms var(--ease-out-strong);
   scroll-behavior: auto;
   scroll-padding-top: var(--header-clearance);
   scrollbar-color: var(--color-accent) var(--color-paper);
@@ -74,13 +74,15 @@ img, video {
 }
 
 a {
-  color: var(--color-link);
+  color: var(--color-ink);
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
   text-decoration-line: underline;
   text-decoration-thickness: 0.07em;
   text-underline-offset: 0.19em;
 }
 
 a:hover {
+  text-decoration-color: currentColor;
   text-decoration-thickness: 0.12em;
 }
 
@@ -89,12 +91,12 @@ a[data-artwork], a[data-hover-label] { position: relative; }
   content: 'Enlarge +';
   position: absolute;
   z-index: 1;
-  inset: auto 0.45rem 0.45rem auto;
-  padding: 0.25rem 0.55rem;
+  inset: auto 0.5rem 0.5rem auto;
+  padding: 0.25rem 0.5rem;
   border: 1px solid var(--color-ink);
   background: var(--color-paper);
   color: var(--color-ink);
-  font: 550 0.8125rem/1.25 var(--font-sans);
+  font: 500 0.8125rem/1.25 var(--font-sans);
   opacity: 0;
   pointer-events: none;
 }
@@ -105,7 +107,7 @@ a[data-hover-label]::after { content: attr(data-hover-label); }
   @media (prefers-reduced-motion: no-preference) {
     :is(a[data-artwork], a[data-hover-label]):not(:focus-visible)::after {
       transform: translateY(0.25rem);
-      transition: opacity 150ms ease-out, transform var(--duration-preview) var(--ease-settle);
+      transition: opacity 150ms var(--ease-out-strong), transform var(--duration-preview) var(--ease-settle);
     }
     :is(a[data-artwork], a[data-hover-label]):hover:not(:focus-visible)::after { transform: none; }
   }
@@ -199,7 +201,7 @@ body:not(.is-home, .is-bleed) > main {
 
 .type-display {
   font-size: var(--size-display);
-  font-weight: 650;
+  font-weight: 600;
   font-variation-settings: 'opsz' 96;
   line-height: 0.96;
   letter-spacing: var(--display-tracking);

@@ -58,7 +58,6 @@ const [givenName, ...familyName] = profile.name.split(' ');
     block-size: auto;
     aspect-ratio: 1;
     background: #fff;
-    box-shadow: 0 20px 60px -10px rgb(0 0 0 / 0.6);
   }
 
   .intro {
@@ -98,16 +97,16 @@ const [givenName, ...familyName] = profile.name.split(' ');
 </style>
 
 <script>
-  import { gsap } from '../scripts/smooth';
+  import { easeOut, gsap } from '../scripts/smooth';
 
   const hero = document.querySelector<HTMLElement>('[data-hero]');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (hero && !reduced) {
     // One entrance: the words rise from their own baselines; the mark is already in place.
-    gsap.from(hero.querySelectorAll('.word > span'), { yPercent: 105, duration: 1.1, ease: 'expo.out', stagger: 0.09, delay: 0.1 });
+    gsap.from(hero.querySelectorAll('.word > span'), { yPercent: 105, duration: 1.1, ease: easeOut, stagger: 0.09, delay: 0.1 });
     // The intro is painted at once (it is often the largest element on phones); it only settles into place.
-    gsap.from(hero.querySelectorAll('.intro > *'), { y: 12, duration: 0.8, ease: 'expo.out', stagger: 0.06 });
+    gsap.from(hero.querySelectorAll('.intro > *'), { y: 12, duration: 0.8, ease: easeOut, stagger: 0.06 });
 
     // The authored moment, scrubbed by scroll.
     const mark = hero.querySelector<HTMLElement>('.mark')!;
@@ -115,7 +114,7 @@ const [givenName, ...familyName] = profile.name.split(' ');
       const value = getComputedStyle(mark).translate;
       return value === 'none' ? 0 : parseFloat(value.split(' ')[axis] ?? '0') || 0;
     };
-    gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: '+=80%', scrub: 0.6, pin: true, anticipatePin: 1 } })
+    gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: '+=45%', scrub: 0.6, pin: true, anticipatePin: 1 } })
       .to(hero.querySelector('.given > span'), { x: () => -innerWidth, ease: 'none' }, 0)
       .to(hero.querySelector('.family > span'), { x: () => innerWidth, ease: 'none' }, 0)
       .to(hero.querySelector('.intro'), { opacity: 0, y: -20, ease: 'none', duration: 0.3 }, 0)

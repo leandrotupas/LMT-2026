@@ -39,6 +39,15 @@ Yancy chose this direction from three homepage concepts. The approved references
 - **"View" badge.** A small yellow-green badge rides beside the native pointer over Work index rows and "Next" panels, on fine pointers only.
 - **Day mode.** A header toggle switches to a light palette: bone ground, night ink, and kit purple for links, focus and the family name. Each visitor's choice is remembered on their device; Afterhours stays the default. The toggle is hidden below 360 px, where the header has no room.
 
+**Unslop polish (27 November 2026, approved by Yancy).** A pass with the unslop skill rated the site as light slop and polished it in place:
+- **Spacing:** every value sits on the 4 px scale.
+- **Accent:** yellow-green is reserved for TUPAS, the band, focus, selection, the current Work category and one action per page. Links and hovers stay bone, with a soft underline.
+- **Depth:** no drop shadows on the night ground; only the floating preview keeps a small soft one.
+- **Type:** weights 400, 500 and 600, with 800 for the condensed display only. No negative tracking on text that can be small.
+- **Copy:** the 404 heading has no period.
+- **Motion:** one easing curve, `cubic-bezier(0.22, 1, 0.36, 1)`, shared by CSS and GSAP.
+- **Hero:** a shorter pin (145% of the viewport), so the case rows arrive as the words leave.
+
 **Status.** Yancy approved R1 on 26 November 2026. R2–R5 are built and await review: the case studies with openers, the Work index, the project pages, About and a full-site audit. [Revamp audit](mockups/AUDIT-REVAMP.md)
 
 ---

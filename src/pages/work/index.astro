@@ -96,7 +96,7 @@ const projectCount = workSections.reduce((total, section) => total + section.pro
     display: grid;
     align-items: start;
     gap: clamp(2.25rem, 5vw, 4.25rem) var(--grid-gap);
-    padding-block-start: clamp(0.85rem, 2.8vw, 2.75rem);
+    padding-block-start: clamp(0.75rem, 2.8vw, 2.75rem);
   }
   .categories {
     display: grid;
@@ -129,7 +129,7 @@ const projectCount = workSections.reduce((total, section) => total + section.pro
   .count, .year { font-variant-numeric: tabular-nums; }
   .categories a > span:first-child { min-inline-size: 0; }
   .groups { min-inline-size: 0; }
-  .group + .group { margin-block-start: clamp(2.8rem, 5.5vw, 5.3rem); }
+  .group + .group { margin-block-start: clamp(2.75rem, 5.5vw, 5.25rem); }
   .group:last-child:has(h2:target) { min-block-size: calc(100svh - var(--header-clearance) - var(--space-section)); }
   .group-heading {
     display: flex;
@@ -137,13 +137,13 @@ const projectCount = workSections.reduce((total, section) => total + section.pro
     align-items: baseline;
     justify-content: space-between;
     gap: 0.25rem 1rem;
-    padding-block-end: 0.7rem;
+    padding-block-end: 0.75rem;
     border-block-end: 1px solid var(--color-divider);
   }
   .group-heading h2 {
     scroll-margin-block-start: 0;
     font-size: clamp(1.55rem, 3.1vw, 2.55rem);
-    letter-spacing: -0.025em;
+    letter-spacing: 0;
     line-height: 1.13;
   }
   .group-heading h2:focus:not(:focus-visible) { outline: none; }
@@ -154,11 +154,11 @@ const projectCount = workSections.reduce((total, section) => total + section.pro
     display: grid;
     grid-template-columns: clamp(3.45rem, 17.5vw, 7rem) minmax(0, 1fr) auto;
     grid-template-areas: "thumb title open" "thumb year open";
-    column-gap: clamp(0.7rem, 2.4vw, 1.5rem);
+    column-gap: clamp(0.75rem, 2.4vw, 1.5rem);
     row-gap: 0.25rem;
     align-items: center;
     min-block-size: var(--target-size);
-    padding-block: clamp(0.85rem, 2vw, 1.2rem);
+    padding-block: clamp(0.75rem, 2vw, 1.25rem);
     color: var(--color-ink);
     text-decoration: none;
   }
@@ -176,23 +176,24 @@ const projectCount = workSections.reduce((total, section) => total + section.pro
     align-self: end;
     font-weight: 600;
     font-size: clamp(1.125rem, 2.4vw, 1.8rem);
-    letter-spacing: -0.015em;
+    letter-spacing: 0;
     line-height: 1.18;
     overflow-wrap: anywhere;
     transform-origin: left center;
-    transition: transform 220ms var(--ease-out-strong), scale 160ms var(--ease-out-strong), color 200ms ease;
+    transition: transform 220ms var(--ease-out-strong), scale 160ms var(--ease-out-strong), color 200ms var(--ease-out-strong);
   }
   .year { grid-area: year; align-self: start; }
-  .open { grid-area: open; color: var(--color-link); font-size: 1.2rem; }
+  .open { grid-area: open; color: var(--color-secondary); font-size: 1.2rem; }
   .work-preview { display: none; }
 
   @media (hover: hover) and (pointer: fine) {
-    .categories a:hover > span:first-child { color: var(--color-link); }
-    .work-link:hover .work-title { color: var(--color-link); transform: translateX(0.625rem); }
+    .categories a:hover > span:first-child { text-decoration: underline; text-underline-offset: 0.2em; }
+    .work-link:hover .work-title { transform: translateX(0.625rem); }
+    .work-link:hover .year { color: var(--color-ink); }
   }
   @media (prefers-reduced-motion: no-preference) { .work-link:active .work-title { scale: 0.98; } }
   @media (prefers-reduced-motion: reduce) {
-    .work-title { transition: color 200ms ease; }
+    .work-title { transition: color 200ms var(--ease-out-strong); }
     .work-link:hover .work-title { transform: none; }
   }
 
@@ -233,7 +234,7 @@ const projectCount = workSections.reduce((total, section) => total + section.pro
       grid-template-columns: minmax(0, 1fr) auto;
       grid-template-areas: "title year";
       min-block-size: 4.75rem;
-      padding: 0.95rem 0.35rem;
+      padding: 1rem 0.25rem;
     }
     [data-previewed] .work-title { text-decoration: underline; text-underline-offset: 0.18em; text-decoration-thickness: 0.055em; }
     .work-preview {
@@ -241,7 +242,7 @@ const projectCount = workSections.reduce((total, section) => total + section.pro
       top: var(--header-clearance);
       display: block;
       grid-column: 9 / -1;
-      margin-block-start: calc(clamp(1.55rem, 3.1vw, 2.55rem) * 1.13 + 0.7rem + 1px);
+      margin-block-start: calc(clamp(1.5rem, 3.1vw, 2.5rem) * 1.13 + 0.75rem + 1px);
       min-inline-size: 0;
     }
     }
@@ -272,7 +273,7 @@ const projectCount = workSections.reduce((total, section) => total + section.pro
     }
     .work-preview figcaption { padding-block-start: 0.75rem; }
     .preview-title { font-size: 1.125rem; font-weight: 600; line-height: 1.25; }
-    .preview-caption { margin-block-start: 0.2rem; }
+    .preview-caption { margin-block-start: 0.25rem; }
   }
 
   @container work-page (max-width: 17rem) {
@@ -281,7 +282,7 @@ const projectCount = workSections.reduce((total, section) => total + section.pro
     .work-link {
       grid-template-columns: minmax(0, 1fr) auto;
       grid-template-areas: "thumb thumb" "title title" "year open";
-      row-gap: 0.45rem;
+      row-gap: 0.5rem;
     }
     .thumbnail { inline-size: min(7rem, 100%); }
   }

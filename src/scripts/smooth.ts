@@ -54,4 +54,14 @@ export function scrollToTarget(target: HTMLElement, { immediate = false } = {}) 
   }
 }
 
+/** The site's one easing curve, cubic-bezier(0.22, 1, 0.36, 1), for GSAP tweens. */
+export function easeOut(t: number) {
+  if (t <= 0 || t >= 1) return t;
+  const [x1, y1, x2, y2] = [0.22, 1, 0.36, 1];
+  const bez = (a: number, b: number, s: number) => 3 * a * s * (1 - s) ** 2 + 3 * b * s * s * (1 - s) + s ** 3;
+  let lo = 0, hi = 1, s = t;
+  for (let i = 0; i < 24; i++) { s = (lo + hi) / 2; if (bez(x1, x2, s) < t) lo = s; else hi = s; }
+  return bez(y1, y2, s);
+}
+
 export { gsap, ScrollTrigger };

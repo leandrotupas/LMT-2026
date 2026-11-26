@@ -27,12 +27,12 @@ const { art, sizes, lead = false } = Astro.props;
   .lead .art-link { inline-size: min(100%, var(--art-width), calc(72svh * var(--art-ratio))); }
   img { display: block; inline-size: 100%; block-size: auto; }
   figcaption {
-    margin-block-start: clamp(0.5rem, 1vw, 0.85rem);
+    margin-block-start: clamp(0.5rem, 1vw, 0.75rem);
     color: var(--color-secondary);
     font-size: clamp(0.875rem, 1.15vw, 1rem);
     line-height: 1.4;
   }
   @media (hover: hover) and (pointer: fine) {
-    .art-link:hover + figcaption { color: var(--color-link); }
+    .art-link:hover + figcaption { color: var(--color-ink); }
   }
 </style>

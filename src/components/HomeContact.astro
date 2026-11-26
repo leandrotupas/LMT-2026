@@ -30,13 +30,13 @@ import { profile } from '../data/profile';
   .mail {
     position: relative;
     display: inline-block;
-    margin-block: clamp(1.125rem, 3vh, 2rem) clamp(4rem, 12vh, 8.75rem);
+    margin-block: clamp(1.25rem, 3vh, 2rem) clamp(4rem, 12vh, 8.75rem);
     color: var(--color-ink);
     font-size: clamp(2.75rem, 8.4vw, 9.75rem);
     line-height: 0.9;
     overflow-wrap: anywhere;
     text-decoration: none;
-    transition: color 200ms ease;
+    transition: color 200ms var(--ease-out-strong);
   }
 
   /* Underline drawn with transform only (no repaint), from the left. */
@@ -52,7 +52,6 @@ import { profile } from '../data/profile';
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .mail:hover { color: var(--color-link); }
     .mail:hover::after { transform: scaleX(1); transition-duration: 300ms; }
   }
 
@@ -72,7 +71,7 @@ import { profile } from '../data/profile';
     color: var(--color-ink);
     text-decoration: none;
   }
-  .foot a:hover { color: var(--color-link); }
+  .foot a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 
   @media (prefers-reduced-motion: reduce) { .mail::after { transition: none; } }
 </style>

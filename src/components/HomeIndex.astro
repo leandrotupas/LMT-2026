@@ -43,7 +43,7 @@ const sections = workSections.filter(({ id }) => id !== 'case-studies');
   h3 {
     display: flex;
     align-items: baseline;
-    gap: 0.375rem;
+    gap: 0.5rem;
     padding-block-end: 0.5rem;
     border-block-end: 1px solid var(--color-divider);
     font-size: clamp(1.25rem, 1.6vw, 1.5rem);
@@ -58,7 +58,7 @@ const sections = workSections.filter(({ id }) => id !== 'case-studies');
     text-decoration: none;
   }
 
-  h3 a:hover { text-decoration: underline; text-decoration-color: var(--color-link); }
+  h3 a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
   h3 small { color: var(--color-secondary); font: 500 1rem var(--font-sans); }
 
   ul { margin: 0; padding: 0; list-style: none; }
@@ -68,14 +68,14 @@ const sections = workSections.filter(({ id }) => id !== 'case-studies');
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: baseline;
     gap: 1rem;
-    padding-block: 0.8125rem;
+    padding-block: 0.75rem;
     border-block-end: 1px solid var(--color-divider);
     color: var(--color-ink);
     font: 600 clamp(1.25rem, 1.7vw, 1.625rem) / 1.15 var(--font-sans);
     font-variation-settings: 'opsz' 28;
     text-decoration: none;
     overflow-wrap: anywhere;
-    transition: color 200ms ease;
+    transition: color 200ms var(--ease-out-strong);
   }
 
   .title { transform-origin: left center; transition: transform 220ms var(--ease-out-strong), scale 160ms var(--ease-out-strong); }
@@ -84,7 +84,7 @@ const sections = workSections.filter(({ id }) => id !== 'case-studies');
   .thumb { display: none; }
 
   @media (hover: hover) and (pointer: fine) {
-    li a:hover { color: var(--color-link); }
+    li a:hover .year { color: var(--color-ink); }
     li a:hover .title { transform: translateX(0.625rem); }
   }
 

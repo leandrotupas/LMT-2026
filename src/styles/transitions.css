@@ -76,6 +76,6 @@
 @media (prefers-reduced-motion: no-preference) {
 
   .site-header a, .categories a > span, .work-link .work-title, figcaption {
-    transition: color 150ms ease-out, text-decoration-color 150ms ease-out;
+    transition: color 150ms var(--ease-out-strong), text-decoration-color 150ms var(--ease-out-strong);
   }
 }
