@@ -49,6 +49,7 @@ npm.cmd run preview
 | `public/images/work/`, `public/images/projects/` | Index thumbnails, project covers, complete gallery images and responsive sizes |
 | `public/images/share/` | 1,200 × 630 JPEGs for social previews in the Afterhours style, with one portfolio card and one card per project |
 | `public/favicon.ico`, `public/*icon*.png`, `public/site.webmanifest` | Browser-tab icon (the LMT square), home-screen and app icons on night, and the web app manifest |
+| `src/components/CursorBadge.astro` | The "View" badge beside the pointer over Work rows and next panels |
 | `src/pages/404.astro` | The not-found page: the LMT square as the zero, links back to the work, kept out of search |
 | `public/licenses/` | The copyright and SIL Open Font License notices distributed with the fonts |
 
@@ -102,4 +103,5 @@ Deployment is a separate approval stage. Local builds use `noindex`. Set the bui
 2. **Configure the build.** Build command `npm run build`, output folder `dist`, Node 22 or later, and `SITE_URL` set to the final origin, for example `https://yancytupas.com`.
 3. **Serve the 404 page.** Astro emits `dist/404.html`; Netlify, Vercel and Cloudflare Pages serve it automatically for unknown addresses.
 4. **Test on real devices.** Check touch momentum, the hero scroll and the artwork viewer on an iPhone in Safari and on an Android phone. The cloud audits used Chromium only.
-5. **Check link previews.** Paste the live URL into LinkedIn's Post Inspector and the Facebook Sharing Debugger to confirm the cards update.
+5. **Turn on analytics.** The site loads Vercel Web Analytics (cookieless) and Speed Insights on deployed hosts only. In the Vercel project, open **Analytics → Enable** and **Speed Insights → Enable**; data appears after the next deployment.
+6. **Check link previews.** Paste the live URL into LinkedIn's Post Inspector and the Facebook Sharing Debugger to confirm the cards update.

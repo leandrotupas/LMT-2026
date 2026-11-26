@@ -9,12 +9,47 @@ const currentWork = pathname === '/work/' ? 'page' : pathname.startsWith('/work/
 <a class="skip-link type-label" href="#main-content" tabindex="0">Skip to content</a>
 <header class="site-header type-label">
   <a class="home-link" href="/" tabindex="0" aria-label={`${profile.name}, home`} aria-current={pathname === '/' ? 'page' : undefined}><span>{profile.name}</span></a>
-  <nav aria-label="Primary" class="primary-nav">
-    <a href="/work/" tabindex="0" aria-current={currentWork}><span>Work</span></a>
-    <a href="/about/" tabindex="0" data-about-link aria-current={aboutPage ? 'page' : undefined}><span>About</span></a>
-    <a href="/about/#contact" tabindex="0" data-contact-link><span>Contact</span></a>
-  </nav>
+  <!-- Davao local time: it's an Afterhours portfolio, so visitors can see when it's night in Davao. -->
+  <p class="local-time">{profile.location.split(',')[0]}<span data-clock></span></p>
+  <div class="end">
+    <nav aria-label="Primary" class="primary-nav">
+      <a href="/work/" tabindex="0" aria-current={currentWork}><span>Work</span></a>
+      <a href="/about/" tabindex="0" data-about-link aria-current={aboutPage ? 'page' : undefined}><span>About</span></a>
+      <a href="/about/#contact" tabindex="0" data-contact-link><span>Contact</span></a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Day mode" data-theme-toggle>
+      <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" /><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1" /></svg>
+      <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z" /></svg>
+    </button>
+  </div>
 </header>
+
+<script>
+  // Davao local time, refreshed on the minute.
+  const clock = document.querySelector<HTMLElement>('[data-clock]');
+  if (clock) {
+    const format = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Manila', hour: 'numeric', minute: '2-digit' });
+    const tick = () => { clock.textContent = `, ${format.format(new Date())}`; };
+    tick();
+    setTimeout(() => { tick(); setInterval(tick, 60_000); }, 60_000 - (Date.now() % 60_000));
+  }
+
+  // Day mode: a per-visitor preference. Night (Afterhours) stays the default.
+  const toggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const root = document.documentElement;
+  const sync = () => {
+    const day = root.dataset.theme === 'day';
+    toggle?.setAttribute('aria-pressed', String(day));
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', day ? '#f4f1ec' : '#0b0712');
+  };
+  sync();
+  toggle?.addEventListener('click', () => {
+    const day = root.dataset.theme !== 'day';
+    if (day) root.dataset.theme = 'day'; else delete root.dataset.theme;
+    try { localStorage.setItem('yancy:theme', day ? 'day' : 'night'); } catch { /* The choice simply isn't remembered. */ }
+    sync();
+  });
+</script>
 
 {aboutPage && (
   <script is:inline>
@@ -81,10 +116,43 @@ const currentWork = pathname === '/work/' ? 'page' : pathname.startsWith('/work/
     color: var(--color-ink);
   }
 
+  .end { display: flex; align-items: center; gap: clamp(0.5rem, 1.6vw, 1.25rem); }
+
   .primary-nav {
     display: flex;
     align-items: center;
     gap: 0 clamp(0.875rem, 2.6vw, 2.25rem);
+  }
+
+  .local-time {
+    display: none;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 64em) { .local-time { display: block; } }
+
+  .theme-toggle {
+    display: grid;
+    place-items: center;
+    inline-size: 2rem;
+    block-size: var(--target-size);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .theme-toggle svg { inline-size: 1.125rem; block-size: 1.125rem; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; }
+  .theme-toggle .moon { display: none; fill: currentColor; stroke: none; }
+  .theme-toggle[aria-pressed='true'] .sun { display: none; }
+  .theme-toggle[aria-pressed='true'] .moon { display: block; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .theme-toggle { transition: transform 160ms var(--ease-out-strong); }
+    .theme-toggle:active { transform: scale(0.94); }
   }
 
   .site-header a {
@@ -140,6 +208,8 @@ const currentWork = pathname === '/work/' ? 'page' : pathname.startsWith('/work/
   @media (max-width: 22.4375em) {
     .site-header { font-size: 0.9375rem; }
     .primary-nav { gap: 0 0.75rem; }
+    /* No room beside the three links on the smallest phones. */
+    .theme-toggle { display: none; }
   }
 
   @media (min-width: 64em) {

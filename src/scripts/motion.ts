@@ -1,4 +1,12 @@
+import { inject } from '@vercel/analytics';
+import { injectSpeedInsights } from '@vercel/speed-insights';
 import { scrollToTarget, smoothScroller } from './smooth';
+
+// Cookieless visitor counts and real-visitor speed, on the deployed site only (Vercel serves the scripts).
+if (!/^(localhost|127\.|\[::1\])/.test(location.hostname)) {
+  inject();
+  injectSpeedInsights();
+}
 
 const root = document.documentElement;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');

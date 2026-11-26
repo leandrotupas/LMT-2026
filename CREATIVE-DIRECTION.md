@@ -33,6 +33,12 @@ Yancy chose this direction from three homepage concepts. The approved references
 
 **Next panel.** Every case and project ends with the next piece of work as a full-width panel in its own color, using the same paired ink as the homepage floods. Work outside the flagships uses the kit purple.
 
+**Additions (27 November 2026).**
+- **Page transitions.** On the homepage, the cursor preview flies into the case opener, and titles morph between the index and the project. Keyboard navigation and reduced motion open pages instantly.
+- **Davao time.** The header shows the local time in Davao on wide screens.
+- **"View" badge.** A small yellow-green badge rides beside the native pointer over Work index rows and "Next" panels, on fine pointers only.
+- **Day mode.** A header toggle switches to a light palette: bone ground, night ink, and kit purple for links, focus and the family name. Each visitor's choice is remembered on their device; Afterhours stays the default. The toggle is hidden below 360 px, where the header has no room.
+
 **Status.** Yancy approved R1 on 26 November 2026. R2–R5 are built and await review: the case studies with openers, the Work index, the project pages, About and a full-site audit. [Revamp audit](mockups/AUDIT-REVAMP.md)
 
 ---

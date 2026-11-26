@@ -2,6 +2,7 @@
 import displayFont from '../assets/fonts/bricolage-grotesque-wdth-latin.woff2?url';
 import { profile } from '../data/profile';
 import ArtworkViewer from '../components/ArtworkViewer.astro';
+import CursorBadge from '../components/CursorBadge.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import '../styles/global.css';
 import '../styles/transitions.css';
@@ -58,6 +59,10 @@ const shareUrl = Astro.site ? new URL(sharePath, Astro.site).href : sharePath;
     </style>
     <slot name="head" />
     <script is:inline>
+      // Apply a saved day-mode choice before first paint, so the page never flashes the other theme.
+      try { if (localStorage.getItem('yancy:theme') === 'day') document.documentElement.dataset.theme = 'day'; } catch { /* Night is the default. */ }
+    </script>
+    <script is:inline>
       // Carry the activating input across an ordinary full-page link, including in browsers without page transitions.
       try {
         const stored = sessionStorage.getItem('yancy:next-navigation');
@@ -95,7 +100,10 @@ const shareUrl = Astro.site ? new URL(sharePath, Astro.site).href : sharePath;
         capture(onProject ? document.querySelector('h1 [data-case-title]') : link?.querySelector('[data-case-title]'), 'case-title');
         if (!isIndex(from.pathname) && !isIndex(to.pathname)) return;
         let cover;
+        // On the homepage the visible artwork is the cursor preview, so it flies into the project's opener.
+        const preview = document.querySelector('.peek.is-on img');
         if (onProject) cover = document.querySelector('img[data-case-cover]');
+        else if (preview && link?.hasAttribute('data-share-cover')) cover = preview;
         else if (link?.hasAttribute('data-share-cover')) {
           cover = link.hasAttribute('data-previewed') ? document.querySelector('.preview-frame > img') : link.querySelector('img');
         }
@@ -128,6 +136,7 @@ const shareUrl = Astro.site ? new URL(sharePath, Astro.site).href : sharePath;
       <slot />
     </main>
     {artworkViewer && <ArtworkViewer />}
+    <CursorBadge />
     <script>
       import '../scripts/motion';
     </script>

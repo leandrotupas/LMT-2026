@@ -1,0 +1,48 @@
+<!-- A small "View" badge rides beside the native pointer over project links (fine pointers only).
+     The homepage rows already show a cursor-following preview, so they are left out. -->
+<div class="cursor-badge" aria-hidden="true" data-cursor-badge>View</div>
+
+<style>
+  .cursor-badge {
+    position: fixed;
+    z-index: 70;
+    inset: 0 auto auto 0;
+    display: none;
+    place-items: center;
+    inline-size: 4.25rem;
+    block-size: 4.25rem;
+    border-radius: 50%;
+    background: var(--color-link);
+    color: var(--color-paper);
+    font: 600 0.9375rem var(--font-sans);
+    pointer-events: none;
+    opacity: 0;
+    scale: 0.6;
+    transform-origin: top left;
+    transition: opacity 150ms ease, scale 150ms var(--ease-out-strong);
+  }
+
+  .cursor-badge.is-on { opacity: 1; scale: 1; transition-duration: 220ms; }
+
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .cursor-badge { display: grid; }
+  }
+</style>
+
+<script>
+  import { gsap } from '../scripts/smooth';
+
+  const badge = document.querySelector<HTMLElement>('[data-cursor-badge]');
+  const usable = matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+  if (badge && usable.matches) {
+    const moveX = gsap.quickTo(badge, 'x', { duration: 0.45, ease: 'power3' });
+    const moveY = gsap.quickTo(badge, 'y', { duration: 0.45, ease: 'power3' });
+    addEventListener('pointermove', (event) => { moveX(event.clientX + 18); moveY(event.clientY + 18); }, { passive: true });
+    document.querySelectorAll<HTMLElement>('.work-link, .case-footer .next.is-panel').forEach((link) => {
+      link.addEventListener('pointerenter', () => badge.classList.add('is-on'));
+      link.addEventListener('pointerleave', () => badge.classList.remove('is-on'));
+    });
+    // Never leave the badge stranded when the page is hidden or left.
+    addEventListener('pagehide', () => badge.classList.remove('is-on'));
+  }
+</script>

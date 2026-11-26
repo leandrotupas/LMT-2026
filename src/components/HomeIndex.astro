@@ -17,9 +17,10 @@ const sections = workSections.filter(({ id }) => id !== 'case-studies');
         <ul role="list">
           {section.projects.map((project) => (
             <li>
-              <a href={project.href} data-preview={project.preview} data-preview-caption={project.caption}>
+              <a href={project.href} data-preview={project.preview} data-preview-caption={project.caption}
+                data-case-link data-share-cover={project.sharesCover || undefined} translate="no">
                 <img class="thumb" src={project.thumbnail} width={project.width} height={project.height} alt="" loading="lazy" decoding="async" />
-                <span class="title">{project.title}</span>
+                <span class="title"><span data-case-title>{project.title}</span></span>
                 <span class="year type-label">{project.year}</span>
               </a>
             </li>

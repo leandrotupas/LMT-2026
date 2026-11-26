@@ -25,6 +25,7 @@ html {
   background: var(--color-paper);
   color: var(--color-ink);
   color-scheme: dark;
+  transition: background-color 250ms ease, color 250ms ease;
   scroll-behavior: auto;
   scroll-padding-top: var(--header-clearance);
   scrollbar-color: var(--color-accent) var(--color-paper);
@@ -32,6 +33,7 @@ html {
 }
 
 html:has(.art-viewer[open]) { overflow: hidden; }
+html[data-theme='day'] { color-scheme: light; }
 
 body {
   margin: 0;

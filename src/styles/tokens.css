@@ -7,6 +7,7 @@
   --color-secondary: #a69eb2;
   --color-link: #e7fa60;
   --color-accent: #670da8;
+  --color-on-accent: #e7fa60;
   --color-divider: #2f2838;
   --header-clearance: 5rem;
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
@@ -76,4 +77,15 @@
     --duration-page: 0ms;
     --duration-exit: 0ms;
   }
+}
+
+/* Day mode: a per-visitor choice; Afterhours (night) stays the default. Links and focus move to the kit
+   purple, because yellow-green fails contrast on a light ground. */
+:root[data-theme='day'] {
+  --color-paper: #f4f1ec;
+  --color-surface: #e9e4da;
+  --color-ink: #0b0712;
+  --color-secondary: #5b5466;
+  --color-link: #670da8;
+  --color-divider: #d6cfc4;
 }
