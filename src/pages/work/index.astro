@@ -179,7 +179,8 @@ const projectCount = workSections.reduce((total, section) => total + section.pro
     letter-spacing: -0.015em;
     line-height: 1.18;
     overflow-wrap: anywhere;
-    transition: transform 350ms var(--ease-out-strong), color 200ms ease;
+    transform-origin: left center;
+    transition: transform 220ms var(--ease-out-strong), scale 160ms var(--ease-out-strong), color 200ms ease;
   }
   .year { grid-area: year; align-self: start; }
   .open { grid-area: open; color: var(--color-link); font-size: 1.2rem; }
@@ -189,6 +190,7 @@ const projectCount = workSections.reduce((total, section) => total + section.pro
     .categories a:hover > span:first-child { color: var(--color-link); }
     .work-link:hover .work-title { color: var(--color-link); transform: translateX(0.625rem); }
   }
+  @media (prefers-reduced-motion: no-preference) { .work-link:active .work-title { scale: 0.98; } }
   @media (prefers-reduced-motion: reduce) {
     .work-title { transition: color 200ms ease; }
     .work-link:hover .work-title { transform: none; }

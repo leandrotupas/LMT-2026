@@ -13,13 +13,15 @@ interface Props {
   artworkViewer?: boolean;
   /** The page opens with full-bleed artwork under the header. */
   bleed?: boolean;
+  /** Keep the page out of search results (the 404 page). */
+  noindex?: boolean;
   share?: { slug: string; alt: string };
 }
 
-const { title, description, artworkViewer = false, bleed = false, share } = Astro.props;
+const { title, description, artworkViewer = false, bleed = false, noindex = false, share } = Astro.props;
 const sharePath = `/images/share/${share?.slug ?? 'portfolio'}.jpg`;
 const shareAlt = share?.alt ?? `${profile.name} with the Advenient playbook, KOTA event cover and Wünderbar business cards.`;
-const canonical = Astro.site && new URL(Astro.url.pathname, Astro.site).href;
+const canonical = !noindex && Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 const shareUrl = Astro.site ? new URL(sharePath, Astro.site).href : sharePath;
 ---
 

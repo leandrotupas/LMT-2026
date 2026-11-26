@@ -1,0 +1,170 @@
+---
+import initials from '../assets/lmt-initials.png';
+import signatureMark from '../assets/lmt-signature.png';
+import ProjectName from '../components/ProjectName.astro';
+import { flagships } from '../data/flagships';
+import { profile } from '../data/profile';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title={`Page not found · ${profile.name}`} description={`This page isn’t here. Browse ${profile.name}’s work instead.`} noindex>
+  <section class="lost" aria-labelledby="lost-title">
+    <!-- The LMT square stands in for the zero: the one bold move on this page. -->
+    <p class="code type-poster" aria-hidden="true">
+      <span class="clip"><span class="four">4</span></span>
+      <img class="mark" src={initials.src} srcset={`${initials.src} 192w, ${signatureMark.src} 408w`}
+        sizes="(min-width: 64em) 12rem, 22vw" width="192" height="192" alt="" />
+      <span class="clip"><span class="four">4</span></span>
+    </p>
+
+    <h1 id="lost-title">This page isn’t here.</h1>
+    <p class="note">The link may be old, or the address mistyped. Everything I’ve made is in the Work index.</p>
+
+    <div class="actions">
+      <a class="primary" href="/work/">Browse all work</a>
+      <a class="secondary" href="/">Back to the homepage</a>
+    </div>
+
+    <nav class="cases" aria-labelledby="lost-cases">
+      <h2 id="lost-cases">Or start with a case study</h2>
+      <ul role="list">
+        {flagships.map((project) => (
+          <li>
+            <a href={project.href} style={{ '--swatch': project.identityColor }} translate="no">
+              <ProjectName title={project.title} titleParts={'titleParts' in project ? [...project.titleParts] : undefined} />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </section>
+</BaseLayout>
+
+<style>
+  .lost {
+    display: grid;
+    align-content: center;
+    gap: clamp(1rem, 2.4vh, 1.5rem);
+    min-block-size: calc(100svh - var(--header-clearance));
+    padding: clamp(1rem, 4vh, 3rem) var(--page-margin) clamp(3rem, 8vh, 5rem);
+  }
+
+  .code {
+    display: flex;
+    align-items: center;
+    gap: 0.06em;
+    margin-block-end: clamp(0.5rem, 2vh, 1.5rem);
+    font-size: clamp(8rem, 30vw, 26rem);
+  }
+
+  .clip { display: block; overflow: hidden; padding-block-start: 0.04em; }
+  .four { display: block; }
+  .clip:last-of-type .four { color: var(--color-link); }
+
+  .mark {
+    inline-size: 0.6em;
+    block-size: auto;
+    aspect-ratio: 1;
+    background: #fff;
+    box-shadow: 0 20px 60px -10px rgb(0 0 0 / 0.6);
+  }
+
+  h1 {
+    font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  .note {
+    max-inline-size: 46ch;
+    color: var(--color-secondary);
+    font-size: clamp(1.0625rem, 1.3vw, 1.25rem);
+    line-height: 1.5;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.75rem;
+    margin-block-start: 0.5rem;
+  }
+
+  .primary {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 3rem;
+    padding-inline: 1.5rem;
+    border-radius: 999px;
+    background: var(--color-link);
+    color: var(--color-paper);
+    font: 600 1.0625rem var(--font-sans);
+    text-decoration: none;
+    transition: background-color 160ms ease, transform 160ms var(--ease-out-strong);
+  }
+
+  .primary:focus-visible { outline-color: var(--color-ink); }
+
+  .secondary {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--target-size);
+    color: var(--color-ink);
+    font: 500 1.0625rem var(--font-sans);
+  }
+
+  .cases {
+    margin-block-start: clamp(1.5rem, 5vh, 3.5rem);
+    padding-block-start: 1rem;
+    border-block-start: 1px solid var(--color-divider);
+  }
+
+  .cases h2 {
+    color: var(--color-secondary);
+    font: 500 1rem var(--font-sans);
+  }
+
+  .cases ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.75rem;
+    margin: 0.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Each case keeps its own color as a small square, echoing the LMT mark. */
+  .cases a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-block-size: var(--target-size);
+    color: var(--color-ink);
+    font: 600 1.125rem var(--font-sans);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  .cases a::before {
+    content: '';
+    flex: none;
+    inline-size: 0.6em;
+    block-size: 0.6em;
+    background: var(--swatch);
+    box-shadow: 0 0 0 1px rgb(244 241 236 / 0.25);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .primary:hover { background-color: var(--color-ink); }
+    .cases a:hover { color: var(--color-link); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* One entrance: the two 4s rise from their baselines while the mark is already in place, as on the homepage. */
+    .four { animation: rise 1.1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .clip:last-of-type .four { animation-delay: 90ms; }
+    .primary:active { transform: scale(0.97); }
+  }
+
+  @keyframes rise { from { transform: translateY(105%); } }
+</style>

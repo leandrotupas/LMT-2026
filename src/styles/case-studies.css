@@ -126,10 +126,14 @@
   line-height: 0.84;
   text-transform: uppercase;
   text-decoration: none;
-  transition: transform 500ms var(--ease-out-strong);
+  transform-origin: left center;
+  transition: transform 200ms var(--ease-out-strong), scale 160ms var(--ease-out-strong);
 }
 .case-footer .next.is-panel [data-case-title]:has(wbr) { font-size: min(12rem, 11.5cqi); }
 .case-footer .next.is-panel:focus-visible { outline-color: var(--panel-ink); outline-offset: calc(-1 * var(--focus-width)); }
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .case-footer .next.is-panel:hover > span:last-child { transform: translateX(clamp(0.75rem, 1.6vw, 1.75rem)); }
+  .case-footer .next.is-panel:hover > span:last-child { transform: translateX(clamp(0.75rem, 1.6vw, 1.75rem)); transition-duration: 300ms, 160ms; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .case-footer .next.is-panel:active > span:last-child { scale: 0.98; }
 }

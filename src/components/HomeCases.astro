@@ -75,13 +75,15 @@ import ProjectName from './ProjectName.astro';
     inset: 0 calc(-1 * var(--page-margin));
     background: var(--flood);
     clip-path: inset(100% 0 0 0);
-    transition: clip-path 420ms var(--ease-out-strong);
+    /* Asymmetric: the flood leaves faster than it arrives. */
+    transition: clip-path 180ms var(--ease-out-strong);
   }
 
   .row h3 {
     font-size: clamp(3.5rem, 9.2vw, 10.5rem);
     overflow-wrap: anywhere;
-    transition: transform 500ms var(--ease-out-strong);
+    transform-origin: left center;
+    transition: transform 200ms var(--ease-out-strong), scale 160ms var(--ease-out-strong);
   }
 
   .meta {
@@ -97,10 +99,11 @@ import ProjectName from './ProjectName.astro';
 
   .row:focus-visible { outline-offset: calc(-1 * var(--focus-width)); }
 
-  .row:is(:hover, :focus-visible)::before { clip-path: inset(0); }
+  .row:is(:hover, :focus-visible)::before { clip-path: inset(0); transition-duration: 280ms; }
   .row:is(:hover, :focus-visible),
   .row:is(:hover, :focus-visible) :is(.meta, .year) { color: var(--flood-ink); }
-  .row:is(:hover, :focus-visible) h3 { transform: translateX(clamp(0.75rem, 1.6vw, 1.75rem)); }
+  .row:is(:hover, :focus-visible) h3 { transform: translateX(clamp(0.75rem, 1.6vw, 1.75rem)); transition-duration: 300ms, 160ms; }
+  @media (prefers-reduced-motion: no-preference) { .row:active h3 { scale: 0.98; } }
   .row:focus-visible { outline-color: var(--flood-ink); }
 
   /* Touch and narrow screens: the artwork sits in the row; no flood. */

@@ -8,7 +8,7 @@ const currentWork = pathname === '/work/' ? 'page' : pathname.startsWith('/work/
 
 <a class="skip-link type-label" href="#main-content" tabindex="0">Skip to content</a>
 <header class="site-header container type-label">
-  <a class="home-link" href="/" tabindex="0" aria-label={`${profile.name}, home`} aria-current={pathname === '/' ? 'page' : undefined}>{profile.name}</a>
+  <a class="home-link" href="/" tabindex="0" aria-label={`${profile.name}, home`} aria-current={pathname === '/' ? 'page' : undefined}><span>{profile.name}</span></a>
   <nav aria-label="Primary" class="primary-nav">
     <a href="/work/" tabindex="0" aria-current={currentWork}><span>Work</span></a>
     <a href="/about/" tabindex="0" data-about-link aria-current={aboutPage ? 'page' : undefined}><span>About</span></a>
@@ -97,30 +97,32 @@ const currentWork = pathname === '/work/' ? 'page' : pathname.startsWith('/work/
 
   .site-header .home-link { white-space: nowrap; }
 
-  .site-header a span,
-  .site-header .home-link {
-    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat;
+  /* Underlines are drawn with transform only (no repaint), growing from the left. */
+  .site-header a span { position: relative; }
+  .site-header a span::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 -0.15em;
+    block-size: 1.5px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left center;
   }
 
-  .site-header a[aria-current]:not(.home-link) span,
-  :global(body:has(#contact:target)) .primary-nav [data-contact-link] span {
-    background-size: 100% 1.5px;
+  .site-header a[aria-current]:not(.home-link) span::after,
+  :global(body:has(#contact:target)) .primary-nav [data-contact-link] span::after {
+    transform: scaleX(1);
   }
 
-  :global(body:has(#contact:target)) .primary-nav [data-about-link]:not(:focus-visible) span {
-    background-size: 0 1.5px;
+  :global(body:has(#contact:target)) .primary-nav [data-about-link]:not(:focus-visible) span::after {
+    transform: scaleX(0);
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .site-header a:hover span,
-    .site-header .home-link:hover {
-      background-size: 100% 1.5px;
-    }
+    .site-header a:hover span::after { transform: scaleX(1); }
     @media (prefers-reduced-motion: no-preference) {
-      .site-header a span,
-      .site-header .home-link {
-        transition: background-size 300ms var(--ease-out-strong);
-      }
+      .site-header a span::after { transition: transform 150ms var(--ease-out-strong); }
+      .site-header a:hover span::after { transition-duration: 200ms; }
     }
   }
 

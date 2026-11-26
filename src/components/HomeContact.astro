@@ -28,6 +28,7 @@ import { profile } from '../data/profile';
   }
 
   .mail {
+    position: relative;
     display: inline-block;
     margin-block: clamp(1.125rem, 3vh, 2rem) clamp(4rem, 12vh, 8.75rem);
     color: var(--color-ink);
@@ -35,11 +36,25 @@ import { profile } from '../data/profile';
     line-height: 0.9;
     overflow-wrap: anywhere;
     text-decoration: none;
-    background: linear-gradient(var(--color-link), var(--color-link)) 0 100% / 0 0.06em no-repeat;
-    transition: background-size 500ms var(--ease-in-out-strong), color 300ms ease;
+    transition: color 200ms ease;
   }
 
-  @media (hover: hover) { .mail:hover { background-size: 100% 0.06em; color: var(--color-link); } }
+  /* Underline drawn with transform only (no repaint), from the left. */
+  .mail::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    block-size: 0.06em;
+    background: var(--color-link);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 200ms var(--ease-in-out-strong);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .mail:hover { color: var(--color-link); }
+    .mail:hover::after { transform: scaleX(1); transition-duration: 300ms; }
+  }
 
   .foot {
     display: flex;
@@ -59,5 +74,5 @@ import { profile } from '../data/profile';
   }
   .foot a:hover { color: var(--color-link); }
 
-  @media (prefers-reduced-motion: reduce) { .mail { transition: color 200ms ease; } }
+  @media (prefers-reduced-motion: reduce) { .mail::after { transition: none; } }
 </style>

@@ -32,11 +32,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     pointer-events: none;
     opacity: 0;
     scale: 0.92;
-    transition: opacity 200ms ease, scale 350ms var(--ease-out-strong);
+    /* It appears to the right of the cursor, so it grows from that side; it leaves faster than it arrives. */
+    transform-origin: left center;
+    transition: opacity 150ms ease, scale 150ms var(--ease-out-strong);
   }
 
-  .peek.is-on { opacity: 1; scale: 1; }
-  .peek img { inline-size: 100%; box-shadow: 0 30px 70px -14px rgb(0 0 0 / 0.75); }
+  .peek.is-on { opacity: 1; scale: 1; transition-duration: 250ms; }
+  .peek img {
+    inline-size: 100%;
+    box-shadow: 0 30px 70px -14px rgb(0 0 0 / 0.75);
+    transition: filter 200ms ease, opacity 200ms ease;
+  }
+  /* A brief blur hides the cut when the preview switches between projects. */
+  .peek img.is-swapping { filter: blur(2px); opacity: 0.6; transition-duration: 0s; }
   .peek figcaption { margin-block-start: 0.625rem; color: var(--color-ink); }
 
   @media (hover: none), (pointer: coarse), (max-width: 51.25em) { .peek { display: none; } }
@@ -59,13 +67,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       moveX(Math.min(event.clientX + 28, innerWidth - peek.offsetWidth - 16));
       moveY(Math.max(16, event.clientY - peek.offsetHeight * 0.55));
     }, { passive: true });
+    // Leaving one row fires before entering the next, so hiding waits a moment; moving row to row swaps instead of flickering.
+    let hide = 0;
     document.querySelectorAll<HTMLAnchorElement>('[data-preview]').forEach((link) => {
       link.addEventListener('pointerenter', () => {
-        image.src = link.dataset.preview!;
+        clearTimeout(hide);
+        const next = link.dataset.preview!;
+        if (peek.classList.contains('is-on') && !image.src.endsWith(next)) {
+          image.classList.add('is-swapping');
+          image.addEventListener('load', () => requestAnimationFrame(() => image.classList.remove('is-swapping')), { once: true });
+        }
+        image.src = next;
         caption.textContent = link.dataset.previewCaption ?? '';
         peek.classList.add('is-on');
       });
-      link.addEventListener('pointerleave', () => peek.classList.remove('is-on'));
+      link.addEventListener('pointerleave', () => { hide = window.setTimeout(() => peek.classList.remove('is-on'), 80); });
     });
   }
 </script>

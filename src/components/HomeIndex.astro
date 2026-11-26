@@ -77,7 +77,8 @@ const sections = workSections.filter(({ id }) => id !== 'case-studies');
     transition: color 200ms ease;
   }
 
-  .title { transition: transform 350ms var(--ease-out-strong); }
+  .title { transform-origin: left center; transition: transform 220ms var(--ease-out-strong), scale 160ms var(--ease-out-strong); }
+  @media (prefers-reduced-motion: no-preference) { li a:active .title { scale: 0.98; } }
   .year { color: var(--color-secondary); font-variant-numeric: tabular-nums; }
   .thumb { display: none; }
 
