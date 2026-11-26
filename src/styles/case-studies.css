@@ -1,6 +1,13 @@
+.case-sheet {
+  position: relative;
+  z-index: 1;
+  background: var(--color-paper);
+  box-shadow: 0 -40px 80px -20px rgb(0 0 0 / 0.5);
+}
+
 .case-page {
   container: case-page / inline-size;
-  padding-block: clamp(0.45rem, 1.1vw, 1rem) var(--space-section);
+  padding-block: clamp(1.25rem, 3vw, 2.5rem) var(--space-section);
 }
 
 :where(.case-page) .layout-grid > * { min-inline-size: 0; }
@@ -30,17 +37,11 @@
   align-items: start;
   row-gap: clamp(1.2rem, 3vw, 2.7rem);
   padding-block: clamp(0.9rem, 2vw, 2rem) clamp(1.4rem, 2.8vw, 2.6rem);
-  border-block-end: 1px solid var(--color-ink);
+  border-block-end: 1px solid var(--color-divider);
 }
-.case-header h1 {
-  font-size: clamp(3.2rem, 16.3vw, 4.75rem);
-  font-weight: 650;
-  font-variation-settings: 'opsz' 96;
-  line-height: 0.99;
-  letter-spacing: -0.022em;
-}
-.case-header .heading-block:has(wbr) { container-type: inline-size; }
-.case-header .heading-block:has(wbr) h1 { font-size: min(5.6rem, 14.3cqi); }
+.case-header .heading-block { container-type: inline-size; }
+.case-header h1 { font-size: min(6.5rem, 22cqi); text-wrap: balance; }
+.case-header .heading-block:has(wbr) h1 { font-size: min(6.5rem, 17cqi); }
 .case-meta { margin-block-start: 0.75rem; font-size: var(--size-body); line-height: 1.35; }
 .case-meta time { font-variant-numeric: tabular-nums; }
 .case-header .introduction { max-inline-size: 38ch; text-wrap: pretty; }
@@ -84,20 +85,51 @@
 }
 
 @container case-page (min-width: 43rem) {
-  .case-header h1 { font-size: clamp(4.6rem, 8.6vw, 7.25rem); }
-  .case-header .heading-block { grid-column: 1 / 6; }
-  .case-header .introduction { grid-column: 6 / -1; }
+  .case-header .heading-block { grid-column: 1 / -1; }
+  .case-header h1 { font-size: min(13rem, 15cqi); }
+  .case-header .heading-block:has(wbr) h1 { font-size: min(13rem, 11.5cqi); }
+  .case-header .introduction { grid-column: 1 / 7; }
   .credits .credit-heading { grid-column: 1 / 4; grid-row: span 2; }
   .credits dl, .credits .documents { grid-column: 4 / -1; }
 }
 
 @container case-page (min-width: 56rem) {
-  .case-header .heading-block { grid-column: 1 / 8; }
-  .case-header .introduction { grid-column: 8 / -1; }
+  .case-header .introduction { grid-column: 1 / 8; }
   .credits dl, .credits .documents { grid-column: 5 / 12; }
 }
 
 @container case-page (max-width: 16.5rem) {
-  .case-header h1 { font-size: min(3.2rem, 21cqi); }
   .case-footer { align-items: start; flex-direction: column; }
+}
+
+/* Afterhours: the next case arrives as a panel in its own color. */
+.case-footer .next.is-panel {
+  position: relative;
+  isolation: isolate;
+  flex: 1 1 100%;
+  padding: clamp(2rem, 6vh, 4.5rem) 0;
+  color: var(--panel-ink);
+}
+.case-footer .next.is-panel::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0 calc(50% - 50vw);
+  background: var(--panel);
+}
+.case-footer .next.is-panel .type-label { color: inherit; }
+.case-footer .next.is-panel > span:last-child {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-stretch: 75%;
+  font-size: min(12rem, 15cqi);
+  line-height: 0.84;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 500ms var(--ease-out-strong);
+}
+.case-footer .next.is-panel [data-case-title]:has(wbr) { font-size: min(12rem, 11.5cqi); }
+.case-footer .next.is-panel:focus-visible { outline-color: var(--panel-ink); outline-offset: calc(-1 * var(--focus-width)); }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .case-footer .next.is-panel:hover > span:last-child { transform: translateX(clamp(0.75rem, 1.6vw, 1.75rem)); }
 }

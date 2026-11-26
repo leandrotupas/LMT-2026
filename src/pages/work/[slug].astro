@@ -29,7 +29,7 @@ const sizes: Record<string, string> = {
 
     <div class="opening layout-grid">
       <header class="heading">
-        <h1 id="project-heading"><span data-case-title><ProjectName title={project.title} titleParts={project.titleParts} /></span></h1>
+        <h1 id="project-heading" class="type-poster"><span data-case-title><ProjectName title={project.title} titleParts={project.titleParts} /></span></h1>
         <p class="metadata"><span>{project.year}</span><span aria-hidden="true"> · </span>{project.role}</p>
       </header>
       <div class="cover">
@@ -61,11 +61,7 @@ const sizes: Record<string, string> = {
   }
   .heading { container-type: inline-size; }
   h1 {
-    font-size: min(clamp(2.65rem, 14.3cqi, 5.6rem), 17.5cqi);
-    font-weight: 650;
-    font-variation-settings: 'opsz' 96;
-    line-height: 1.01;
-    letter-spacing: -0.025em;
+    font-size: min(clamp(3.5rem, 21cqi, 8.5rem), 24cqi);
     text-wrap: balance;
     overflow-wrap: anywhere;
   }

@@ -40,17 +40,17 @@ export function scrollToTarget(target: HTMLElement, { immediate = false } = {}) 
     if (!target.matches('a, button, input, select, textarea, [tabindex]')) target.setAttribute('tabindex', '-1');
     target.focus({ preventScroll: true });
   };
-  const offset = -parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop || '0');
   if (!lenis) {
     target.scrollIntoView({ block: 'start' });
     land();
     return;
   }
   if (immediate) {
-    lenis.scrollTo(target, { immediate: true, offset, force: true });
+    // Lenis already honours the page's scroll-padding-top (the header clearance).
+    lenis.scrollTo(target, { immediate: true, force: true });
     land();
   } else {
-    lenis.scrollTo(target, { duration: 1.1, offset, onComplete: land });
+    lenis.scrollTo(target, { duration: 1.1, onComplete: land });
   }
 }
 

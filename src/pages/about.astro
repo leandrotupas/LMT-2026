@@ -19,7 +19,7 @@ const [mailbox, domain] = profile.email.split('@');
 <BaseLayout title={`About · ${profile.name}`} description={profile.introduction}>
   <article class="about-page container" aria-labelledby="about-title">
     <header class="about-intro">
-      <h1 id="about-title" data-reveal>{profile.aboutHeading}</h1>
+      <h1 id="about-title" class="type-poster" data-reveal>{profile.aboutHeading}</h1>
       <figure class="portrait" data-reveal>
         <img src={portrait.src} srcset={portraitSet} width={portrait.width} height={portrait.height}
           alt="Two portraits of Yancy, wearing glasses in the first and laughing in the second."
@@ -109,12 +109,8 @@ const [mailbox, domain] = profile.email.split('@');
     padding-block: clamp(1.5rem, 3.7vw, 3.75rem) var(--space-section);
   }
   h1 {
-    max-inline-size: 13ch;
-    font-size: clamp(2.85rem, 9.5vw, 7.25rem);
-    line-height: 0.98;
-    font-weight: 650;
-    letter-spacing: var(--display-tracking);
-    font-variation-settings: 'opsz' 96;
+    max-inline-size: 11ch;
+    font-size: clamp(3.5rem, 13vw, 11rem);
     text-wrap: balance;
     overflow-wrap: anywhere;
   }
@@ -128,7 +124,7 @@ const [mailbox, domain] = profile.email.split('@');
     border-block-start: 1px solid var(--color-divider);
     padding-block: clamp(1.65rem, 3.7vw, 3.7rem);
   }
-  .about-intro + .profile-section, .contact { border-color: var(--color-ink); }
+  .about-intro + .profile-section, .contact { border-color: var(--color-divider); }
   .split { align-items: baseline; row-gap: var(--space-related); }
   .split > * { grid-column: 1 / -1; min-inline-size: 0; }
   h2, h3 { letter-spacing: -0.022em; text-wrap: balance; }
@@ -174,10 +170,12 @@ const [mailbox, domain] = profile.email.split('@');
     max-inline-size: 100%;
     min-block-size: var(--target-size);
     padding-block: 0.22em;
-    font-size: clamp(1.35rem, 3.35vw, 3.3rem);
-    font-weight: 530;
-    line-height: 1.18;
-    letter-spacing: -0.022em;
+    font-size: clamp(2rem, 6.4vw, 6.5rem);
+    font-weight: 800;
+    font-stretch: 75%;
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
     text-decoration-thickness: 0.055em;
     overflow-wrap: anywhere;
   }

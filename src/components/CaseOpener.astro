@@ -1,0 +1,77 @@
+---
+import { getImage, Image } from 'astro:assets';
+import type { CaseArtwork } from '../data/flagships';
+import type { GalleryArtwork } from '../data/projects';
+
+interface Props {
+  art?: CaseArtwork;
+  plate?: GalleryArtwork;
+  /** The case's own color, shown around artwork that cannot fill the width. */
+  field: string;
+  sharesCover?: boolean;
+}
+
+const { art, plate, field, sharesCover = false } = Astro.props;
+if (!art && !plate) throw new Error('CaseOpener needs art or plate');
+const width = art ? art.image.width : plate!.width;
+const height = art ? art.image.height : plate!.height;
+const caption = art ? art.caption : plate!.caption;
+const alt = art ? art.alt : plate!.alt;
+const full = art ? (await getImage({ src: art.image, width, format: 'webp', quality: 90 })).src : plate!.src;
+const widths = art ? [...[480, 840, 1200].filter((w) => w < width * 0.9), width] : [];
+---
+
+<!-- The key artwork opens the case across the full width at its own proportions: never cropped, never tinted. -->
+<figure class="case-opener" data-case-opener style={{ '--field': field, '--ratio': String(width / height) }}>
+  <a class="opener-link" href={full} type="image/webp" data-artwork data-caption={caption} data-alt={alt} aria-label={`View ${caption} in detail`}>
+    {art ? (
+      <Image src={art.image} alt={alt} widths={widths} sizes="100vw" format="webp" quality={90}
+        loading="eager" fetchpriority="high" decoding="async" data-case-cover={sharesCover || undefined} />
+    ) : (
+      <img src={plate!.src} srcset={plate!.srcset} sizes="100vw" width={width} height={height} alt={alt}
+        loading="eager" fetchpriority="high" decoding="async" data-case-cover={sharesCover || undefined} />
+    )}
+  </a>
+  <figcaption class="type-label">{caption}</figcaption>
+</figure>
+
+<style>
+  .case-opener {
+    --caption-band: 2.75rem;
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 0;
+    margin: 0;
+    background: var(--color-paper);
+  }
+
+  .opener-link {
+    position: relative;
+    display: block;
+    block-size: min(calc(100svh - var(--caption-band)), calc(100vw / var(--ratio)));
+    min-block-size: 18rem;
+    overflow: hidden;
+    background: var(--field);
+    cursor: zoom-in;
+  }
+
+  /* Pinned to the frame and contained: artwork that cannot fill the width sits whole on its field. */
+  .opener-link :global(img) {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: contain;
+    transform-origin: 50% 30%;
+  }
+
+  .opener-link:focus-visible { outline-offset: calc(-1 * var(--focus-width) - 2px); }
+
+  figcaption {
+    display: flex;
+    align-items: center;
+    min-block-size: var(--caption-band);
+    padding-inline: var(--page-margin);
+    color: var(--color-secondary);
+  }
+</style>

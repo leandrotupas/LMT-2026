@@ -1,5 +1,6 @@
 ---
 import { getImage, Image } from 'astro:assets';
+import CaseOpener from '../../components/CaseOpener.astro';
 import CaseFigure from '../../components/CaseFigure.astro';
 import { wunderbar, wunderbarArt as art, wunderbarStudies } from '../../data/wunderbar';
 import CaseLayout from '../../layouts/CaseLayout.astro';
@@ -13,8 +14,8 @@ const studies = await Promise.all(wunderbarStudies.map(async (study) => {
 ---
 
 <CaseLayout project={wunderbar} subject="Identity and menus">
+  <CaseOpener slot="opener" art={art.clipboard} field={wunderbar.identityColor} />
   <section class="opening layout-grid" aria-label="Wünderbar’s menu and wordmark">
-    <CaseFigure class="clipboard" art={art.clipboard} sizes={cardSize} priority />
     <div class="identity-note">
       <CaseFigure art={art.wordmark} sizes="(min-width: 90em) 533px, (min-width: 64em) 40vw, calc(100vw - 2rem)" loading="eager" />
       <p class="prose">{wunderbar.idea}</p>
@@ -73,7 +74,7 @@ const studies = await Promise.all(wunderbarStudies.map(async (study) => {
 <style>
   .opening, .section-intro, .menu-spread, .print-spread, .handover { align-items: start; row-gap: var(--space-related); }
   .opening { padding-block-start: clamp(1.4rem, 3vw, 2.85rem); }
-  .clipboard, .cards { inline-size: min(100%, 595px); }
+  .cards { inline-size: min(100%, 595px); }
   .identity-note .prose, .menu-note .prose, .handover-note .prose { margin-block-start: 1rem; }
   .study-board, .print-spread { margin-block-start: var(--space-related); }
   .studies {
@@ -92,8 +93,7 @@ const studies = await Promise.all(wunderbarStudies.map(async (study) => {
     .studies { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
   @container case-page (min-width: 43rem) {
-    .clipboard { grid-column: 5 / -1; grid-row: 1; justify-self: end; }
-    .identity-note { grid-column: 1 / 5; grid-row: 1; align-self: end; }
+    .identity-note { grid-column: 1 / 7; grid-row: 1; align-self: end; }
     .section-intro h2 { grid-column: 1 / 4; }
     .section-intro .prose { grid-column: 4 / -1; }
     .menu-note { grid-column: 1 / 7; }
@@ -105,8 +105,7 @@ const studies = await Promise.all(wunderbarStudies.map(async (study) => {
     .later { grid-column: 6 / -1; inline-size: min(100%, 360px); }
   }
   @container case-page (min-width: 56rem) {
-    .clipboard { grid-column: 7 / -1; }
-    .identity-note { grid-column: 1 / 6; }
+    .identity-note { grid-column: 1 / 8; }
     .section-intro h2 { grid-column: 1 / 5; }
     .section-intro .prose { grid-column: 6 / 12; }
     .studies { grid-template-columns: repeat(6, minmax(0, 1fr)); }

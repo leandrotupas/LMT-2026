@@ -29,7 +29,11 @@ Yancy chose this direction from three homepage concepts. The approved references
 
 **Header.** It stays fixed, with the name always present. On wide screens it uses difference blending over the work. It turns solid night when it holds keyboard focus, and on screens narrower than 51.25em.
 
-**Status.** Milestone R1 (foundations and homepage) is built and awaits approval. Next come R2 (case studies with openers), R3 (Work index), R4 (project pages) and R5 (About and final audit). Until each page's milestone, it keeps its earlier layout on the new palette.
+**Project pages.** The 18 project pages keep their split layout, with the title and summary beside the cover, so the four case studies stay distinct. They share the condensed title and the colored "Next" panel.
+
+**Next panel.** Every case and project ends with the next piece of work as a full-width panel in its own color, using the same paired ink as the homepage floods. Work outside the flagships uses the kit purple.
+
+**Status.** Yancy approved R1 on 26 November 2026. R2–R5 are built and await review: the case studies with openers, the Work index, the project pages, About and a full-site audit. [Revamp audit](mockups/AUDIT-REVAMP.md)
 
 ---
 

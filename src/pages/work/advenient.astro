@@ -1,15 +1,15 @@
 ---
+import CaseOpener from '../../components/CaseOpener.astro';
 import CaseFigure from '../../components/CaseFigure.astro';
 import { advenient as project, advenientArt as art } from '../../data/advenient';
 import CaseLayout from '../../layouts/CaseLayout.astro';
 
-const largeImage = '(min-width: 90em) 756px, (min-width: 64em) 53vw, calc(100vw - 2rem)';
 const halfImage = '(min-width: 90em) 644px, (min-width: 48em) 46vw, calc(100vw - 2rem)';
 ---
 
 <CaseLayout {project}>
+  <CaseOpener slot="opener" art={art.playbook} field={project.identityColor} sharesCover={project.sharesCover} />
   <section class="opening layout-grid" aria-labelledby="mark-heading">
-    <CaseFigure class="playbook" art={art.playbook} sizes={largeImage} sharesCover={project.sharesCover} priority />
     <div class="mark-note">
       <CaseFigure class="symbol" art={art.symbol} sizes="(min-width: 48em) clamp(7rem, 13vw, 11.75rem), 4.5rem" />
       <h2 id="mark-heading">A mark that moves forward.</h2>
@@ -90,8 +90,7 @@ const halfImage = '(min-width: 90em) 644px, (min-width: 48em) 46vw, calc(100vw -
   .applications-spread .social { inline-size: 76%; justify-self: end; }
 
   @container case-page (min-width: 43rem) {
-    .playbook { grid-column: 1 / 6; }
-    .mark-note { grid-column: 6 / -1; border: 0; padding: 0; }
+    .mark-note { grid-column: 4 / -1; border: 0; padding: 0; }
     .symbol { display: block; }
     .symbol :global(.art-link) { inline-size: clamp(7rem, 13vw, 11.75rem); }
     .symbol :global(figcaption) { margin-block-start: 0.65rem; }
@@ -110,8 +109,7 @@ const halfImage = '(min-width: 90em) 644px, (min-width: 48em) 46vw, calc(100vw -
   }
 
   @container case-page (min-width: 56rem) {
-    .playbook { grid-column: 1 / 8; }
-    .mark-note { grid-column: 9 / -1; }
+    .mark-note { grid-column: 5 / 12; }
     .copy, .chapter-intro > .prose { grid-column: 5 / 12; }
     .construction { grid-column: 5 / -1; }
     .system-note { grid-column: 5 / 12; }

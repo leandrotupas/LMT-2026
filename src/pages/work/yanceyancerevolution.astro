@@ -1,4 +1,5 @@
 ---
+import CaseOpener from '../../components/CaseOpener.astro';
 import ProjectPlate from '../../components/ProjectPlate.astro';
 import { dreamPosters, kit, mixCovers, y2r, y2rCover } from '../../data/yanceyancerevolution';
 import CaseLayout from '../../layouts/CaseLayout.astro';
@@ -10,8 +11,8 @@ const [document] = y2r.documents;
 ---
 
 <CaseLayout project={y2r} subject="DJ identity case study">
+  <CaseOpener slot="opener" plate={y2rCover} field="#670da8" sharesCover />
   <section class="opening spread" aria-labelledby="brief">
-    <ProjectPlate art={y2rCover} sizes={large} lead />
     <div class="brief">
       <div class="note">
         <h2 id="brief">The sound behind the brief</h2>
@@ -98,7 +99,7 @@ const [document] = y2r.documents;
     .mix-covers > :global(figure:first-child) { grid-column: 1 / -1; }
   }
   @container case-page (min-width: 43rem) {
-    .opening { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+    .opening { grid-template-columns: minmax(0, 1fr); }
     .experiments, .chapter-intro { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
     .pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .mix-covers { grid-template-columns: repeat(5, minmax(0, 1fr)); }

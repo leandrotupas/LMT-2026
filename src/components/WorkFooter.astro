@@ -1,18 +1,24 @@
 ---
+import { flagships } from '../data/flagships';
 import ProjectName from './ProjectName.astro';
 
 interface Props {
   category: { title: string; href: string };
-  next: { title: string; href: string; titleParts?: string[] };
+  next: { title: string; href: string; slug?: string; titleParts?: string[] };
   nextLabel?: string;
 }
 const { category, next, nextLabel = 'Next project' } = Astro.props;
+
+// The next case arrives in its own color with ink that passes AA; other work uses the kit purple.
+const flagship = flagships.find(({ href }) => href === next.href);
+const panel = flagship?.identityColor ?? 'var(--color-accent)';
+const panelInk = flagship?.slug === 'advenient' ? 'var(--color-paper)' : '#fff';
 ---
 
 <nav class="case-footer" aria-label="Explore other work">
-  <a class="back type-label" href={category.href} tabindex="0">Back to {category.title}</a>
-  <a class="next" href={next.href} tabindex="0" data-case-link>
+  <a class="next is-panel" href={next.href} tabindex="0" data-case-link style={{ '--panel': panel, '--panel-ink': panelInk }}>
     <span class="type-label">{nextLabel}</span>
     <span data-case-title><ProjectName title={next.title} titleParts={next.titleParts} /></span>
   </a>
+  <a class="back type-label" href={category.href} tabindex="0">Back to {category.title}</a>
 </nav>

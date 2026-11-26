@@ -178,11 +178,18 @@ a[data-hover-label]::after { content: attr(data-hover-label); }
 }
 
 /* The header floats over the page; the homepage hero runs beneath it on purpose. */
-body:not(.is-home) > main {
+body:not(.is-home, .is-bleed) > main {
   padding-block-start: var(--header-clearance);
 }
 
 #main-content:focus { outline: none; }
+
+/* Headings that receive focus after a link lands on them are marked, not boxed: they are destinations, not controls. */
+:is(h1, h2, h3)[tabindex='-1']:focus-visible {
+  outline: none;
+  text-decoration: underline var(--color-link) 0.08em;
+  text-underline-offset: 0.18em;
+}
 
 #main-content:focus-visible {
   outline-offset: calc(-1 * var(--focus-width));

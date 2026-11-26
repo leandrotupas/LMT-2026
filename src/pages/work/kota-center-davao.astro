@@ -1,4 +1,5 @@
 ---
+import CaseOpener from '../../components/CaseOpener.astro';
 import CaseFigure from '../../components/CaseFigure.astro';
 import { kota, kotaArt as art } from '../../data/kota';
 import CaseLayout from '../../layouts/CaseLayout.astro';
@@ -8,8 +9,8 @@ const half = '(min-width: 90em) 644px, (min-width: 48em) 46vw, calc(100vw - 2rem
 ---
 
 <CaseLayout project={kota} subject="Community identity">
+  <CaseOpener slot="opener" art={art.cover} field={kota.identityColor} sharesCover={kota.sharesCover} />
   <section class="opening layout-grid" aria-label="KOTA’s event and Story templates">
-    <CaseFigure class="cover" art={art.cover} sizes={wide} sharesCover={kota.sharesCover} priority />
     <p class="brief prose">{kota.brief}</p>
     <CaseFigure class="story" art={art.story} sizes="(min-width: 64em) 16rem, (min-width: 48em) 21vw, (min-width: 37.5em) 16rem, (min-width: 26.5em) 45vw, min(76vw, 16rem)" loading="eager" />
   </section>
@@ -84,9 +85,8 @@ const half = '(min-width: 90em) 644px, (min-width: 48em) 46vw, calc(100vw - 2rem
     .squares :global(figure:first-child) { grid-column: auto; }
   }
   @container case-page (min-width: 43rem) {
-    .cover { grid-column: 1 / 7; grid-row: 1; }
-    .opening .brief { grid-column: 1 / 7; grid-row: 2; max-inline-size: 48ch; }
-    .opening .story { grid-column: 7 / -1; grid-row: 1 / span 2; align-self: end; }
+    .opening .brief { grid-column: 1 / 7; grid-row: 1; max-inline-size: 48ch; }
+    .opening .story { grid-column: 7 / -1; grid-row: 1; align-self: end; }
     .origin-copy { grid-column: 1 / 4; }
     .references { grid-column: 4 / -1; align-self: center; }
     .system { grid-column: 1 / 7; }
@@ -98,7 +98,6 @@ const half = '(min-width: 90em) 644px, (min-width: 48em) 46vw, calc(100vw - 2rem
     .later { grid-column: 6 / -1; inline-size: min(100%, 390px); }
   }
   @container case-page (min-width: 56rem) {
-    .cover { grid-column: 1 / 9; }
     .opening .brief { grid-column: 1 / 8; }
     .opening .story { grid-column: 10 / -1; justify-self: start; }
     .origin-copy { grid-column: 1 / 5; }

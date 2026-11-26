@@ -24,7 +24,12 @@ document.addEventListener('click', (event) => {
   event.preventDefault();
   const keyboard = !event.detail || root.dataset.input === 'keyboard';
   scrollToTarget(target, { immediate: keyboard || link.hash === '#main-content' || !smoothScroller() });
-  if (location.hash !== link.hash) history.pushState(null, '', link.hash);
+  if (location.hash !== link.hash) {
+    const oldURL = location.href;
+    history.pushState(null, '', link.hash);
+    // pushState is silent; pages that follow the fragment (the Work index rail) listen for hashchange.
+    window.dispatchEvent(new HashChangeEvent('hashchange', { oldURL, newURL: location.href }));
+  }
 }, { capture: true });
 
 function cancelReveals() {
