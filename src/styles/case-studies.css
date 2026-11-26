@@ -1,6 +1,8 @@
 .case-sheet {
   position: relative;
   z-index: 1;
+  /* The next panel bleeds to the window edge with 50vw, which includes the scrollbar; clip that overhang. */
+  overflow-x: clip;
   background: var(--color-paper);
   box-shadow: 0 -40px 80px -20px rgb(0 0 0 / 0.5);
 }

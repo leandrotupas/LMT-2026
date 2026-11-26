@@ -7,7 +7,7 @@ const currentWork = pathname === '/work/' ? 'page' : pathname.startsWith('/work/
 ---
 
 <a class="skip-link type-label" href="#main-content" tabindex="0">Skip to content</a>
-<header class="site-header container type-label">
+<header class="site-header type-label">
   <a class="home-link" href="/" tabindex="0" aria-label={`${profile.name}, home`} aria-current={pathname === '/' ? 'page' : undefined}><span>{profile.name}</span></a>
   <nav aria-label="Primary" class="primary-nav">
     <a href="/work/" tabindex="0" aria-current={currentWork}><span>Work</span></a>
@@ -68,7 +68,8 @@ const currentWork = pathname === '/work/' ? 'page' : pathname.startsWith('/work/
     align-items: center;
     justify-content: space-between;
     gap: 0.25rem var(--grid-gap);
-    padding: clamp(0.25rem, 1vw, 0.75rem) var(--page-margin);
+    /* Full-width bar; the padding lines its contents up with the page container on wide screens. */
+    padding: clamp(0.25rem, 1vw, 0.75rem) max(var(--page-margin), calc((100% - var(--content-width)) / 2));
     color: #fff;
     mix-blend-mode: difference;
     font-size: 1rem;
