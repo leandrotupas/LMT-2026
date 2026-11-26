@@ -1,0 +1,100 @@
+---
+import { workSections } from '../data/work';
+
+// Every project outside the three flagships, in its confirmed section and order.
+const sections = workSections.filter(({ id }) => id !== 'case-studies');
+---
+
+<section class="index" id="all-work" aria-labelledby="all-work-heading">
+  <h2 id="all-work-heading" class="visually-hidden">All work</h2>
+  <div class="cols">
+    {sections.map((section) => (
+      <div>
+        <h3 id={`home-${section.id}`}>
+          <a href={`/work/#${section.id}`}>{section.title}</a>
+          <small aria-hidden="true">{section.projects.length}</small>
+        </h3>
+        <ul role="list">
+          {section.projects.map((project) => (
+            <li>
+              <a href={project.href} data-preview={project.preview} data-preview-caption={project.caption}>
+                <img class="thumb" src={project.thumbnail} width={project.width} height={project.height} alt="" loading="lazy" decoding="async" />
+                <span class="title">{project.title}</span>
+                <span class="year type-label">{project.year}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .index { padding: clamp(4rem, 14vh, 10rem) var(--page-margin) clamp(4rem, 12vh, 8.75rem); }
+
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 3rem);
+  }
+
+  h3 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.375rem;
+    padding-block-end: 0.5rem;
+    border-block-end: 1px solid var(--color-divider);
+    font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+    line-height: 1.2;
+  }
+
+  h3 a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--target-size);
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  h3 a:hover { text-decoration: underline; text-decoration-color: var(--color-link); }
+  h3 small { color: var(--color-secondary); font: 500 1rem var(--font-sans); }
+
+  ul { margin: 0; padding: 0; list-style: none; }
+
+  li a {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 1rem;
+    padding-block: 0.8125rem;
+    border-block-end: 1px solid var(--color-divider);
+    color: var(--color-ink);
+    font: 600 clamp(1.25rem, 1.7vw, 1.625rem) / 1.15 var(--font-sans);
+    font-variation-settings: 'opsz' 28;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    transition: color 200ms ease;
+  }
+
+  .title { transition: transform 350ms var(--ease-out-strong); }
+  .year { color: var(--color-secondary); font-variant-numeric: tabular-nums; }
+  .thumb { display: none; }
+
+  @media (hover: hover) and (pointer: fine) {
+    li a:hover { color: var(--color-link); }
+    li a:hover .title { transform: translateX(0.625rem); }
+  }
+
+  @media (max-width: 51.25em) {
+    .cols { grid-template-columns: minmax(0, 1fr); gap: 3.5rem; }
+    li a { grid-template-columns: 4rem minmax(0, 1fr); align-items: center; column-gap: 1rem; }
+    .thumb { display: block; grid-row: span 2; inline-size: 4rem; block-size: 3rem; object-fit: contain; background: var(--color-surface); }
+    .year { grid-column: 2; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .title { transition: none; }
+    li a:hover .title { transform: none; }
+  }
+</style>

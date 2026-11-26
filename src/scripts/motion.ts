@@ -1,23 +1,8 @@
+import { scrollToTarget, smoothScroller } from './smooth';
+
 const root = document.documentElement;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-const wheelPointer = matchMedia('(any-pointer: fine)');
 const reveals = new Set<Animation>();
-let anchorTimer = 0;
-let wheelTarget: number | undefined;
-let lastWheel = 0;
-let wheelDirection = 0;
-
-function clearScrollState() {
-  clearTimeout(anchorTimer);
-  root.removeAttribute('data-smooth-anchor');
-  wheelTarget = undefined;
-}
-
-function interruptScroll() {
-  if (wheelTarget === undefined && !root.hasAttribute('data-smooth-anchor')) return;
-  clearScrollState();
-  window.scrollTo({ top: scrollY, behavior: 'instant' });
-}
 
 document.addEventListener('click', (event) => {
   const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href]') : null;
@@ -32,49 +17,15 @@ document.addEventListener('click', (event) => {
     }
     return;
   }
-  if (!link.hash || link.hash === '#main-content' || !event.detail || root.dataset.input === 'keyboard' || reduced.matches) return;
-  root.setAttribute('data-smooth-anchor', '');
-  clearTimeout(anchorTimer);
-  anchorTimer = window.setTimeout(clearScrollState, 1800);
-}, { capture: true });
-
-// A notched mouse sends line/page deltas or larger, regularly sized pixel deltas.
-// Precision input already has its own acceleration and momentum.
-function scrollWheel(event: WheelEvent) {
-  if (event.defaultPrevented || !event.cancelable) return;
-  if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.deltaX || !event.deltaY) {
-    interruptScroll();
-    return;
-  }
-  root.dataset.input = 'pointer';
-  const magnitude = Math.abs(event.deltaY);
-  const stepped = event.deltaMode !== WheelEvent.DOM_DELTA_PIXEL || magnitude % 100 === 0 || magnitude % 120 === 0;
-  if (!stepped) { interruptScroll(); return; }
-  const target = event.target;
-  if (!(target instanceof Element) || target.closest('dialog, input, textarea, select, [contenteditable="true"]')) return;
-  for (let node: Element | null = target; node && node !== document.body && node !== root; node = node.parentElement) {
-    if (node.scrollHeight > node.clientHeight + 1 && /^(auto|scroll)$/.test(getComputedStyle(node).overflowY)) return;
-  }
-  const now = performance.now();
-  const direction = Math.sign(event.deltaY);
-  const unit = event.deltaMode === WheelEvent.DOM_DELTA_LINE ? 16 : event.deltaMode === WheelEvent.DOM_DELTA_PAGE ? innerHeight : 1;
-  const base = now - lastWheel < 220 && direction === wheelDirection ? (wheelTarget ?? scrollY) : scrollY;
-  const limit = Math.max(0, root.scrollHeight - root.clientHeight);
-  const destination = Math.min(limit, Math.max(0, base + event.deltaY * unit));
-  if (Math.abs(destination - scrollY) < 1) { interruptScroll(); return; }
+  if (!link.hash) return;
+  const target = document.getElementById(decodeURIComponent(link.hash.slice(1)));
+  if (!target) return;
+  // Same-page links glide with the wheel engine and always hand focus to their destination.
   event.preventDefault();
-  clearTimeout(anchorTimer);
-  root.removeAttribute('data-smooth-anchor');
-  wheelTarget = destination;
-  wheelDirection = direction;
-  lastWheel = now;
-  window.scrollTo({ top: destination, behavior: 'smooth' });
-}
-
-function syncWheel() {
-  window.removeEventListener('wheel', scrollWheel);
-  if (!reduced.matches && wheelPointer.matches) window.addEventListener('wheel', scrollWheel, { passive: false });
-}
+  const keyboard = !event.detail || root.dataset.input === 'keyboard';
+  scrollToTarget(target, { immediate: keyboard || link.hash === '#main-content' || !smoothScroller() });
+  if (location.hash !== link.hash) history.pushState(null, '', link.hash);
+}, { capture: true });
 
 function cancelReveals() {
   for (const animation of reveals) animation.cancel();
@@ -119,20 +70,8 @@ if ('IntersectionObserver' in window && typeof Element.prototype.animate === 'fu
 window.addEventListener('keydown', (event) => {
   if (['Alt', 'Control', 'Meta', 'Shift'].includes(event.key)) return;
   root.dataset.input = 'keyboard';
-  interruptScroll();
   cancelReveals();
 }, { capture: true });
-window.addEventListener('pointerdown', () => {
-  root.dataset.input = 'pointer';
-  interruptScroll();
-}, { capture: true, passive: true });
-window.addEventListener('scrollend', (event) => {
-  if (event.target === document || event.target === window) clearScrollState();
-});
-window.addEventListener('pagehide', () => { clearScrollState(); cancelReveals(); });
-reduced.addEventListener('change', () => {
-  if (reduced.matches) { interruptScroll(); cancelReveals(); }
-  syncWheel();
-});
-wheelPointer.addEventListener('change', syncWheel);
-syncWheel();
+window.addEventListener('pointerdown', () => { root.dataset.input = 'pointer'; }, { capture: true, passive: true });
+window.addEventListener('pagehide', cancelReveals);
+reduced.addEventListener('change', () => { if (reduced.matches) cancelReveals(); });

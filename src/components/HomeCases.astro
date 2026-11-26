@@ -1,0 +1,132 @@
+---
+import { flagships } from '../data/flagships';
+import { projectFormats } from '../data/project-formats';
+
+// Ink for each flagship's color flood: night on light grounds, bone on dark ones (WCAG AA).
+const floodInk: Record<string, string> = {
+  advenient: 'var(--color-paper)',
+  'kota-center-davao': '#fff',
+  wunderbar: '#fff',
+};
+---
+
+<section class="cases" id="case-studies" aria-labelledby="cases-heading">
+  <div class="head">
+    <h2 id="cases-heading">Case Studies</h2>
+    <a href="#all-work">All work</a>
+  </div>
+  <ul class="rows" role="list">
+    {flagships.map((project) => {
+      const asset = `/images/flagships/${project.slug}`;
+      return (
+        <li>
+          <a class="row" href={project.href} data-case-link data-share-cover={project.sharesCover || undefined}
+            data-preview={`${asset}-${project.largestRendition}.webp`} data-preview-caption={project.applicationCaption}
+            style={{ '--flood': project.identityColor, '--flood-ink': floodInk[project.slug] }}>
+            <img class="thumb" src={`${asset}-480.webp`} srcset={`${asset}-240.webp 240w, ${asset}-480.webp 480w, ${asset}-${project.largestRendition}.webp ${project.largestRendition}w`}
+              sizes="calc(100vw - 2 * var(--page-margin))" width={project.width} height={project.height}
+              alt={project.applicationAlt} loading="lazy" decoding="async" />
+            <h3 class="type-poster"><span data-case-title>{project.title}</span></h3>
+            <span class="meta type-label"><span class="year">{project.year}</span>{project.discipline}<span class="visually-hidden">, {projectFormats[project.format].label}</span></span>
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</section>
+
+<style>
+  .cases { padding: clamp(1.5rem, 6vh, 4.5rem) var(--page-margin) clamp(4rem, 12vh, 8.75rem); }
+
+  .head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-block-end: 1.75rem;
+  }
+
+  .head h2 { font-size: clamp(1.25rem, 1.6vw, 1.5rem); line-height: 1.2; }
+
+  .head a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--target-size);
+    color: var(--color-secondary);
+    font: 500 1.0625rem var(--font-sans);
+    text-decoration: none;
+  }
+
+  .head a:hover { color: var(--color-ink); }
+
+  .rows { margin: 0; padding: 0; list-style: none; border-block-start: 1px solid var(--color-divider); }
+
+  .row {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 0.5rem 2rem;
+    padding-block: clamp(1.125rem, 2.4vw, 1.875rem);
+    border-block-end: 1px solid var(--color-divider);
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .row::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 0 calc(-1 * var(--page-margin));
+    background: var(--flood);
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 420ms var(--ease-out-strong);
+  }
+
+  .row h3 {
+    font-size: clamp(3.5rem, 9.2vw, 10.5rem);
+    overflow-wrap: anywhere;
+    transition: transform 500ms var(--ease-out-strong);
+  }
+
+  .meta {
+    display: grid;
+    justify-items: end;
+    gap: 0.125rem;
+    padding-block-end: 0.6em;
+    color: var(--color-secondary);
+  }
+
+  .year { color: var(--color-ink); font-weight: 600; }
+  .thumb { display: none; }
+
+  .row:focus-visible { outline-offset: calc(-1 * var(--focus-width)); }
+
+  .row:is(:hover, :focus-visible)::before { clip-path: inset(0); }
+  .row:is(:hover, :focus-visible),
+  .row:is(:hover, :focus-visible) :is(.meta, .year) { color: var(--flood-ink); }
+  .row:is(:hover, :focus-visible) h3 { transform: translateX(clamp(0.75rem, 1.6vw, 1.75rem)); }
+  .row:focus-visible { outline-color: var(--flood-ink); }
+
+  /* Touch and narrow screens: the artwork sits in the row; no flood. */
+  @media (hover: none), (max-width: 51.25em) {
+    .row { grid-template-columns: minmax(0, 1fr); }
+    .row::before { display: none; }
+    .row:is(:hover, :focus-visible),
+    .row:is(:hover, :focus-visible) .meta { color: inherit; }
+    .row:is(:hover, :focus-visible) .meta { color: var(--color-secondary); }
+    .row:is(:hover, :focus-visible) .year { color: var(--color-ink); }
+    .row:is(:hover, :focus-visible) h3 { transform: none; }
+    .row:focus-visible { outline-color: var(--color-link); }
+    .thumb { display: block; grid-row: 1; inline-size: 100%; margin-block-end: 0.75rem; }
+    .meta { justify-items: start; grid-auto-flow: column; justify-content: start; gap: 0.875rem; padding: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .row::before { clip-path: none; opacity: 0; transition: opacity 200ms ease; }
+    .row:is(:hover, :focus-visible)::before { opacity: 1; }
+    .row h3 { transition: none; }
+    .row:is(:hover, :focus-visible) h3 { transform: none; }
+  }
+</style>

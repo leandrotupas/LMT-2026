@@ -8,9 +8,7 @@ const currentWork = pathname === '/work/' ? 'page' : pathname.startsWith('/work/
 
 <a class="skip-link type-label" href="#main-content" tabindex="0">Skip to content</a>
 <header class="site-header container type-label">
-  {pathname !== '/' && (
-    <a class="home-link" href="/" tabindex="0" aria-label={`${profile.name}, home`}>{profile.name}</a>
-  )}
+  <a class="home-link" href="/" tabindex="0" aria-label={`${profile.name}, home`} aria-current={pathname === '/' ? 'page' : undefined}>{profile.name}</a>
   <nav aria-label="Primary" class="primary-nav">
     <a href="/work/" tabindex="0" aria-current={currentWork}><span>Work</span></a>
     <a href="/about/" tabindex="0" data-about-link aria-current={aboutPage ? 'page' : undefined}><span>About</span></a>
@@ -41,15 +39,18 @@ const currentWork = pathname === '/work/' ? 'page' : pathname.startsWith('/work/
 
 <style>
   .skip-link {
-    position: absolute;
-    z-index: 1;
+    position: fixed;
+    z-index: 60;
     inset-block-start: 0.5rem;
     inset-inline-start: var(--page-margin);
     display: inline-flex;
     align-items: center;
     min-block-size: var(--target-size);
     padding-inline: 1rem;
-    background: var(--color-paper);
+    background: var(--color-link);
+    color: var(--color-paper);
+    font-weight: 600;
+    text-decoration: none;
     transform: translateY(calc(-100% - 1rem));
   }
 
@@ -57,82 +58,90 @@ const currentWork = pathname === '/work/' ? 'page' : pathname.startsWith('/work/
     transform: none;
   }
 
+  /* Fixed over the work. Difference blending keeps the words legible over light and dark artwork;
+     with keyboard focus inside, the header turns solid so the focus ring keeps its true color. */
   .site-header {
+    position: fixed;
+    z-index: 50;
+    inset: 0 0 auto;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: 0.25rem var(--grid-gap);
-    padding-block: clamp(0.5rem, 1.5vw, 1.375rem);
+    padding: clamp(0.25rem, 1vw, 0.75rem) var(--page-margin);
+    color: #fff;
+    mix-blend-mode: difference;
     font-size: 1rem;
+  }
+
+  .site-header:focus-within {
+    mix-blend-mode: normal;
+    background: var(--color-paper);
+    color: var(--color-ink);
   }
 
   .primary-nav {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 0 clamp(0.5rem, 3vw, 2.375rem);
-    margin-inline-start: auto;
-    max-inline-size: 100%;
+    gap: 0 clamp(0.875rem, 2.6vw, 2.25rem);
   }
 
   .site-header a {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    min-inline-size: var(--target-size);
     min-block-size: var(--target-size);
-    color: var(--color-ink);
-    text-decoration-color: transparent;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.28em;
-  }
-
-  .site-header .home-link {
-    font-size: 1.0625em;
+    color: inherit;
     font-weight: 600;
-    letter-spacing: -0.015em;
+    text-decoration: none;
   }
 
-  .site-header a[aria-current],
-  .site-header a:focus-visible,
-  :global(body:has(#contact:target)) .primary-nav [data-contact-link] {
-    text-decoration-color: var(--color-link);
+  .site-header .home-link { white-space: nowrap; }
+
+  .site-header a span,
+  .site-header .home-link {
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat;
   }
 
-  /* The server knows the About page. The browser also knows the fragment. */
-  :global(body:has(#contact:target)) .primary-nav [data-about-link]:not(:focus-visible) {
-    text-decoration-color: transparent;
+  .site-header a[aria-current]:not(.home-link) span,
+  :global(body:has(#contact:target)) .primary-nav [data-contact-link] span {
+    background-size: 100% 1.5px;
+  }
+
+  :global(body:has(#contact:target)) .primary-nav [data-about-link]:not(:focus-visible) span {
+    background-size: 0 1.5px;
   }
 
   @media (hover: hover) and (pointer: fine) {
+    .site-header a:hover span,
     .site-header .home-link:hover {
-      text-decoration-color: var(--color-link);
+      background-size: 100% 1.5px;
     }
-    .primary-nav span { position: relative; }
-    .primary-nav span::after {
-      content: '';
-      position: absolute;
-      inset: auto 0 -0.1em;
-      block-size: 2px;
-      background: var(--color-link);
-      transform: scaleX(0);
-      transform-origin: left;
-    }
-    .primary-nav a:not([aria-current]):hover span::after,
-    :global(body:has(#contact:target)) .primary-nav [data-about-link]:hover span::after { transform: scaleX(1); }
     @media (prefers-reduced-motion: no-preference) {
-      .primary-nav span::after { transition: transform var(--duration-preview) var(--ease-settle); }
+      .site-header a span,
+      .site-header .home-link {
+        transition: background-size 300ms var(--ease-out-strong);
+      }
     }
   }
 
-  .site-header a:active {
-    color: var(--color-link);
+  /* On narrow screens text scrolls right under the header, so it sits on solid night instead of blending. */
+  @media (max-width: 51.25em) {
+    .site-header {
+      mix-blend-mode: normal;
+      background: var(--color-paper);
+      color: var(--color-ink);
+    }
+  }
+
+  /* The smallest phones: tighter spacing keeps the name and all three links inside the margins. */
+  @media (max-width: 22.4375em) {
+    .site-header { font-size: 0.9375rem; }
+    .primary-nav { gap: 0 0.75rem; }
   }
 
   @media (min-width: 64em) {
     .site-header {
-      font-size: 1.125rem;
+      font-size: 1.0625rem;
     }
   }
 </style>

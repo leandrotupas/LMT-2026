@@ -1,5 +1,40 @@
 # Yancy Tupas · Creative direction
 
+## Afterhours (revamp, from 26 November 2026)
+
+Yancy chose this direction from three homepage concepts. The approved references are `mockups/afterhours-v2.html` and `mockups/afterhours-v2-case.html`. It replaces the look and feel of the 20 November direction below. The work, text, credits, artwork proportions, flagship order and information architecture stay the same.
+
+**Idea.** Your portfolio after dark. The night ground lets the artwork glow. The palette comes from Yancy's own YANCEYANCEREVOLUTION kit, so the dark look is part of the brand, not a generic template look.
+
+| Role | Value | Use |
+|---|---|---|
+| Night (`--color-paper`) | `#0B0712` | Page ground, tinted from the kit purple |
+| Night 2 (`--color-surface`) | `#160E20` | Thumbnail backing and quiet surfaces |
+| Bone (`--color-ink`) | `#F4F1EC` | Names, headings and text. 17.7:1 on Night |
+| Dim (`--color-secondary`) | `#A69EB2` | Captions, years and roles. 7.7:1 on Night |
+| Yellow-green (`--color-link`) | `#E7FA60` | Links, focus, selection and the family name. From the kit |
+| Purple (`--color-accent`) | `#670DA8` | The statement band and the scrollbar. From the kit. Yellow-green on purple is 8.3:1 |
+| Flagship floods | `#09B2B5`, `#CC0000`, `#03256C` | Each case's own color on hover, paired with ink that passes AA: Night on teal (7.6:1), white on red (5.2:1) and on navy (12.6:1) |
+
+**Type.** Bricolage Grotesque, now self-hosted with its width axis. The name, case titles and band are set at 800 weight, 75% width, in capitals with 0.84 leading (`.type-poster`). Headings and labels use Bricolage at normal width. DM Sans stays for reading. Labels are in sentence case: no mono costume, no all-caps eyebrows, and no section numbering.
+
+**The one authored moment.** The LMT square holds still while YANCY and TUPAS part on scroll and the three flagships rise between them. This evolves the approved "mark fixed, name settles" signature. Everything else stays quiet:
+- case rows flood with their brand color on hover
+- a preview follows a fine pointer over the rows and the index, and touch shows thumbnails instead
+- the statement band drifts and speeds up slightly with scroll velocity, with a pause control
+
+**Case openers.** Each case opens with its key artwork across the full width at its true proportions, never cropped. The night page then rises over it, carrying the title. The opener never fades or tints the artwork.
+
+**Motion and input.** Lenis smooths wheel input only. Touch keeps native momentum, keyboard and history behave natively, and same-page links move focus to their destination. GSAP with ScrollTrigger drives the hero sequence. Under reduced motion, Lenis and the sequence are off, the page shows its final composition, and hover floods become opacity fades.
+
+**Header.** It stays fixed, with the name always present. On wide screens it uses difference blending over the work. It turns solid night when it holds keyboard focus, and on screens narrower than 51.25em.
+
+**Status.** Milestone R1 (foundations and homepage) is built and awaits approval. Next come R2 (case studies with openers), R3 (Work index), R4 (project pages) and R5 (About and final audit). Until each page's milestone, it keeps its earlier layout on the new palette.
+
+---
+
+## Earlier direction
+
 20 November 2026 · Step 3 proposal for review
 
 **The mark in use** is the organizing idea. Your black LMT initials sit inside their original square beside *Yancy Tupas*. Immediately below, visitors choose among the Advenient playbook, a KOTA event template and Wünderbar stationery. Inside each case, they can trace a decision from the brief to the design it shaped. [Desktop and phone wireframes](PORTFOLIO-WIREFRAMES.pdf)

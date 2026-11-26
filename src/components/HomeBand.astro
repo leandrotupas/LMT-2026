@@ -1,0 +1,97 @@
+---
+// Words from Yancy's own statement, run as a band in the YANCEYANCEREVOLUTION purple and yellow-green.
+const words = ['Intentional', 'Expressive', 'Unmistakably themselves'];
+---
+
+<div class="band" data-band>
+  <div class="track type-poster" aria-hidden="true">
+    {[0, 1, 2, 3].map(() => words.map((word) => <span>{word}</span>))}
+  </div>
+  <button class="pause" type="button" aria-pressed="false" aria-label="Pause moving text">
+    <svg class="icon-pause" viewBox="0 0 14 14" aria-hidden="true"><rect x="2" y="1" width="3.5" height="12" /><rect x="8.5" y="1" width="3.5" height="12" /></svg>
+    <svg class="icon-play" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1l10 6-10 6z" /></svg>
+  </button>
+</div>
+
+<style>
+  .band {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(0.875rem, 2vw, 1.5rem);
+    background: var(--color-accent);
+    color: var(--color-link);
+  }
+
+  .track {
+    display: flex;
+    inline-size: max-content;
+    font-size: clamp(3rem, 7vw, 7.5rem);
+    white-space: nowrap;
+  }
+
+  .track span { padding-inline-end: 0.45em; }
+  .track span::after {
+    content: '';
+    display: inline-block;
+    inline-size: 0.32em;
+    block-size: 0.32em;
+    margin-inline-start: 0.45em;
+    background: currentColor;
+    vertical-align: 0.18em;
+  }
+
+  .pause {
+    position: absolute;
+    inset-inline-end: var(--page-margin);
+    inset-block-start: 50%;
+    translate: 0 -50%;
+    display: grid;
+    place-items: center;
+    inline-size: var(--target-size);
+    block-size: var(--target-size);
+    padding: 0;
+    border: 1.5px solid currentColor;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: inherit;
+    cursor: pointer;
+    transition: transform 160ms var(--ease-out-strong);
+  }
+
+  .pause:active { transform: scale(0.94); }
+  .pause svg { inline-size: 0.875rem; block-size: 0.875rem; fill: currentColor; }
+  .icon-play, .pause[aria-pressed='true'] .icon-pause { display: none; }
+  .pause[aria-pressed='true'] .icon-play { display: block; }
+
+  /* Under reduced motion the band never moves, so the control has nothing to do. */
+  @media (prefers-reduced-motion: reduce) { .pause { display: none; } }
+</style>
+
+<script>
+  import { gsap, smoothScroller } from '../scripts/smooth';
+
+  const band = document.querySelector<HTMLElement>('[data-band]');
+  if (band && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const track = band.querySelector<HTMLElement>('.track')!;
+    const button = band.querySelector<HTMLButtonElement>('.pause')!;
+    let x = 0;
+    let boost = 0;
+    let paused = false;
+    let visible = false;
+    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }).observe(band);
+    smoothScroller()?.on('scroll', ({ velocity }: { velocity: number }) => { boost = gsap.utils.clamp(-14, 14, velocity); });
+    gsap.ticker.add(() => {
+      if (paused || !visible) return;
+      const half = track.scrollWidth / 2;
+      x -= 1.1 + Math.abs(boost) * 0.5;
+      boost *= 0.92;
+      if (-x >= half) x += half;
+      track.style.transform = `translate3d(${x}px, 0, 0)`;
+    });
+    button.addEventListener('click', () => {
+      paused = !paused;
+      button.setAttribute('aria-pressed', String(paused));
+      button.setAttribute('aria-label', paused ? 'Play moving text' : 'Pause moving text');
+    });
+  }
+</script>

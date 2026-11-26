@@ -1,0 +1,156 @@
+---
+import initials from '../assets/lmt-initials.png';
+import signatureMark from '../assets/lmt-signature.png';
+import { flagships } from '../data/flagships';
+import { profile } from '../data/profile';
+
+const [givenName, ...familyName] = profile.name.split(' ');
+---
+
+<!-- The mark holds still while the two words of the name part and the three flagships rise between them. -->
+<section class="hero" data-hero aria-labelledby="hero-name">
+  <h1 id="hero-name" class="name type-poster">
+    <span class="visually-hidden">{profile.name}</span>
+    <span class="word given" aria-hidden="true"><span>{givenName}</span></span>
+    <span class="word family" aria-hidden="true"><span>{familyName.join(' ')}</span></span>
+  </h1>
+  <div class="stage" aria-hidden="true">
+    {flagships.map((project) => (
+      <figure>
+        <img src={`/images/flagships/${project.slug}-480.webp`}
+          srcset={`/images/flagships/${project.slug}-480.webp 480w, /images/flagships/${project.slug}-${project.largestRendition}.webp ${project.largestRendition}w`}
+          sizes="(min-width: 64em) 30vw, 46vw" width={project.width} height={project.height} alt="" decoding="async" />
+      </figure>
+    ))}
+  </div>
+  <img class="mark" src={initials.src} srcset={`${initials.src} 192w, ${signatureMark.src} 408w`}
+    sizes="(min-width: 64em) 136px, 84px" width="192" height="192" alt="LMT initials" fetchpriority="high" />
+  <div class="intro">
+    <p class="statement">{profile.statement}</p>
+    <p class="where type-label"><span>{profile.role}</span>{profile.location}</p>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-block-size: max(36rem, 100svh);
+    overflow: hidden;
+  }
+
+  .name {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-inline: var(--page-margin);
+    font-size: clamp(6rem, 26vw, 28.75rem);
+    color: var(--color-ink);
+    pointer-events: none;
+  }
+
+  .word {
+    display: block;
+    overflow: hidden;
+    padding-block-start: 0.04em;
+  }
+
+  .word > span { display: block; }
+  .family { text-align: end; color: var(--color-link); }
+
+  .mark {
+    position: relative;
+    z-index: 3;
+    inline-size: clamp(5.25rem, 9vw, 8.5rem);
+    block-size: auto;
+    aspect-ratio: 1;
+    background: #fff;
+    box-shadow: 0 20px 60px -10px rgb(0 0 0 / 0.6);
+  }
+
+  .stage {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .stage figure {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    inline-size: clamp(11rem, 26vw, 27.5rem);
+    opacity: 0;
+    translate: -50% -50%;
+  }
+
+  .stage img { box-shadow: 0 40px 80px -24px rgb(0 0 0 / 0.8); }
+
+  .intro {
+    position: absolute;
+    z-index: 4;
+    inset: auto var(--page-margin) clamp(1.25rem, 4vh, 2.5rem);
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .statement {
+    max-inline-size: 30ch;
+    font-size: clamp(1.0625rem, 1.35vw, 1.3125rem);
+    line-height: 1.4;
+  }
+
+  .where {
+    display: grid;
+    text-align: end;
+    color: var(--color-secondary);
+  }
+
+  .where span { color: var(--color-ink); font-weight: 600; }
+
+  @media (max-width: 51.25em) {
+    /* One lockup on phones: the words stack tight, and the mark takes the open space left of TUPAS. */
+    .name { font-size: 31vw; }
+    .mark {
+      inline-size: min(5.25rem, 22vw);
+      translate: calc(var(--page-margin) + min(2.625rem, 11vw) - 50vw) 13vw;
+    }
+    .intro { flex-direction: column; align-items: start; }
+    .where { text-align: start; }
+  }
+</style>
+
+<script>
+  import { gsap } from '../scripts/smooth';
+
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (hero && !reduced) {
+    // One entrance: the words rise from their own baselines; the mark is already in place.
+    gsap.from(hero.querySelectorAll('.word > span'), { yPercent: 105, duration: 1.1, ease: 'expo.out', stagger: 0.09, delay: 0.1 });
+    gsap.from(hero.querySelectorAll('.intro > *'), { opacity: 0, y: 12, duration: 0.8, ease: 'expo.out', delay: 0.55, stagger: 0.06 });
+
+    // The authored moment, scrubbed by scroll.
+    const figures = gsap.utils.toArray<HTMLElement>(hero.querySelectorAll('.stage figure'));
+    const mark = hero.querySelector<HTMLElement>('.mark')!;
+    const offset = (axis: number) => {
+      const value = getComputedStyle(mark).translate;
+      return value === 'none' ? 0 : parseFloat(value.split(' ')[axis] ?? '0') || 0;
+    };
+    const spread = () => Math.min(innerWidth * 0.27, 470);
+    gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: '+=110%', scrub: 0.6, pin: true, anticipatePin: 1 } })
+      .to(hero.querySelector('.given > span'), { x: () => -innerWidth, ease: 'none' }, 0)
+      .to(hero.querySelector('.family > span'), { x: () => innerWidth, ease: 'none' }, 0)
+      .to(hero.querySelector('.intro'), { opacity: 0, y: -20, ease: 'none', duration: 0.3 }, 0)
+      .fromTo(figures, { y: () => innerHeight * 0.45, scale: 0.7, opacity: 0 },
+        { y: 0, opacity: 1, scale: 1, x: (i) => (i - 1) * spread(), rotate: (i) => [-5, 2, 6][i], ease: 'power2.out', stagger: 0.06 }, 0.1)
+      // On phones the mark starts beside TUPAS; it returns to centre as the words leave.
+      .to(mark, { x: () => -offset(0), y: () => -offset(1), scale: 0.82, ease: 'none' }, 0);
+  }
+</script>

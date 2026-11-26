@@ -10,6 +10,8 @@ Steps 0–3 and Milestones 4.1–4.8 are approved. Yancy approved the look of th
 
 Deployment requires separate approval of the host and final domain.
 
+**Revamp (in progress, 26 November 2026).** Yancy asked for a full look-and-feel revamp that keeps all work and text. From three homepage concepts in `mockups/`, Yancy chose **Afterhours**: dark and expressive, drawing on the YANCEYANCEREVOLUTION palette. Yancy approved GSAP with Lenis for smooth scrolling and transitions, which replaces the earlier native-scrolling rule. Reduced motion, keyboard access, touch momentum and browser history must still work. The taste-skill (`.agents/skills/design-taste-frontend`) is used for its checks only. Where it conflicts with this brief, this brief wins, so captions and credits stay. Yancy approved the Afterhours v2 homepage and the full-bleed case opener, along with the audit fixes, and asked for the Astro build. Milestone R1 (foundations and homepage) is implemented and awaits approval. [Afterhours direction](CREATIVE-DIRECTION.md#afterhours-revamp-from-26-november-2026) · [Audit](mockups/AUDIT-AFTERHOURS-V2.md). Where the Afterhours direction differs from the rules below, it supersedes them: the palette (night, bone, yellow-green, purple), the condensed display type, Lenis with GSAP motion and the fixed header. Every other rule still applies.
+
 ## Content and visual direction
 
 - Use **Yancy Tupas** as the display name. The approved homepage keeps the square LMT initials fixed while the two words of the name settle on their baselines. Give the three flagships equal prominence in their confirmed order of Advenient, KOTA Center Davao, then Wünderbar.

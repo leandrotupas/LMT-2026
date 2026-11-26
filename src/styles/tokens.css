@@ -1,10 +1,16 @@
+/* Afterhours palette, drawn from the YANCEYANCEREVOLUTION kit (#FFFFFF, #670DA8, #E7FA60).
+   The role names are unchanged, so every page inherits the night ground. */
 :root {
-  --color-paper: #f8f6f1;
-  --color-surface: #efebe4;
-  --color-ink: #22211f;
-  --color-secondary: #5a5853;
-  --color-link: #314aa3;
-  --color-divider: #ccc6be;
+  --color-paper: #0b0712;
+  --color-surface: #160e20;
+  --color-ink: #f4f1ec;
+  --color-secondary: #a69eb2;
+  --color-link: #e7fa60;
+  --color-accent: #670da8;
+  --color-divider: #2f2838;
+  --header-clearance: 5rem;
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
 
   --font-sans: 'Bricolage Grotesque', Arial, sans-serif;
   --font-reading: 'DM Sans', Arial, sans-serif;

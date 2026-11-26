@@ -1,6 +1,9 @@
 ---
-import FlagshipSelection from '../components/FlagshipSelection.astro';
-import HomeSignature from '../components/HomeSignature.astro';
+import HomeBand from '../components/HomeBand.astro';
+import HomeCases from '../components/HomeCases.astro';
+import HomeContact from '../components/HomeContact.astro';
+import HomeHero from '../components/HomeHero.astro';
+import HomeIndex from '../components/HomeIndex.astro';
 import { profile } from '../data/profile';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
@@ -9,12 +12,60 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   title={`${profile.name} — ${profile.role}`}
   description={`Selected brand and graphic design by ${profile.name} in ${profile.location}. Explore Advenient, KOTA Center Davao and Wünderbar.`}
 >
-  <div class="container home">
-    <HomeSignature />
-    <FlagshipSelection />
-  </div>
+  <HomeHero />
+  <HomeCases />
+  <HomeBand />
+  <HomeIndex />
+  <HomeContact />
+  <figure class="peek" aria-hidden="true" data-peek>
+    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="840" height="472" alt="" />
+    <figcaption class="type-label"></figcaption>
+  </figure>
 </BaseLayout>
 
 <style>
-  .home { container: homepage / inline-size; font-family: var(--font-sans); }
+  .peek {
+    position: fixed;
+    z-index: 30;
+    inset: 0 auto auto 0;
+    inline-size: clamp(16rem, 26vw, 26rem);
+    pointer-events: none;
+    opacity: 0;
+    scale: 0.92;
+    transition: opacity 200ms ease, scale 350ms var(--ease-out-strong);
+  }
+
+  .peek.is-on { opacity: 1; scale: 1; }
+  .peek img { inline-size: 100%; box-shadow: 0 30px 70px -14px rgb(0 0 0 / 0.75); }
+  .peek figcaption { margin-block-start: 0.625rem; color: var(--color-ink); }
+
+  @media (hover: none), (pointer: coarse), (max-width: 51.25em) { .peek { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .peek { transition: opacity 150ms ease; scale: 1; } }
 </style>
+
+<script>
+  import { gsap } from '../scripts/smooth';
+
+  // A preview follows a fine pointer over the case rows and the index; touch shows thumbnails instead.
+  const peek = document.querySelector<HTMLElement>('[data-peek]');
+  const fine = matchMedia('(hover: hover) and (pointer: fine) and (min-width: 51.3125em)');
+  if (peek && fine.matches) {
+    const image = peek.querySelector('img')!;
+    const caption = peek.querySelector('figcaption')!;
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const moveX = gsap.quickTo(peek, 'x', { duration: still ? 0 : 0.55, ease: 'power3' });
+    const moveY = gsap.quickTo(peek, 'y', { duration: still ? 0 : 0.55, ease: 'power3' });
+    addEventListener('pointermove', (event) => {
+      moveX(Math.min(event.clientX + 28, innerWidth - peek.offsetWidth - 16));
+      moveY(Math.max(16, event.clientY - peek.offsetHeight * 0.55));
+    }, { passive: true });
+    document.querySelectorAll<HTMLAnchorElement>('[data-preview]').forEach((link) => {
+      link.addEventListener('pointerenter', () => {
+        image.src = link.dataset.preview!;
+        caption.textContent = link.dataset.previewCaption ?? '';
+        peek.classList.add('is-on');
+      });
+      link.addEventListener('pointerleave', () => peek.classList.remove('is-on'));
+    });
+  }
+</script>

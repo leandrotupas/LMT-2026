@@ -1,5 +1,5 @@
 ---
-import displayFont from '../assets/fonts/bricolage-grotesque-latin.woff2?url';
+import displayFont from '../assets/fonts/bricolage-grotesque-wdth-latin.woff2?url';
 import initials from '../assets/lmt-initials.png';
 import { profile } from '../data/profile';
 import ArtworkViewer from '../components/ArtworkViewer.astro';
@@ -30,7 +30,7 @@ const shareUrl = Astro.site ? new URL(sharePath, Astro.site).href : sharePath;
     <meta name="description" content={description} />
     {!canonical && <meta name="robots" content="noindex" />}
     {canonical && <link rel="canonical" href={canonical} />}
-    <meta name="theme-color" content="#f8f6f1" />
+    <meta name="theme-color" content="#0b0712" />
     <meta property="og:type" content={share ? 'article' : 'website'} />
     <meta property="og:site_name" content={profile.name} />
     <meta property="og:title" content={title} />
@@ -116,7 +116,7 @@ const shareUrl = Astro.site ? new URL(sharePath, Astro.site).href : sharePath;
       });
     </script>
   </head>
-  <body>
+  <body class:list={{ 'is-home': Astro.url.pathname === '/' }}>
     <SiteHeader />
     <main id="main-content" tabindex="-1">
       <slot />
