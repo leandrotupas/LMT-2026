@@ -35,6 +35,8 @@ const shareUrl = Astro.site ? new URL(sharePath, Astro.site).href : sharePath;
     {!canonical && <meta name="robots" content="noindex" />}
     {canonical && <link rel="canonical" href={canonical} />}
     <meta name="theme-color" content="#0b0712" />
+    <!-- Google Search Console ownership (URL-prefix property for https://lmt-2026.vercel.app/). -->
+    <meta name="google-site-verification" content="oLckE_xkTiTDaZGsJv6aFvkPa9wFur2vHBlbaOzvCDw" />
     <meta property="og:type" content={share ? 'article' : 'website'} />
     <meta property="og:site_name" content={profile.name} />
     <meta property="og:title" content={title} />
