@@ -170,9 +170,13 @@ const trail = [...new Set([...plates.map(small), ...caseSources])];
       [sources[i], sources[j]] = [sources[j], sources[i]];
     }
     let next = 0;
+    let started = false;
     const ready: HTMLImageElement[] = [];
-    const fill = () => {
-      while (ready.length < 5 && sources.length) {
+    // Touch shows images only on tap, so it keeps fewer in reserve than a mouse sweeping across the hero.
+    const reserve = matchMedia('(pointer: coarse)').matches ? 2 : 5;
+    const fill = (count = reserve) => {
+      if (!started) return;
+      while (ready.length < count && sources.length) {
         const image = new Image();
         image.alt = '';
         image.decoding = 'async';
@@ -180,7 +184,6 @@ const trail = [...new Set([...plates.map(small), ...caseSources])];
         ready.push(image);
       }
     };
-    fill();
 
     const drop = (clientX: number, clientY: number) => {
       const image = ready.find((item) => item.complete && item.naturalWidth);
@@ -209,11 +212,21 @@ const trail = [...new Set([...plates.map(small), ...caseSources])];
     }, { passive: true });
     hero.addEventListener('pointerdown', (event) => { if (event.pointerType === 'touch') drop(event.clientX, event.clientY); }, { passive: true });
 
-    // A short opening flourish hints at the interaction, then the trail waits for the visitor.
-    [[0.28, 0.3], [0.68, 0.26], [0.74, 0.6], [0.34, 0.64]].forEach(([fx, fy], i) => setTimeout(() => {
-      const box = hero.getBoundingClientRect();
-      if (box.bottom > 0) drop(box.left + box.width * fx, box.top + box.height * fy);
-    }, 700 + i * 280));
+    // Nothing is fetched until the page has loaded and the browser is idle, so the trail never competes with
+    // the hero. Then a short opening flourish hints at the interaction, and the trail waits for the visitor.
+    const flourish = [[0.28, 0.3], [0.68, 0.26], [0.74, 0.6], [0.34, 0.64]];
+    const start = async () => {
+      started = true;
+      fill(flourish.length);
+      await Promise.all(ready.map((image) => image.decode().catch(() => undefined)));
+      flourish.forEach(([fx, fy], i) => setTimeout(() => {
+        const box = hero.getBoundingClientRect();
+        if (box.bottom > 0) drop(box.left + box.width * fx, box.top + box.height * fy);
+      }, i * 280));
+      setTimeout(() => fill(), flourish.length * 280);
+    };
+    const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(() => start(), { timeout: 1500 }) : setTimeout(start, 200));
+    if (document.readyState === 'complete') idle(); else addEventListener('load', idle, { once: true });
 
     // The authored moment, scrubbed by scroll.
     const mark = hero.querySelector<HTMLElement>('.mark')!;

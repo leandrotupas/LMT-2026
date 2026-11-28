@@ -1,5 +1,42 @@
 # Afterhours revamp: full-site audit
 
+## Full audit, 28 November 2026 (after the image-trail hero)
+
+| # | Dimension | Score | Key finding |
+|---|---|---|---|
+| 1 | Accessibility | 4 | 25 pages pass: one `h1`, no skipped headings, alt text, named controls, skip link first, reduced motion without Lenis, contrast at night and in day mode |
+| 2 | Performance | 3 | CLS 0 everywhere and LCP under 120 ms locally. The homepage on phones loads 718 KB before scrolling because the trail fetches five images at once, even though touch only shows them on tap |
+| 3 | Theming | 4 | Day mode persists across pages and applies before first paint. Key pairs pass (ink 17.7:1) |
+| 4 | Responsive | 4 | No sideways scroll at 320 or 390 px on any page; every control is at least 24 px tall, the header toggle 44 px |
+| 5 | Implementation integrity | 3 | `e9a6822` (image trail) is not live. Vercel still serves `3cbf7bb`, deployed 27 Nov 05:05 UTC |
+| **Total** | | **18/20** | **Get the latest push deployed, then defer the trail preloading** |
+
+### Findings
+
+- **[P1] The image-trail hero hasn't deployed.** It was pushed at 05:49 UTC on 28 November and the branch head on GitHub is `e9a6822`. More than 20 minutes later, lmt-2026.vercel.app still returns `Last-Modified: 27 Nov 05:05` with no trail markup. Earlier pushes went live within about a minute. The local `check` and `build` both pass, so look for a failed or queued build under Deployments in Vercel.
+- **[P2] The trail preloads images during the first paint.** Five images start downloading as soon as the script runs, so they compete with the hero. Phones fetch them before any tap. Fix: start preloading after `load` when idle, and on touch fetch only the four opening images.
+- **[P3] The only security header is HSTS.** There's no `X-Content-Type-Options`, `Referrer-Policy` or `Permissions-Policy`. A small `vercel.json` `headers` block would add them. No content security policy yet, because Vercel Analytics and the inline theme script would need it tuned.
+- **[P3] The shared motion bundle is still 49 KB gzipped** (carried over).
+
+### Fix pass (same day)
+
+| Finding | Fix | Verified |
+|---|---|---|
+| P2 The trail preloads images during the first paint | Nothing is fetched until the `load` event and an idle moment. Then the four opening images are fetched and decoded before the flourish. Touch keeps two images in reserve, a mouse five | Trail requests now start after `load` (111 ms locally), never before. CLS 0, and the flourish still plays on desktop and phone |
+| P3 The only security header is HSTS | `vercel.json` adds `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` and `X-Frame-Options: SAMEORIGIN` | Takes effect on the next Vercel deployment |
+| P1 Image trail not live | Needs Yancy to check Deployments in Vercel | Open |
+
+### Checked, no issues
+
+- Check: 0 errors, 0 warnings, 0 hints. Build: 26 pages. All 121 trail images exist in the build.
+- **False positives from the automated checks:**
+  - Images without width and height are the runtime trail images and the empty lightbox image. Both are absolutely positioned and can't shift layout.
+  - The YANCEYANCEREVOLUTION "Next case" panel paints its teal (`#09b2b5`) on `::before`. The real contrast against the night ink is about 8:1.
+  - The low day-mode contrast on the header is its difference blend. Visually it reads as night ink on bone.
+- The only 404 is the intentional `/nope/` test.
+- Live site: canonical tags, absolute `og:image`, the Search Console tag, `robots.txt` and a 25-URL `sitemap.xml` are all present. Static assets are cached as `immutable` for a year.
+- Interactions: the Davao clock matches Manila time. Page transitions carry the title and cover. The View badge, the Work hover preview, and day mode at 320 to 390 px all work.
+
 ## Full audit, 27 November 2026 (live site plus local build)
 
 | # | Dimension | Score | Key finding |
