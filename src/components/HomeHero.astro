@@ -1,13 +1,43 @@
 ---
+import { getImage } from 'astro:assets';
 import initials from '../assets/lmt-initials.png';
 import signatureMark from '../assets/lmt-signature.png';
+import { advenientArt } from '../data/advenient';
+import { kotaArt } from '../data/kota';
 import { profile } from '../data/profile';
+import artwork from '../data/project-artwork.json';
+import type { GalleryArtwork } from '../data/projects';
+import { wunderbarArt, wunderbarStudies } from '../data/wunderbar';
+import { dreamPosters, kit, mixCovers, y2rCover } from '../data/yanceyancerevolution';
 
 const [givenName, ...familyName] = profile.name.split(' ');
+
+// Every image in the portfolio, at a small rendition, for the cursor trail.
+// Gallery artwork already has responsive files: take the smallest candidate at least 420 px wide.
+function small(art: GalleryArtwork) {
+  const candidates = art.srcset.split(',').map((entry) => {
+    const [url, width] = entry.trim().split(/\s+/);
+    return { url, width: parseInt(width, 10) || art.width };
+  }).sort((a, b) => a.width - b.width);
+  return (candidates.find(({ width }) => width >= 420) ?? candidates.at(-1))?.url ?? art.src;
+}
+const plates: GalleryArtwork[] = [
+  ...Object.values(artwork).flatMap((project) => project.groups.flatMap((group) => group.items as GalleryArtwork[])),
+  y2rCover, ...Object.values(kit), ...mixCovers, ...dreamPosters,
+];
+// Case-study artwork lives in src/assets, so a 480 px WebP of each is rendered at build time.
+const caseImages: ImageMetadata[] = [
+  ...Object.values(advenientArt), ...Object.values(kotaArt), ...Object.values(wunderbarArt), ...wunderbarStudies,
+].map(({ image }) => image);
+const caseSources = await Promise.all(caseImages.map(async (image) =>
+  (await getImage({ src: image, width: Math.min(480, image.width), format: 'webp' })).src));
+const trail = [...new Set([...plates.map(small), ...caseSources])];
 ---
 
-<!-- The mark holds still while the two words of the name part on scroll. -->
+<!-- The mark holds still while the two words of the name part on scroll. Moving across the hero leaves a trail
+     of Yancy's work behind the name, cycling through every image in the portfolio. -->
 <section class="hero" data-hero aria-labelledby="hero-name">
+  <div class="trail" aria-hidden="true" data-trail data-images={JSON.stringify(trail)}></div>
   <h1 id="hero-name" class="name type-poster">
     <span class="visually-hidden">{profile.name}</span>
     <span class="word given" aria-hidden="true"><span>{givenName}</span></span>
@@ -30,8 +60,27 @@ const [givenName, ...familyName] = profile.name.split(' ');
     overflow: hidden;
   }
 
+  .trail {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Each image is shown whole at its own proportions; only its width is set. */
+  .trail :global(img) {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    inline-size: clamp(8.75rem, 16vw, 16.25rem);
+    block-size: auto;
+    translate: -50% -50%;
+    box-shadow: 0 12px 32px -12px rgb(0 0 0 / 0.5);
+  }
+
   .name {
     position: absolute;
+    z-index: 2;
     inset: 0;
     display: flex;
     flex-direction: column;
@@ -41,6 +90,10 @@ const [givenName, ...familyName] = profile.name.split(' ');
     color: var(--color-ink);
     pointer-events: none;
   }
+
+  /* At night the bone half of the name inverts over the artwork passing beneath it, so it reads on light and
+     dark images alike. TUPAS keeps its lime, and day mode keeps the name as it is. */
+  :global(:root:not([data-theme='day'])) .given { mix-blend-mode: difference; }
 
   .word {
     display: block;
@@ -108,6 +161,60 @@ const [givenName, ...familyName] = profile.name.split(' ');
     // The intro is painted at once (it is often the largest element on phones); it only settles into place.
     gsap.from(hero.querySelectorAll('.intro > *'), { y: 12, duration: 0.8, ease: easeOut, stagger: 0.06 });
 
+    // The trail. Images come from every project in a fresh order each visit. Only the next few are loaded
+    // ahead, and an image is placed only once it has loaded, so the trail never shows an empty frame.
+    const trail = hero.querySelector<HTMLElement>('[data-trail]')!;
+    const sources: string[] = JSON.parse(trail.dataset.images ?? '[]');
+    for (let i = sources.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [sources[i], sources[j]] = [sources[j], sources[i]];
+    }
+    let next = 0;
+    const ready: HTMLImageElement[] = [];
+    const fill = () => {
+      while (ready.length < 5 && sources.length) {
+        const image = new Image();
+        image.alt = '';
+        image.decoding = 'async';
+        image.src = sources[next++ % sources.length];
+        ready.push(image);
+      }
+    };
+    fill();
+
+    const drop = (clientX: number, clientY: number) => {
+      const image = ready.find((item) => item.complete && item.naturalWidth);
+      if (!image) return;
+      ready.splice(ready.indexOf(image), 1);
+      fill();
+      const box = hero.getBoundingClientRect();
+      image.style.left = `${clientX - box.left}px`;
+      image.style.top = `${clientY - box.top}px`;
+      trail.append(image);
+      image.animate(
+        [{ opacity: 0, scale: 0.86 }, { opacity: 1, scale: 1, offset: 0.16 }, { opacity: 1, scale: 1, offset: 0.68 }, { opacity: 0, scale: 0.96 }],
+        { duration: 1500, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
+      ).onfinish = () => image.remove();
+      while (trail.children.length > 8) trail.firstElementChild?.remove();
+    };
+
+    // A mouse or pen leaves an image every 110 px; a finger leaves one where it taps. Nothing loops on its own.
+    let lastX = NaN, lastY = NaN;
+    hero.addEventListener('pointermove', (event) => {
+      if (event.pointerType === 'touch') return;
+      if (Number.isNaN(lastX) || Math.hypot(event.clientX - lastX, event.clientY - lastY) > 110) {
+        drop(event.clientX, event.clientY);
+        lastX = event.clientX; lastY = event.clientY;
+      }
+    }, { passive: true });
+    hero.addEventListener('pointerdown', (event) => { if (event.pointerType === 'touch') drop(event.clientX, event.clientY); }, { passive: true });
+
+    // A short opening flourish hints at the interaction, then the trail waits for the visitor.
+    [[0.28, 0.3], [0.68, 0.26], [0.74, 0.6], [0.34, 0.64]].forEach(([fx, fy], i) => setTimeout(() => {
+      const box = hero.getBoundingClientRect();
+      if (box.bottom > 0) drop(box.left + box.width * fx, box.top + box.height * fy);
+    }, 700 + i * 280));
+
     // The authored moment, scrubbed by scroll.
     const mark = hero.querySelector<HTMLElement>('.mark')!;
     const offset = (axis: number) => {
@@ -118,6 +225,7 @@ const [givenName, ...familyName] = profile.name.split(' ');
       .to(hero.querySelector('.given > span'), { x: () => -innerWidth, ease: 'none' }, 0)
       .to(hero.querySelector('.family > span'), { x: () => innerWidth, ease: 'none' }, 0)
       .to(hero.querySelector('.intro'), { opacity: 0, y: -20, ease: 'none', duration: 0.3 }, 0)
+      .to(trail, { opacity: 0, ease: 'none', duration: 0.5 }, 0)
       // On phones the mark starts beside TUPAS; it returns to centre as the words leave.
       .to(mark, { x: () => -offset(0), y: () => -offset(1), scale: 0.82, ease: 'none' }, 0);
   }

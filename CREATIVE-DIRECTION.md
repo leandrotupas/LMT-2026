@@ -39,6 +39,15 @@ Yancy chose this direction from three homepage concepts. The approved references
 - **"View" badge.** A small yellow-green badge rides beside the native pointer over Work index rows and "Next" panels, on fine pointers only.
 - **Day mode.** A header toggle switches to a light palette: bone ground, night ink, and kit purple for links, focus and the family name. Each visitor's choice is remembered on their device; Afterhours stays the default. The toggle is hidden below 360 px, where the header has no room.
 
+**Image-trail hero (28 November 2026, chosen by Yancy after trying a flyer wall).**
+- **The trail:** moving a mouse or pen across the hero leaves a fading trail of Yancy's work behind the name, one image every 110 px. It cycles through every image in the portfolio, about 120 across the case studies and all 18 projects, in a fresh order each visit.
+- **The images:** each is shown whole at a small rendition, never cropped. Only the next few are loaded ahead, and each appears once it has loaded.
+- **The name:** at night it uses difference blending, so it stays legible over light and dark artwork.
+- **On touch:** an image appears where the visitor taps.
+- **On load:** a short four-image flourish hints at the interaction. Nothing loops on its own.
+- **On scroll:** the trail fades as the words part around the mark.
+- **Reduced motion:** a still hero with no trail.
+
 **Unslop polish (27 November 2026, approved by Yancy).** A pass with the unslop skill rated the site as light slop and polished it in place:
 - **Spacing:** every value sits on the 4 px scale.
 - **Accent:** yellow-green is reserved for TUPAS, the band, focus, selection, the current Work category and one action per page. Links and hovers stay bone, with a soft underline.
